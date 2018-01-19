@@ -69,13 +69,6 @@ class Authentication extends REST_Controller {
                         $payload['expired']         =   $expired;
 
                         $output['id_token']     =   JWT::encode($payload, $this->secret);
-
-                        // create session token
-                        // $session_data = array(
-                        //     'id_token' => $output['id_token']
-                        // );
-                        
-                        // $this->session->set_userdata($session_data);
                     
                         try{
 
@@ -103,7 +96,7 @@ class Authentication extends REST_Controller {
                         }catch(Exception $e){
                             
                             // error
-                            $output['error']  = $e;
+                            $output['error']  = 'gagal menyimpan data transaksi login';
                         
                         }    
 
@@ -136,72 +129,72 @@ class Authentication extends REST_Controller {
        
     }
 
-    public function check_token_get()
-    {
+    // public function check_token_get()
+    // {
 
-        // retrieve token
-        if($token = $this->input->get_request_header('Authorization')){
-            // from header
-        }else if($this->session->userdata('id_token')== null){
-            // jika menggunakan session
-            $token = $this->session->userdata('id_token');
-        }else{
-            // set token null
-            $token = null;
-        }
+    //     // retrieve token
+    //     if($token = $this->input->get_request_header('Authorization')){
+    //         // from header
+    //     }else if($this->session->userdata('id_token')== null){
+    //         // jika menggunakan session
+    //         $token = $this->session->userdata('id_token');
+    //     }else{
+    //         // set token null
+    //         $token = null;
+    //     }
 
-        try{
+    //     try{
 
-            $decode = JWT::decode($token, $this->secret, array('HS256'));
+    //         $decode = JWT::decode($token, $this->secret, array('HS256'));
             
-            // retrieve i_user dari token
-            $i_user = $decode->i_user;
+    //         // retrieve i_user dari token
+    //         $i_user = $decode->i_user;
 
-            // cocokan token dan expired token
-            if($valid = $this->user_model->token_validation($i_user)->result()){
+    //         // cocokan token dan expired token
+    //         if($valid = $this->user_model->token_validation($i_user)->result()){
                 
-                // tanggal expired dari tacm.t_d_login
-                $token_expired = $valid[0]->expired;
+    //             // tanggal expired dari tacm.t_d_login
+    //             $token_expired = $valid[0]->expired;
 
-                // cek apakah token masih berlaku atau sudah expired
-                if ($token_expired < date('Y-m-d H:i:s')) {
+    //             // cek apakah token masih berlaku atau sudah expired
+    //             if ($token_expired < date('Y-m-d H:i:s')) {
                     
-                    // token expired
-                    $this->response([
-                        'status' => FALSE,
-                        'message' => 'Token sudah expired'
-                    ], REST_Controller::HTTP_UNAUTHORIZED); // token expired
+    //                 // token expired
+    //                 $this->response([
+    //                     'status' => FALSE,
+    //                     'message' => 'Token sudah expired'
+    //                 ], REST_Controller::HTTP_UNAUTHORIZED); // token expired
 
-                }else{
+    //             }else{
 
-                    // Set the response 
-                    $this->response([
-                        'status' => true,
-                        'message' => 'Token valid'
-                    ], REST_Controller::HTTP_OK); // token valid
+    //                 // Set the response 
+    //                 $this->response([
+    //                     'status' => true,
+    //                     'message' => 'Token valid'
+    //                 ], REST_Controller::HTTP_OK); // token valid
 
-                }
+    //             }
         
-            }
+    //         }
             
-        }catch(Exception $e){
+    //     }catch(Exception $e){
 
-            // Set the response 
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Token invalid'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+    //         // Set the response 
+    //         $this->response([
+    //             'status' => FALSE,
+    //             'message' => 'Token invalid'
+    //         ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 
-        }
-    }
+    //     }
+    // }
 
-    public function protected_method()
-    {
-        if ($this->check_token_get()) {
-            //cek apakah user yang login sama dengan user token
+    // public function protected_method()
+    // {
+    //     if ($this->check_token_get()) {
+    //         //cek apakah user yang login sama dengan user token
 
-            return true;
-        }
-    }
+    //         return true;
+    //     }
+    // }
 
 }

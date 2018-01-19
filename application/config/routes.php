@@ -7,7 +7,7 @@ $route['translate_uri_dashes'] = TRUE;
 
 // authentication 
 $route['login'] = 'user_authentication';
-$route['verify'] = 'user_authentication/verify';
+$route['verify']['POST'] = 'user_authentication/verify';
 
 
 // MY API Routes

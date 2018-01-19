@@ -20,7 +20,7 @@ $att_password = array(
     'placeholder'   =>  'Password' 
 );
 
-echo form_open('api/user_auth/login');
+echo form_open_multipart('verify');
 
     echo form_input($att_username);
 
