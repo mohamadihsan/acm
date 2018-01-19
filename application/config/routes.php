@@ -11,13 +11,13 @@ $route['verify'] = 'user_authentication/verify';
 
 
 // MY API Routes
-$route['api/user_auth/login']['POST'] = 'api/user_authentication/login';
-$route['api/post']['POST'] = 'api/user_authentication/user';
+$route['api/user_auth/login']['POST'] = 'api/authentication/login';
+$route['api/post']['POST'] = 'api/authentication/user';
 
 
 
 // cek token jwt
-$route['api/check_token']['GET'] = 'api/user_authentication/check_token'; 
+$route['api/check_token']['GET'] = 'api/authentication/check_token'; 
 
 
 /*

@@ -8,13 +8,23 @@ class User_Authentication extends CI_Controller {
     {
         parent::__construct();
         //Load Dependencies
-
+        $this->load->library('check_token');
+        
     }
 
     // List all your items
     public function index( $offset = 0 )
     {
+        $token = null;
+        if($this->check_token->token($token)){
+            echo 'valid';
+        }else{
+            echo 'non_valid';
+        }
+        die();
+
         $this->load->template('login/v_form_login');
+        
     }
 
     // verifikasi user
