@@ -10,7 +10,7 @@ class User extends REST_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('master/user_model');
+        $this->load->model('master/User_Model');
         
     }
     

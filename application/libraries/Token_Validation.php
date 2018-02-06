@@ -2,7 +2,7 @@
 require APPPATH . 'libraries/JWT.php';
 
 use \Firebase\JWT\JWT;
-class Token_validation {
+class Token_Validation {
 
     private $secret = 'access card management';
 
@@ -34,12 +34,60 @@ class Token_validation {
         }
     }
 
+    private function extract_token($token)
+    {
+
+        try{
+
+            $decode = JWT::decode($token, $this->secret, array('HS256'));
+            
+            // retrieve tanggal expired dari token
+            $token_expired = $decode->expired;
+            
+            // cek apakah token masih berlaku atau sudah expired
+            if ($token_expired < date('Y-m-d H:i:s')) {
+                
+                //token expired
+                $data = array(
+                    'status'=> false, 
+                    'pesan' => 'token telah kadaluarsa'
+                );
+
+                return json_encode($data);
+
+            }else{
+                
+                // token masih berlaku
+                $data = array(
+                    'status'=> true, 
+                    'i_group_access' => $decode->i_group_access,
+                    'i_user' => $decode->i_user 
+                );
+
+                return json_encode($data);
+            }
+            
+        }catch(Exception $e){
+            $data = array(
+                'status'=> false,
+                'pesan' => 'terjadi error saat memproses data' 
+            );
+            // kesalahan dalam memproses
+            return json_encode($data);
+        }
+    }
+
     public function check($token)
     {
         if($this->check_token($token)) {
             //cek apakah user yang login sama dengan user token
             return true;
         }
+    }
+
+    public function extract($token)
+    {
+        return $this->extract_token($token);
     }
 
 }

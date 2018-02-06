@@ -13,12 +13,13 @@ class User_Authentication extends CI_Controller {
         $this->API = base_url();
         //Load Dependencies
         $this->load->library('curl');
-        $this->load->library('token_validation');
+        $this->load->library('Token_Validation');
+        $this->load->model('master/User_model');
 
     }
 
     // List all your items
-    public function index( $offset = 0 )
+    public function index()
     {
         if ($this->session->userdata('id_token')) {
             // get session token
@@ -76,6 +77,60 @@ class User_Authentication extends CI_Controller {
 
         }else{
             // request method tidak sesuai
+            redirect(base_url());
+        }
+    }
+
+    public function logout()
+    {
+       
+        // get session token
+        $token = $this->session->userdata('id_token');
+        
+        //cek masa berlaku token
+        if($this->token_validation->check($token)){
+            
+            // extract token 
+            $extract = $this->token_validation->extract($token);
+            $json = json_decode($extract);
+            // set variable
+            $i_user = $json->i_user;
+            $i_group_access = $json->i_group_access;
+            // set ip address
+            $ip_address = $this->input->ip_address();
+            if (!$this->input->valid_ip($ip_address)) {
+                $ip_address = null;
+            }
+            
+            // clear session
+            if(!$this->session->unset_userdata('id_token')){
+                
+                $data = array(
+                    'i_user' => $i_user,
+                    'i_group_access' => $i_group_access,
+                    'ip_address' => $ip_address
+                );
+                
+                try{
+                    // non sktifkan status login
+                    $this->User_model->clear_data_login($i_user);
+                    // insert data logout
+                    $this->User_model->insert_data_logout($data);
+                }catch(Exception $e){
+                    // gagal menyimpan data logout
+                    redirect(base_url());
+                }
+                
+                // session telah berhasil di bersihkan
+                redirect(base_url());
+                
+            }else{
+                // gagal unset session token
+                redirect(base_url());
+            }
+
+        }else{
+            // token tidak valid atau tidak ada session token
             redirect(base_url());
         }
     }
