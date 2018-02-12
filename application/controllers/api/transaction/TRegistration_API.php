@@ -79,7 +79,7 @@ class TRegistration_API extends REST_Controller {
                         $this->response([
                             'status' => false,
                             'data' => $data_post,
-                            'message' => 'Proses insert gagal, cek kembali parameter yang anda masukkan!'
+                            'message' => 'Proses registrasi gagal, cek kembali parameter yang anda masukkan!'
                         ], REST_Controller::HTTP_NOT_ACCEPTABLE);
                     }
                     

@@ -15,9 +15,14 @@ class Token_Validation {
             
             // retrieve tanggal expired dari token
             $token_expired = $decode->expired;
+            
+            // get time server
+            // $response = $this->db->query("SELECT * FROM macm.sp_get_timeserver()")->result();
+            // $time_server = $response[0]->time_server;
+            $time_server = date('Y-m-d H:i:s');
 
             // cek apakah token masih berlaku atau sudah expired
-            if ($token_expired < date('Y-m-d H:i:s')) {
+            if ($token_expired < $time_server) {
                 
                 //token expired
                 return false;
@@ -44,8 +49,11 @@ class Token_Validation {
             // retrieve tanggal expired dari token
             $token_expired = $decode->expired;
             
+            // get time server
+            $time_server = date('Y-m-d H:i:s');
+
             // cek apakah token masih berlaku atau sudah expired
-            if ($token_expired < date('Y-m-d H:i:s')) {
+            if ($token_expired < $time_server) {
                 
                 //token expired
                 $data = array(
@@ -61,7 +69,11 @@ class Token_Validation {
                 $data = array(
                     'status'=> true, 
                     'i_group_access' => $decode->i_group_access,
-                    'i_user' => $decode->i_user 
+                    'i_user' => $decode->i_user,
+                    'c_login' => $decode->c_login,
+                    'terminal_id' => $decode->terminal_id,
+                    'd_insert' => $decode->d_insert,
+                    'expired' => $decode->expired 
                 );
 
                 return json_encode($data);

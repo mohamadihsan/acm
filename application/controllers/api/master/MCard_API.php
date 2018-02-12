@@ -30,7 +30,7 @@ class MCard_API extends REST_Controller {
                 
                 if (!$json) {
                     
-                    // respone failed
+                    // response failed
                     $this->response([
                         'status' => false,
                         'message' => 'Format data yang dikirim harus json array'
@@ -49,18 +49,18 @@ class MCard_API extends REST_Controller {
 
                 }
 
-                // insert data macm.t_m_desc
+                // show data
                 if($response = $this->Card_model->show($c_card, $i_card_type)){
 
-                    if($response[0]->i_card == null){
+                    if($response[0]->c_card == null){
                         // response success not found data
                         $this->response([
-                            'status' => true,
+                            'status' => false,
                             'data' => $data_post,
                             'message' => 'Data tidak ditemukan'
-                        ], REST_Controller::HTTP_NO_CONTENT);
+                        ], REST_Controller::HTTP_PARTIAL_CONTENT);
                     }else if(count($response) > 1){
-                        //respone success with data
+                        //response success with data
                         $this->response([
                             'status' => true,
                             'data' => $response,
@@ -68,7 +68,7 @@ class MCard_API extends REST_Controller {
                             'message' => 'Data kembar ditemukan'
                         ], REST_Controller::HTTP_OK);
                     }else{
-                        //respone success with data
+                        //response success with data
                         $this->response([
                             'status' => true,
                             'data' => $response,
@@ -76,16 +76,16 @@ class MCard_API extends REST_Controller {
                         ], REST_Controller::HTTP_OK);
                     }
                 }else{
-                    // respone failed
+                    // response failed
                     $this->response([
                         'status' => false,
                         'data' => $data_post,
-                        'message' => 'Kartu tidak ditemukan'
-                    ], REST_Controller::HTTP_NO_CONTENT);
+                        'message' => 'Data tidak ditemukan'
+                    ], REST_Controller::HTTP_PARTIAL_CONTENT);
                 }
                  
             }else{
-                // respone unauthorized karena token invalid
+                // response unauthorized karena token invalid
                 $this->response([
                     'status' => false,
                     'message' => 'Token invalid'
@@ -93,7 +93,7 @@ class MCard_API extends REST_Controller {
             }
             
         }else{
-            // respone unauthorized karena token invalid
+            // response unauthorized karena token invalid
             $this->response([
                 'status' => false,
                 'message' => 'Token invalid'

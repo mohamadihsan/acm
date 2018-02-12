@@ -67,7 +67,7 @@ class TMDesc_API extends REST_Controller {
 
                 // insert data macm.t_m_desc
                 if($this->Desc_model->insert($data_post)){
-                    //respone success
+                    //response success
                     $this->response([
                         'status' => true,
                         'data' => $data_post,
@@ -75,7 +75,7 @@ class TMDesc_API extends REST_Controller {
                     ], REST_Controller::HTTP_CREATED);
 
                 }else{
-                    // respone failed
+                    // response failed
                     $this->response([
                         'status' => false,
                         'data' => $data_post,
@@ -84,7 +84,7 @@ class TMDesc_API extends REST_Controller {
                 }
                  
             }else{
-                // respone unauthorized karena token invalid
+                // response unauthorized karena token invalid
                 $this->response([
                     'status' => false,
                     'message' => 'Token invalid'
@@ -92,7 +92,7 @@ class TMDesc_API extends REST_Controller {
             }
             
         }else{
-            // respone unauthorized karena token invalid
+            // response unauthorized karena token invalid
             $this->response([
                 'status' => false,
                 'message' => 'Token invalid'
@@ -161,7 +161,7 @@ class TMDesc_API extends REST_Controller {
 
                     return $count_update;
                     if ($count_update > 0) {
-                        //respone success
+                        //response success
                         $this->response([
                             'status' => true,
                             'data' => $data_post,
@@ -169,7 +169,7 @@ class TMDesc_API extends REST_Controller {
                         ], REST_Controller::HTTP_OK);
 
                     }else{
-                        // respone failed
+                        // response failed
                         $this->response([
                             'status' => false,
                             'data' => $data_post,
@@ -183,7 +183,7 @@ class TMDesc_API extends REST_Controller {
                 }
                 
             }else{
-                // respone unauthorized karena token invalid
+                // response unauthorized karena token invalid
                 $this->response([
                     'status' => false,
                     'message' => 'Token invalid'
@@ -191,7 +191,7 @@ class TMDesc_API extends REST_Controller {
             }
             
         }else{
-            // respone unauthorized karena token invalid
+            // response unauthorized karena token invalid
             $this->response([
                 'status' => false,
                 'message' => 'Token invalid'
@@ -241,7 +241,7 @@ class TMDesc_API extends REST_Controller {
                     $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
                 }
             }else{
-                // respone unauthorized karena token invalid
+                // response unauthorized karena token invalid
                 $this->response([
                     'status' => false,
                     'message' => 'Token invalid'
@@ -249,7 +249,7 @@ class TMDesc_API extends REST_Controller {
             }
 
         }else{
-            // respone unauthorized karena token invalid
+            // response unauthorized karena token invalid
             $this->response([
                 'status' => false,
                 'message' => 'Token invalid'

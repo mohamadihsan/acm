@@ -89,7 +89,7 @@ class Authentication extends REST_Controller {
 
                     if($log->num_rows() > 0){
 
-                        if (TRIM($log2[0]->terminal_id) != TRIM($terminal_id)) {
+                        if (TRIM($log2[0]->terminal_id) != TRIM($terminal_id) AND TRIM($log2[0]->terminal_id) != null) {
                             
                             $output = array(
                                 'status' => false,
@@ -109,24 +109,24 @@ class Authentication extends REST_Controller {
                     if (!$this->input->valid_ip($ip_address)) {
                         $ip_address = null;
                     }
+                    $c_login = date('YmdHis');
 
                     try{
 
                         // JWT
                         $payload['i_user']          =   $i_user_from_db;
-                        $payload['username']        =   $username_from_db;
-                        $payload['password']        =   $password_from_db;
                         $payload['i_group_access']  =   $i_group_access;
                         $payload['d_insert']        =   $iat;
                         $payload['expired']         =   $expired;
                         $payload['terminal_id']     =   $terminal_id;
-                        $payload['c_login']         =   $log2[0]->c_login;
+                        $payload['c_login']         =   $c_login;
 
                         $output['id_token']     =   JWT::encode($payload, $this->secret);
+                        $output['i_user']       =   $i_user_from_db;
 
                         // data login success
                         $data_login_success = array(
-                            'c_login'           => date('YmdHis'),
+                            'c_login'           => $c_login,
                             'i_group_access'    => $i_group_access,
                             'i_user'            => $i_user_from_db,
                             'ip_address'        => $ip_address,
@@ -197,65 +197,5 @@ class Authentication extends REST_Controller {
             ], REST_Controller::HTTP_UNAUTHORIZED); // data user tidak valid
         
         } 
-    }
-
-    public function logout_get()
-    {
-        $id = $this->uri->segment(3);
-        $terminal_id = $this->uri->segment(4);
-        // set ip address
-        $ip_address = $this->input->ip_address();
-        if (!$this->input->valid_ip($ip_address)) {
-            $ip_address = null;
-        }
-        
-        if ($id != '' OR $id != null) {
-            //clear status login active true menjadi false
-            $count_clear = $this->User_model->clear_data_login($id);
-            if ($count_clear > 0) {
-                
-                $data = array(
-                    'i_user' => $id,
-                    'terminal_id' => $terminal_id,
-                    'ip_address' => $ip_address
-                );
-                
-                // clear data login & logout success
-                try{
-                    $this->User_model->insert_data_logout($data);
-                }catch(Exception $e){
-                    //respone gagl non aktifkan status login
-                    // respone success logout 
-                    $this->response([
-                        'status' => true,
-                        'i_user' => $id,
-                        'terminal_id' => $terminal_id,
-                        'message' => 'Anda telah berhasil logout tetapi status login belum dibersihkan'
-                    ], REST_Controller::HTTP_NO_CONTENT);
-                }
-                
-                // respone success logout 
-                $this->response([
-                    'status' => true,
-                    'i_user' => $id,
-                    'terminal_id' => $terminal_id,
-                    'message' => 'Anda telah berhasil logout'
-                ], REST_Controller::HTTP_OK);
-            }
-
-            // clear data login failed & logout success
-            $this->response([
-                'status' => true,
-                'i_user' => $id,
-                'terminal_id' => $terminal_id,
-                'message' => 'Anda telah berhasil logout'
-            ], REST_Controller::HTTP_OK);
-        }
-
-        $this->response([
-            'status' => true,
-            'message' => 'Bad Request'
-        ], REST_Controller::HTTP_BAD_REQUEST);
-        
     }
 }

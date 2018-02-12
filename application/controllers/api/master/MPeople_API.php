@@ -30,7 +30,7 @@ class MPeople_API extends REST_Controller {
                 
                 if (!$json) {
                     
-                    // respone failed
+                    // response failed
                     $this->response([
                         'status' => false,
                         'message' => 'Format data yang dikirim harus json array'
@@ -48,18 +48,18 @@ class MPeople_API extends REST_Controller {
 
                 }
 
-                // insert data macm.t_m_desc
+                // show data
                 if($response = $this->People_model->show($c_people, $type_people)){
 
                     if($response[0]->c_people == null){
                         // response success not found data
                         $this->response([
-                            'status' => true,
+                            'status' => false,
                             'data' => $data_post,
                             'message' => 'Data tidak ditemukan'
-                        ], REST_Controller::HTTP_NO_CONTENT);
+                        ], REST_Controller::HTTP_PARTIAL_CONTENT);
                     }else{
-                        //respone success with data
+                        //response success with data
                         $this->response([
                             'status' => true,
                             'data' => $response,
@@ -68,16 +68,16 @@ class MPeople_API extends REST_Controller {
                     }
                     
                 }else{
-                    // respone failed
+                    // response failed
                     $this->response([
                         'status' => false,
                         'data' => $data_post,
                         'message' => 'Data tidak ditemukan'
-                    ], REST_Controller::HTTP_NO_CONTENT);
+                    ], REST_Controller::HTTP_PARTIAL_CONTENT);
                 }
                  
             }else{
-                // respone unauthorized karena token invalid
+                // response unauthorized karena token invalid
                 $this->response([
                     'status' => false,
                     'message' => 'Token invalid'
@@ -85,7 +85,7 @@ class MPeople_API extends REST_Controller {
             }
             
         }else{
-            // respone unauthorized karena token invalid
+            // response unauthorized karena token invalid
             $this->response([
                 'status' => false,
                 'message' => 'Token invalid'

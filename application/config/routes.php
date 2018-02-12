@@ -15,7 +15,8 @@ $route['logout']                = 'User_Authentication/logout';
 // MY API Routes
 // login & logout
 $route['api/user_auth/login']['POST']           = 'api/Authentication/login'; //login
-$route['api/logout/(:num)/(:any)']['GET']       = 'api/Authentication/logout'; // logout aplikasi front end
+// $route['api/logout/(:num)/(:any)']['GET']       = 'api/Authentication/logout'; // logout aplikasi front end
+$route['api/logout']['GET']       = 'api/transaction/TLog_Logout_API/logout'; // logout aplikasi front end
 // tacm.t_d_find_card
 $route['api/find_card']['POST']               = 'api/master/MCard_API/find'; // find card
 // tacm.t_d_find_people
