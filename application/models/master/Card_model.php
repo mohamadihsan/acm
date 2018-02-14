@@ -11,6 +11,13 @@ class Card_model extends CI_Model {
         return $result;
     }
 
+    public function show_all()
+    {
+        $result = $this->db->query("SELECT * FROM macm.sp_getcard()")->result();
+        
+        return $result;
+    }
+
 }
 
 /* End of file Card_model.php */

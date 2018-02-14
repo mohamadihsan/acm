@@ -101,6 +101,60 @@ class MCard_API extends REST_Controller {
         }
     }
 
+    public function show_all_get()
+    {
+        // request header authorization
+        $token = $this->input->get_request_header('Authorization');
+        // jika ada header token
+        if($token){
+            
+            //cek validasi token
+            if($this->token_validation->check($token)){
+                
+                // show data
+                if($response = $this->Card_model->show_all()){
+
+                    if($response[0]->c_card == null){
+                        // response success not found data
+                        $this->response([
+                            'status' => false,
+                            'data' => $data_post,
+                            'message' => 'Data tidak ditemukan'
+                        ], REST_Controller::HTTP_PARTIAL_CONTENT);
+                    }else{
+                        //response success with data
+                        $this->response([
+                            'status' => true,
+                            'data' => $response,
+                            'message' => 'Data ditemukan'
+                        ], REST_Controller::HTTP_OK);
+                    }
+                }else{
+                    // response failed
+                    $this->response([
+                        'status' => false,
+                        'data' => $data_post,
+                        'message' => 'Data tidak ditemukan'
+                    ], REST_Controller::HTTP_PARTIAL_CONTENT);
+                }
+                 
+            }else{
+                // response unauthorized karena token invalid
+                $this->response([
+                    'status' => false,
+                    'message' => 'Token invalid'
+                ], REST_Controller::HTTP_UNAUTHORIZED);
+            }
+            
+        }else{
+            // response unauthorized karena token invalid
+            $this->response([
+                'status' => false,
+                'message' => 'Token invalid'
+            ], REST_Controller::HTTP_UNAUTHORIZED);
+        }
+    }
+
 }
 
 

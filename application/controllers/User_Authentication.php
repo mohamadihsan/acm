@@ -29,6 +29,7 @@ class User_Authentication extends CI_Controller {
             if($this->token_validation->check($token)){
                 
                 //token masih berlaku
+                $this->load->template('dashboard/v_dashboard');
                 
             }else{
                 //token expired
@@ -38,7 +39,7 @@ class User_Authentication extends CI_Controller {
             }
         }else{
             // load from login
-            $this->load->template('login/v_form_login');
+            $this->load->view('login/v_form_login');
         }
     }
 
@@ -67,17 +68,18 @@ class User_Authentication extends CI_Controller {
                 
                 // set flash data
                 $this->session->set_flashdata('hasil','Insert Data Berhasil');
-                redirect(base_url().'home');
             }else{
                 // data login salah
                 //set flash data
                 $this->session->set_flashdata('hasil','Insert Data Gagal');
-                redirect(base_url());
             }
+            
+            //redirect
+            redirect(site_url());
 
         }else{
             // request method tidak sesuai
-            redirect(base_url());
+            redirect(site_url());
         }
     }
 
@@ -118,20 +120,20 @@ class User_Authentication extends CI_Controller {
                     $this->User_model->insert_data_logout($data);
                 }catch(Exception $e){
                     // gagal menyimpan data logout
-                    redirect(base_url());
+                    redirect(site_url());
                 }
                 
                 // session telah berhasil di bersihkan
-                redirect(base_url());
+                redirect(site_url());
                 
             }else{
                 // gagal unset session token
-                redirect(base_url());
+                redirect(site_url());
             }
 
         }else{
             // token tidak valid atau tidak ada session token
-            redirect(base_url());
+            redirect(site_url());
         }
     }
 }

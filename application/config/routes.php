@@ -9,6 +9,19 @@ $route['translate_uri_dashes']  = TRUE;
 $route['login']                 = 'User_Authentication';
 $route['verify']['POST']        = 'User_Authentication/verify';
 
+// Menu
+$route['dashboard']             = 'Dashboard';
+$route['card']                  = 'Card_Management';
+$route['card']                  = 'Card_Management';
+$route['people/employee']       = 'People_Management/show_employee';
+$route['people/non_employee']   = 'People_Management/show_non_employee';
+$route['people/tenant']         = 'People_Management/show_tenant';
+$route['people/add_employee']   = 'People_Management/form_add_employee';
+$route['people/add_non_employee']  = 'People_Management/form_add_non_employee';
+$route['people/add_tenant']        = 'People_Management/form_add_employee';
+$route['Report']                = 'Report';
+$route['user']                  = 'User_Management';
+
 // logout web
 $route['logout']                = 'User_Authentication/logout';
 
@@ -18,7 +31,8 @@ $route['api/user_auth/login']['POST']           = 'api/Authentication/login'; //
 // $route['api/logout/(:num)/(:any)']['GET']       = 'api/Authentication/logout'; // logout aplikasi front end
 $route['api/logout']['GET']       = 'api/transaction/TLog_Logout_API/logout'; // logout aplikasi front end
 // tacm.t_d_find_card
-$route['api/find_card']['POST']               = 'api/master/MCard_API/find'; // find card
+$route['api/find_card']['POST']                 = 'api/master/MCard_API/find'; // find card
+$route['api/show_card']['GET']                  = 'api/master/MCard_API/show_all'; // show all card
 // tacm.t_d_find_people
 $route['api/find_people']['POST']               = 'api/master/MPeople_API/find'; // find people
 // macm.t_m_desc
