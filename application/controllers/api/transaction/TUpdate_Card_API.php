@@ -23,7 +23,11 @@ class TUpdate_Card_API extends REST_Controller {
             
             //cek validasi token
             if($this->token_validation->check($token)){
-                
+                                
+                // extract token
+                $data_token = $this->token_validation->extract($token);
+                $i_user = $data_token['i_user'];
+
                 $json = json_decode(file_get_contents('php://input'), true);
                 // cara mendeklarasikannya
                 // echo $data['n_desc'];
@@ -38,33 +42,65 @@ class TUpdate_Card_API extends REST_Controller {
 
                 }else{
 
+                    $uid           = $json['uid'];
+                    $c_card        = $json['c_card'];
+                    $i_card_type   = $json['i_card_type'];
+                    $c_people      = $json['c_people'];
+
                     // action untuk data post format json
                     $data_post = array(
-                        'uid'           => $json['uid'],
-                        'c_card'        => $json['c_card'],
-                        'i_card_type'   => $json['i_card_type'],
-                        'c_people'      => $json['c_people'],
-                        'i_user'        => $json['i_user']
+                        'uid'           => $uid,
+                        'c_card'        => $c_card,
+                        'i_card_type'   => $i_card_type,
+                        'c_people'      => $c_people,
+                        'i_user'        => $i_user
                     );
 
                 }
 
                 // insert data macm.t_m_desc
-                if($this->Update_Card_model->insert($data_post)){
-                    //respone success
-                    $this->response([
-                        'status' => true,
-                        'data' => $data_post,
-                        'message' => 'Update Kartu berhasil'
-                    ], REST_Controller::HTTP_OK);
+                if($response = $this->Update_Card_model->insert($uid, $c_card, $i_card_type, $c_people, $i_user)){
+                
+                    if($response[0]->c_desc == 'NR'){
+                        // sekarang bukan jadwal perpanjangan
+                        $this->response([
+                            'status' => false,
+                            'data' => $data_post,
+                            'message' => 'Saat ini bukan Jadwal Perpanjangan'
+                        ], REST_Controller::HTTP_NOT_ACCEPTABLE);
+                    }else{
+                        // sekarang dalam masa jadwal perpanjangan
+                        if($response[0]->c_status == 'f'){
+                            // response success not found data
+                            $this->response([
+                                'status' => false,
+                                'data' => $response,
+                                'message' => 'Proses Perpanjangan Kartu Gagal'
+                            ], REST_Controller::HTTP_NOT_ACCEPTABLE);
+                        }else if($response[0]->c_status == 't'){
+                            //respone success
+                            $this->response([
+                                'status' => true,
+                                'data' => $response,
+                                'message' => 'Proses Perpanjangan Kartu berhasil'
+                            ], REST_Controller::HTTP_OK);
+                        }else{
+                            // respone failed
+                            $this->response([
+                                'status' => false,
+                                'data' => $data_post,
+                                'message' => 'Data Kartu atau Pemilik Kartu tidak terdaftar'
+                            ], REST_Controller::HTTP_NOT_ACCEPTABLE);
+                        }
+                    }
 
                 }else{
                     // respone failed
                     $this->response([
                         'status' => false,
                         'data' => $data_post,
-                        'message' => 'Update Kartu gagal'
-                    ], REST_Controller::HTTP_NOT_MODIFIED);
+                        'message' => 'Proses Perpanjangan Kartu gagal'
+                    ], REST_Controller::HTTP_NOT_ACCEPTABLE);
                 }
                  
             }else{

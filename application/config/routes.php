@@ -53,7 +53,8 @@ $route['api/deletion']['POST']                  = 'api/transaction/TDeletion_Car
 
 
 // cek token jwt
-$route['api/check_token'] = 'api/authentication/check_token'; 
+$route['api/check_token'] = 'api/authentication/check'; 
+$route['api/extract_token'] = 'api/authentication/extract'; 
 
 
 /*

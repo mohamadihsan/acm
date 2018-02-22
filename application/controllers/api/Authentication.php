@@ -116,13 +116,12 @@ class Authentication extends REST_Controller {
                         // JWT
                         $payload['i_user']          =   $i_user_from_db;
                         $payload['i_group_access']  =   $i_group_access;
-                        $payload['d_insert']        =   $iat;
                         $payload['expired']         =   $expired;
                         $payload['terminal_id']     =   $terminal_id;
                         $payload['c_login']         =   $c_login;
 
                         $output['id_token']     =   JWT::encode($payload, $this->secret);
-                        $output['i_user']       =   $i_user_from_db;
+                        // $output['i_user']       =   $i_user_from_db;
 
                         // data login success
                         $data_login_success = array(
@@ -144,6 +143,9 @@ class Authentication extends REST_Controller {
                         }
 
                         // data log login success
+                        // $response = $this->db->query("SELECT * FROM macm.sp_get_timeserver()")->result();
+                        // $e_code = $response[0]->time_server;
+
                         $data_login = array(
                             'e_code'            => date('YmdHis'),
                             'username'          => $username,

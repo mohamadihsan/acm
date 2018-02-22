@@ -16,10 +16,13 @@ class Token_Validation {
             // retrieve tanggal expired dari token
             $token_expired = $decode->expired;
             
+            $CI =& get_instance();
+            
             // get time server
-            // $response = $this->db->query("SELECT * FROM macm.sp_get_timeserver()")->result();
-            // $time_server = $response[0]->time_server;
-            $time_server = date('Y-m-d H:i:s');
+            $CI->load->database();
+            $response = $CI->db->query("SELECT * FROM macm.sp_get_timeserver()")->result();
+            $time_server = $response[0]->time_server;
+            // $time_server = date('Y-m-d H:i:s');
 
             // cek apakah token masih berlaku atau sudah expired
             if ($token_expired < $time_server) {
@@ -50,7 +53,13 @@ class Token_Validation {
             $token_expired = $decode->expired;
             
             // get time server
-            $time_server = date('Y-m-d H:i:s');
+            $CI =& get_instance();
+            
+            // get time server
+            $CI->load->database();
+            $response = $CI->db->query("SELECT * FROM macm.sp_get_timeserver()")->result();
+            $time_server = $response[0]->time_server;
+            // $time_server = date('Y-m-d H:i:s');
 
             // cek apakah token masih berlaku atau sudah expired
             if ($token_expired < $time_server) {
@@ -72,11 +81,10 @@ class Token_Validation {
                     'i_user' => $decode->i_user,
                     'c_login' => $decode->c_login,
                     'terminal_id' => $decode->terminal_id,
-                    'd_insert' => $decode->d_insert,
                     'expired' => $decode->expired 
                 );
 
-                return json_encode($data);
+                return $data;
             }
             
         }catch(Exception $e){
@@ -101,7 +109,6 @@ class Token_Validation {
     {
         return $this->extract_token($token);
     }
-
 }
 
 /* End of file Token_Validation.php */

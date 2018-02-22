@@ -19,10 +19,13 @@ class TRegistration_API extends REST_Controller {
         // request header authorization
         $token = $this->input->get_request_header('Authorization');
         // jika ada header token
-        if($token){
-            
+        if($token){        
             //cek validasi token
             if($this->token_validation->check($token)){
+ 
+                // extract token
+                $data_token = $this->token_validation->extract($token);
+                $i_user = $data_token['i_user'];
                 
                 $json = json_decode(file_get_contents('php://input'), true);
                 // cara mendeklarasikannya
@@ -43,7 +46,6 @@ class TRegistration_API extends REST_Controller {
                     $i_card_type   = $json['i_card_type'];
                     $c_people      = $json['c_people'];
                     $n_company     = $json['n_company'];
-                    $i_user        = $json['i_user'];
 
                     // action untuk data post format json
                     $data_post = array(
