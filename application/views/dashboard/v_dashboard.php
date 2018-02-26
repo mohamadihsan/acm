@@ -1,80 +1,87 @@
-<main class="main-content bgc-grey-100">
-    <div id="mainContent">
-        <div class="row gap-20 masonry pos-r">
-            <div class="masonry-sizer col-md-6"></div>
-                <div class="masonry-item w-100">
-                    <div class="row gap-20">
-                        <div class="col-md-3">
-                            <div class="layers bd bgc-white p-20">
-                                <div class="layer w-100 mB-10">
-                                    <h6 class="lh-1">Registered Card</h6>
-                                </div>
-                                <div class="layer w-100">
-                                    <div class="peers ai-sb fxw-nw">
-                                        <div class="peer peer-greed">
-                                            <span id="sparklinedash"></span>
-                                        </div>
-                                        <div class="peer">
-                                            <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+10%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="layers bd bgc-white p-20">
-                                <div class="layer w-100 mB-10">
-                                    <h6 class="lh-1">Card Blocked</h6>
-                                </div>
-                                <div class="layer w-100">
-                                    <div class="peers ai-sb fxw-nw">
-                                        <div class="peer peer-greed">
-                                            <span id="sparklinedash2"></span>
-                                        </div>
-                                        <div class="peer">
-                                            <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="layers bd bgc-white p-20">
-                                <div class="layer w-100 mB-10">
-                                    <h6 class="lh-1">Card Replaced</h6>
-                                </div>
-                                <div class="layer w-100">
-                                    <div class="peers ai-sb fxw-nw">
-                                        <div class="peer peer-greed">
-                                            <span id="sparklinedash3"></span>
-                                        </div>
-                                        <div class="peer">
-                                            <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">~12%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="layers bd bgc-white p-20">
-                                <div class="layer w-100 mB-10">
-                                    <h6 class="lh-1">Total People</h6>
-                                </div>
-                                <div class="layer w-100">
-                                    <div class="peers ai-sb fxw-nw">
-                                        <div class="peer peer-greed">
-                                            <span id="sparklinedash4"></span>
-                                        </div>
-                                        <div class="peer">
-                                            <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">33%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<title>ACMS | <?= $title ?></title>
+
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?= site_url('dashboard') ?>">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span><?= $title ?></span>
+                </li>
+            </ul>
+            
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h1 class="page-title"> <?= $title ?>
+            <!-- <small>dashboard & statistics</small> -->
+        </h1>
+        <!-- END PAGE TITLE-->
+        <!-- END PAGE HEADER-->
+        <!-- BEGIN DASHBOARD STATS 1-->
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                    <div class="visual">
+                        <i class="fa fa-comments"></i>
                     </div>
-                </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup" data-value="1349">0</span>
+                        </div>
+                        <div class="desc"> Total Cards </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                    <div class="visual">
+                        <i class="fa fa-bar-chart-o"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup" data-value="12,5">0</span>M$ </div>
+                        <div class="desc"> Total Blacklist Card </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                    <div class="visual">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup" data-value="549">0</span>
+                        </div>
+                        <div class="desc"> Total Employees </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                    <div class="visual">
+                        <i class="fa fa-globe"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number"> +
+                            <span data-counter="counterup" data-value="89"></span>% </div>
+                        <div class="desc"> Total Non Employees </div>
+                    </div>
+                </a>
             </div>
         </div>
+        <div class="clearfix"></div>
+        <!-- END DASHBOARD STATS 1-->
+        
     </div>
-</main>
+    <!-- END CONTENT BODY -->
+</div>
+<!-- END CONTENT -->

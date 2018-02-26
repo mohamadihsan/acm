@@ -28,8 +28,9 @@ class User_Authentication extends CI_Controller {
             //cek masa berlaku token
             if($this->token_validation->check($token)){
                 
+                $data['title'] = 'Dashboard';
                 //token masih berlaku
-                $this->load->template('dashboard/v_dashboard');
+                $this->load->template('dashboard/v_dashboard', $data);
                 
             }else{
                 //token expired

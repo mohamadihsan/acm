@@ -10,6 +10,7 @@ class MY_Loader extends CI_Loader {
         return $content;
     else:
         $this->view('templates/header', $vars);
+        $this->view('templates/sidebar', $vars);
         $this->view($template_name, $vars);
         $this->view('templates/footer', $vars);
     endif;
