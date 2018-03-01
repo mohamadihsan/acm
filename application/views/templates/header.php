@@ -32,7 +32,10 @@
         <link href="<?= base_url() ?>assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
         <link href="<?= base_url() ?>assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="<?= base_url() ?>assets/apps/img/favicon.ico" /> </head>
+        <link rel="shortcut icon" href="<?= base_url() ?>assets/apps/img/favicon.ico" /> 
+    
+        <script src="<?= base_url() ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    </head>
     <!-- END HEAD -->
 
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
@@ -70,7 +73,7 @@
                             <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                             <li class="dropdown dropdown-quick-sidebar-toggler">
-                                <a href="<?= base_url() ?>api/logout" class="dropdown-toggle" title="Logout">
+                                <a href="<?= base_url() ?>logout" class="dropdown-toggle" title="Logout">
                                     <i class="icon-logout"></i>
                                 </a>
                             </li>

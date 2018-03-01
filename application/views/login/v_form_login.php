@@ -50,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic | User Login 5</title>
+        <title>ACMS | User Login </title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="" name="description" />
@@ -75,20 +75,18 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="favicon.ico" /> </head>
+        <link rel="shortcut icon" href="<?= base_url() ?>assets/apps/img/favicon.ico" />  
+    </head>
     <!-- END HEAD -->
 
     <body class=" login">
         <!-- BEGIN : LOGIN PAGE 5-1 -->
         <div class="user-login-5">
             <div class="row bs-reset">
-                <div class="col-md-6 bs-reset mt-login-5-bsfix">
-                    <div class="login-bg" style="background-image:url(<?= base_url() ?>assets/pages/img/login/bg1.jpg)">
-                        <img class="login-logo" src="<?= base_url() ?>assets/pages/img/login/logo.png" /> </div>
-                </div>
                 <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                     <div class="login-content">
-                        <h1>ACMS Admin Login</h1>
+                        <img class="login-logo login-6" src="<?= base_url() ?>assets/pages/img/login/logo_baru.png" /><br><br><br><br>
+                        <h1>ACMS Login</h1>
                         <p> Access Card Management System. </p>
                         <form action="<?= site_url('verify') ?>" class="login-form" method="post">
                             <div class="alert alert-danger display-hide">
@@ -97,7 +95,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Username" name="username" required/> </div>
+                                    <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Username" name="username" required autofocus /> </div>
                                 <div class="col-xs-6">
                                     <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" required/> </div>
                             </div>
@@ -114,7 +112,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <!-- <div class="forgot-password">
                                         <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
                                     </div> -->
-                                    <button class="btn green" name="login" type="submit">Login</button>
+                                    <button class="btn red" name="login" type="submit">Login</button>
                                 </div>
                             </div>
                         </form>
@@ -158,6 +156,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-6 bs-reset mt-login-5-bsfix">
+                    <div class="login-bg" style="background-image:url(<?= base_url() ?>assets/pages/img/login/bg1.jpg)">
+                        <!-- <img class="login-logo" src="<?= base_url() ?>assets/pages/img/login/logo_baru.png" />  -->
                     </div>
                 </div>
             </div>

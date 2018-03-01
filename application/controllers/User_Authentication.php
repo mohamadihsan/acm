@@ -86,55 +86,94 @@ class User_Authentication extends CI_Controller {
 
     public function logout()
     {
-       
+
         // get session token
         $token = $this->session->userdata('id_token');
-        
-        //cek masa berlaku token
-        if($this->token_validation->check($token)){
-            
-            // extract token 
-            $extract = $this->token_validation->extract($token);
-            $json = json_decode($extract);
-            // set variable
-            $i_user = $json->i_user;
-            $i_group_access = $json->i_group_access;
-            // set ip address
-            $ip_address = $this->input->ip_address();
-            if (!$this->input->valid_ip($ip_address)) {
-                $ip_address = null;
-            }
-            
-            // clear session
-            if(!$this->session->unset_userdata('id_token')){
-                
-                $data = array(
-                    'i_user' => $i_user,
-                    'i_group_access' => $i_group_access,
-                    'ip_address' => $ip_address
-                );
-                
-                try{
-                    // non sktifkan status login
-                    $this->User_model->clear_data_login($i_user);
-                    // insert data logout
-                    $this->User_model->insert_data_logout($data);
-                }catch(Exception $e){
-                    // gagal menyimpan data logout
-                    redirect(site_url());
-                }
-                
-                // session telah berhasil di bersihkan
-                redirect(site_url());
-                
-            }else{
-                // gagal unset session token
-                redirect(site_url());
-            }
 
+        // jika ada header token
+        if($token){
+             
+            //cek validasi token
+            if($this->token_validation->check($token)){
+                
+                // extract token 
+                $extract = $this->token_validation->extract($token);
+                
+                // set variable
+                $i_user = $extract['i_user'];
+                $c_login = $extract['c_login'];
+                $terminal_id = $extract['terminal_id'];
+                $i_group_access = $extract['i_group_access'];
+
+                $ip_address = $this->input->ip_address();
+                if (!$this->input->valid_ip($ip_address)) {
+                    $ip_address = null;
+                }
+
+                // clear session
+                if(!$this->session->unset_userdata('id_token')){
+                    
+                    $data = array(
+                        'i_user' => $i_user,
+                        'i_group_access' => $i_group_access,
+                        'ip_address' => $ip_address
+                    );
+                    
+                    try{
+                        
+                        //clear status login active true menjadi false
+                        $count_clear = $this->User_model->clear_data_login($i_user);
+                        if ($count_clear > 0) {
+                            
+                            $data = array(
+                                'i_user' => $i_user,
+                                'i_group_access' => $i_group_access,
+                                'c_login' => $c_login,
+                                'terminal_id' => $terminal_id,
+                                'ip_address' => $ip_address
+                            );
+                            
+                            // clear data login & logout success
+                            try{
+                                $this->User_model->insert_data_logout($data);
+                            }catch(Exception $e){
+                                //respone gagl non aktifkan status login
+                                redirect(site_url());
+                            }
+                            
+                            // respone success logout 
+                            redirect(site_url());
+
+                        }else{
+
+                            // clear data login failed & logout success
+                            redirect(site_url());
+                        
+                        }
+
+                    }catch(Exception $e){
+
+                        // gagal menyimpan data logout
+                        redirect(site_url());
+                    
+                    }
+                    
+                    // session telah berhasil di bersihkan
+                    redirect(site_url());
+                    
+                }else{
+
+                    // gagal unset session token / token invalid
+                    redirect(site_url());
+                
+                }
+            }    
+            
         }else{
-            // token tidak valid atau tidak ada session token
+
+            // respone unauthorized karena token invalid
             redirect(site_url());
+        
         }
     }
 }

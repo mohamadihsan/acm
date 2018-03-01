@@ -71,6 +71,7 @@ $config['csrf_exclude_uris'] = array(
     'api/logout',
     'api/register',
     'api/replacement',
+    'api/show_people',
     'api/updatecard',
     'api/tmdesc/insert',
     'api/tmdesc/update',

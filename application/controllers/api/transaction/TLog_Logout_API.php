@@ -18,6 +18,12 @@ class TLog_Logout_API extends REST_Controller {
     {
         // request header authorization
         $token = $this->input->get_request_header('Authorization');
+
+        // request from web with session token
+        if($token == null){
+            $token = $this->session->userdata('id_token');
+        }
+
         // jika ada header token
         if($token){
              
@@ -26,12 +32,19 @@ class TLog_Logout_API extends REST_Controller {
                 
                 // extract token 
                 $extract = $this->token_validation->extract($token);
-                $json = json_decode($extract);
+                
                 // set variable
-                $i_user = $json->i_user;
-                $c_login = $json->c_login;
-                $terminal_id = $json->terminal_id;
-                $i_group_access = $json->i_group_access;
+                $i_user = $extract['i_user'];
+                $c_login = $extract['c_login'];
+                $terminal_id = $extract['terminal_id'];
+                $i_group_access = $extract['i_group_access'];
+
+
+
+                // $i_user = $json->i_user;
+                // $c_login = $json->c_login;
+                // $terminal_id = $json->terminal_id;
+                // $i_group_access = $json->i_group_access;
                 // set ip address
                 $ip_address = $this->input->ip_address();
                 if (!$this->input->valid_ip($ip_address)) {

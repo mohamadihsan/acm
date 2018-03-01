@@ -35,6 +35,7 @@ $route['api/find_card']['POST']                 = 'api/master/MCard_API/find'; /
 $route['api/show_card']['GET']                  = 'api/master/MCard_API/show_all'; // show all card
 // tacm.t_d_find_people
 $route['api/find_people']['POST']               = 'api/master/MPeople_API/find'; // find people
+$route['api/show_people']['POST']               = 'api/master/MPeople_API/show_people'; // show people
 // macm.t_m_desc
 $route['api/tmdesc/store']['GET']               = 'api/master/TMDesc_API/store'; // show data desc
 $route['api/tmdesc/insert']['POST']             = 'api/master/TMDesc_API/desc_insert'; // insert data desc
