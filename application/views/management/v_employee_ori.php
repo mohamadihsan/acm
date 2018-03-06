@@ -45,28 +45,62 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <table class="table table-striped table-bordered table-hover table-header-fixed dt-responsive" id="posts">
+                        <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
                             <thead>
                                 <tr>
                                     <th> No </th>
-                                    <th> Identity Number </th>
-                                    <th> Name </th>
-                                    <th> Company </th>
+                                    <th> Nomor Induk </th>
+                                    <th> Nama Lengkap </th>
+                                    <th> Perusahaan </th>
+                                    <th> Email </th>
                                     <th> Status </th>
-                                    <th> Card Active </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php
+                                $no = 1;
+                                foreach ($data as $d) {
+                                    $c_people = $d->c_people; 
+                                    $n_people = $d->n_people; 
+                                    $n_company = $d->n_company; 
+                                    $email = $d->email;
+                                    $b_active = $d->b_active; 
+                                    ?>
+                                    <td class="text-center"><?= $no++ ?></td>
+                                    <td class="text-left"><?= $c_people ?></td>
+                                    <td class="text-left"><?= $n_people ?></td>
+                                    <td class="text-left"><?= $n_company ?></td>
+                                    <td class="text-left"><?= $email ?></td>
+                                    <td class="text-center">
+                                        <?php 
+                                            if($b_active == 't'){
+                                                ?>
+                                                <span class="label label-success"> active </span>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                <span class="label label-danger"> non active </span>
+                                                <?php
+                                            }
+                                        ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> edit</a>
+                                        <a href="" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> delete</a>    
+                                    </td>
+                                    <?php
+                                }  
+                                ?>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th> No </th>
-                                    <th> Identity Number </th>
-                                    <th> Name </th>
-                                    <th> Company </th>
+                                    <th> Nomor Induk </th>
+                                    <th> Nama Lengkap </th>
+                                    <th> Perusahaan </th>
+                                    <th> Email </th>
                                     <th> Status </th>
-                                    <th> Card Active </th>
                                     <th> Action </th>
                                 </tr>
                             </tfoot>
@@ -80,36 +114,3 @@
     <!-- END CONTENT BODY -->
 </div>
 <!-- END CONTENT -->
-
-<script>
-    $( document ).ready(function() {
-        var dataTable =  $('#posts').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order":[],
-            "language": {
-                "lengthMenu": "Show _MENU_ records per page",
-                "zeroRecords": "Data Not Found...",
-                "info": "Showing page _PAGE_ of _PAGES_",
-                "infoEmpty": "No records available",
-                "infoFiltered": "(filtered from _MAX_ total records)"
-            },
-            "ajax":{
-                "url": "<?php echo base_url() . 'people/employee/all'; ?>",
-                "type": "POST"
-            },
-            "scrollY": false,
-            "columnDefs":[
-                {
-                    "target":[0],
-                    "orderable":false
-                },
-                {
-                    "target":[2],
-                    "width": "40%"
-                }
-            ]
-
-	    });
-    });
-</script>

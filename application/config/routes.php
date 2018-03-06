@@ -14,11 +14,12 @@ $route['dashboard']             = 'Dashboard';
 $route['card']                  = 'Card_Management';
 $route['card']                  = 'Card_Management';
 $route['people/employee']       = 'People_Management/show_employee';
+$route['people/employee/all']   = 'People_Management/all_employee';
 $route['people/non_employee']   = 'People_Management/show_non_employee';
 $route['people/tenant']         = 'People_Management/show_tenant';
-$route['people/add_employee']   = 'People_Management/form_add_employee';
-$route['people/add_non_employee']  = 'People_Management/form_add_non_employee';
-$route['people/add_tenant']        = 'People_Management/form_add_employee';
+$route['people/employee/add']   = 'People_Management/form_add_employee';
+$route['people/non_employee/add']  = 'People_Management/form_add_non_employee';
+$route['people/tenant/add']        = 'People_Management/form_add_employee';
 $route['Report']                = 'Report';
 $route['user']                  = 'User_Management';
 

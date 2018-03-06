@@ -3,41 +3,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class People_Management extends CI_Controller {
 
+    function __construct(){
+        parent::__construct();
+        $this->load->model('master/People_model');
+    }
+
     public function show_employee()
     {
-        // get from API
-        $url = site_url('api/show_people');  
-
-        // set header
-        $token = $this->session->userdata('id_token');
-        $authorization = array('Authorization' => $token );
         
-        // set parameter request body
-        $param = array("type_people" => "employee");
-        
-        $request_headers = array();
-        $request_headers[] = 'Authorization: '.$token;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($param));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $transaction = curl_exec($ch);
+        $this->load->template('management/v_employee');
+    }
 
-        if (curl_errno($ch)) {
+    public function all_employee()
+    {
+        $list = $this->People_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
             
-            print "Error: ".curl_error($ch);
+            if ($field->b_active == 't') {
+                $b_active = '<span class="label label-success">active</span>';
+            }else{
+                $b_active = '<span class="label label-danger">non active</span>';
+            }
             
-        } else {
-            
-            $data = json_decode($transaction);
-
-            curl_close($ch);
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->c_people;
+            $row[] = $field->n_people;
+            $row[] = $field->n_company;
+            $row[] = $b_active;
+            $row[] = $field->card_active.' days';
+            $row[] = '  <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> edit</button>
+                        <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> delete</button>';
+ 
+            $data[] = $row;
         }
-        
-        $this->load->template('management/v_employee', $data);
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->People_model->count_all(),
+            "recordsFiltered" => $this->People_model->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
 
     public function form_add_employee()
