@@ -10,21 +10,20 @@ $route['login']                 = 'User_Authentication';
 $route['verify']['POST']        = 'User_Authentication/verify';
 
 // Menu
-$route['dashboard']             = 'Dashboard';
-$route['card']                  = 'Card_Management';
-$route['card']                  = 'Card_Management';
-$route['people/employee']       = 'People_Management/show_employee';
-$route['people/employee/all']   = 'People_Management/all_employee';
-$route['people/non_employee']   = 'People_Management/show_non_employee';
-$route['people/tenant']         = 'People_Management/show_tenant';
-$route['people/employee/add']   = 'People_Management/form_add_employee';
-$route['people/non_employee/add']  = 'People_Management/form_add_non_employee';
-$route['people/tenant/add']        = 'People_Management/form_add_employee';
-$route['Report']                = 'Report';
-$route['user']                  = 'User_Management';
+$route['dashboard']                     = 'Dashboard';
+$route['card']                          = 'Card_Management';
+$route['card']                          = 'Card_Management';
+$route['employee']               = 'People_Management/show_employee';
+$route['employee/all']           = 'People_Management/all_employee';
+$route['employee/(:num)']        = 'People_Management/ajax_edit/$1';
+$route['employee/delete/(:num)'] = 'People_Management/ajax_delete/$1';
+$route['employee/add']           = 'People_Management/ajax_add';
+$route['employee/update']        = 'People_Management/ajax_update';
+$route['Report']                        = 'Report';
+$route['user']                          = 'User_Management';
 
 // logout web
-$route['logout']                = 'User_Authentication/logout';
+$route['logout']                        = 'User_Authentication/logout';
 
 // MY API Routes
 // login & logout

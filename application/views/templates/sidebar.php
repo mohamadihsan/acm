@@ -45,17 +45,17 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="<?= site_url('people/employee') ?>" class="nav-link">
+                        <a href="<?= site_url('employee') ?>" class="nav-link">
                             <span class="title">Employee</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="<?= site_url('people/tenant') ?>" class="nav-link ">
+                        <a href="<?= site_url('tenant') ?>" class="nav-link ">
                             <span class="title">Tenant / Vendor</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="<?= site_url('people/non_employee') ?>" class="nav-link ">
+                        <a href="<?= site_url('non_employee') ?>" class="nav-link ">
                             <span class="title">Non Employee</span>
                         </a>
                     </li>

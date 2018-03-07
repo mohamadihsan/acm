@@ -1,20 +1,16 @@
-<?php
-
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class People_model extends CI_Model {
+class Company_model extends CI_Model {
 
-    var $table = 'macm.t_m_people'; //nama tabel dari database
-    var $table_2 = 'macm.t_m_company';
-    var $column_order = array(null, "c_people", "n_people", "n_company", "email", null, "b_active", "d_entry", "card_active"); //field yang ada di table user
-    var $column_search = array('c_people','n_people', 'n_company', 'email'); //field yang diizin untuk pencarian 
-    var $order = array('i_people' => 'asc'); // default order 
+    var $table = 'macm.t_m_company'; //nama tabel dari database
+    var $column_order = array(null, "c_company", "n_company", "address"); //field yang ada di table user
+    var $column_search = array('c_company','n_company', 'address'); //field yang diizin untuk pencarian 
+    var $order = array('i_company' => 'asc'); // default order 
 
-    private function _get_datatables_query($type_people)
+    private function _get_datatables_query()
     {
-        $this->db->where('type_people', $type_people);
         $this->db->from($this->table);
-        $this->db->join($this->table_2, 't_m_people.c_company = t_m_company.c_company');
  
         $i = 0;
      
@@ -50,23 +46,23 @@ class People_model extends CI_Model {
         }
     }
  
-    function get_datatables($type_people)
+    function get_datatables()
     {
-        $this->_get_datatables_query($type_people);
+        $this->_get_datatables_query();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
         return $query->result();
     }
  
-    function count_filtered($type_people)
+    function count_filtered()
     {
-        $this->_get_datatables_query($type_people);
+        $this->_get_datatables_query();
         $query = $this->db->get();
         return $query->num_rows();
     }
  
-    public function count_all($type_people)
+    public function count_all()
     {
         $this->db->from($this->table);
         return $this->db->count_all_results();
@@ -75,7 +71,7 @@ class People_model extends CI_Model {
     public function get_by_id($id)
     {
         $this->db->from($this->table);
-        $this->db->where('i_people',$id);
+        $this->db->where('i_company',$id);
         $query = $this->db->get();
  
         return $query->row();
@@ -95,26 +91,16 @@ class People_model extends CI_Model {
  
     public function delete_by_id($id)
     {
-        $this->db->where('i_people', $id);
+        $this->db->where('i_company', $id);
         $this->db->delete($this->table);
     }
 
-
-
-    public function show_all($type_people)
+    function show_data_company()
     {
-        $result = $this->db->query("SELECT * FROM macm.sp_getpeople_by_type('$type_people')")->result();
-        
-        return $result;
-    }
-
-    public function show($c_people, $type_people)
-    {
-        $result = $this->db->query("SELECT * FROM macm.sp_getpeople('$c_people', '$type_people')")->result();
-        
-        return $result;
+        $query = $this->db->get($this->table);
+        return $query->result();
     }
 
 }
 
-/* End of file People_model.php */
+/* End of file Company_model.php */

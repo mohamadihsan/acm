@@ -78,9 +78,11 @@ $config['csrf_exclude_uris'] = array(
     'api/tmdesc/delete', 
     'api/user_auth/login',
     'card',
-    'people/employee/all',
+    'employee/all',
+    'employee/add',
+    'employee/update',
+    'employee/delete',
     'logout',
-    'people',
     'report',
     'user',
     'verify'
