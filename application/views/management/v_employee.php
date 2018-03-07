@@ -207,7 +207,7 @@
                 "zeroRecords": "Data Not Found...",
                 "info": "Showing page _PAGE_ of _PAGES_",
                 "infoEmpty": "No records available",
-                "infoFiltered": "(filtered from _MAX_ total records)"
+                "infoFiltered": ""
             },
             "ajax":{
                 "url": "<?php echo base_url() . 'employee/all'; ?>",
