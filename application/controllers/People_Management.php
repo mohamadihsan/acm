@@ -10,6 +10,13 @@ class People_Management extends CI_Controller {
         $this->load->library('Token_Validation');
     }
 
+    private function extract_user($token)
+    {
+        $data_token = $this->token_validation->extract($token);
+        $i_user = $data_token['i_user'];
+        return $i_user;
+    }
+
     public function get_json($type_people)
     {
         $list = $this->People_model->get_datatables($type_people);
@@ -228,6 +235,9 @@ class People_Management extends CI_Controller {
     public function ajax_add()
     {
         $this->_validate();
+        // get user entry
+        $i_user = $this->extract_user($this->session->userdata('id_token'));
+
         $data = array(
                 'c_people' => $this->input->post('c_people'),
                 'n_people' => $this->input->post('n_people'),
@@ -236,7 +246,7 @@ class People_Management extends CI_Controller {
                 'email' => $this->input->post('email'),
                 'phone' => $this->input->post('phone'),
                 'b_active' => 't',
-                'e_entry' => null,
+                'e_entry' => $i_user,
                 'card_active' => $this->input->post('card_active'),
             );
         $insert = $this->People_model->save($data);
@@ -246,6 +256,9 @@ class People_Management extends CI_Controller {
     public function ajax_update()
     {
         $this->_validate();
+        // get user entry
+        $i_user = $this->extract_user($this->session->userdata('id_token'));
+        
         $data = array(
                 'c_people' => $this->input->post('c_people'),
                 'n_people' => $this->input->post('n_people'),
@@ -254,7 +267,7 @@ class People_Management extends CI_Controller {
                 'email' => $this->input->post('email'),
                 'phone' => $this->input->post('phone'),
                 'b_active' => 't',
-                'e_entry' => null,
+                'e_entry' => $i_user,
                 'card_active' => $this->input->post('card_active'),
             );
         $this->People_model->update(array('i_people' => $this->input->post('i_people')), $data);

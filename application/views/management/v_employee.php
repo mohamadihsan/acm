@@ -164,18 +164,35 @@
 
 <!-- MODAL IMPORT -->
 <div id="import" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
-    <div class="modal-body">
-        <i class="fa fa-upload"></i> IMPORT DATA
-    </div>
-    <div class="modal-body">
-        <p> Choice file! </p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-        <button type="button" class="btn blue">Import</button>
-    </div>
+<form action="#" id="form_import" method="POST" enctype="multipart/form-data">
+        <div class="modal-header">
+            <i class="fa fa-upload"></i> IMPORT DATA
+        </div>
+        <div class="modal-body">
+            <input type="file" name="file" id="file_excel" class="">
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
+            <button type="button" id="btnImport" onclick="import_data()" class="btn blue">Import</button>
+        </div>
+    </form>    
 </div>
 <!-- END MODAL IMPORT -->
+
+<!-- <div id="import" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
+<form action="<?= base_url().'excel/people/import' ?>"  method="POST" enctype="multipart/form-data">
+        <div class="modal-header">
+            <i class="fa fa-upload"></i> IMPORT DATA
+        </div>
+        <div class="modal-body">
+            <input type="file" name="file" id="" class="form-control" require>
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
+            <button type="submit"  class="btn blue">Import</button>
+        </div>
+    </form>    
+</div> -->
 
 <!-- MODAL EXPORT -->
 <div id="export" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
@@ -330,6 +347,51 @@
     
             }
         });
+    }
+
+    function import_data()
+    {
+        
+        var form = $(this).closest("form").get(0);
+        console.log(form);
+        $('#btnImport').text('importing...'); //change button text
+        $('#btnImport').attr('disabled',true); //set button disable 
+
+        var url = "<?php echo site_url('excel/people/import')?>";
+        
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: new FormData(form),
+            mimeType: "multipart/form-data",
+            contentType: false,
+            cache: false,
+            dataType: "html",
+            processData: false,
+            success: function(data)
+            {
+                if (data.status) {
+                    console.log("Import Success")
+                    //if success reload ajax table
+                    $('#import').modal('hide');
+                    reload_table();    
+                }else{
+                    console.log("Import Failed");
+                }
+
+                $('#btnImport').text('import'); //change button text
+                $('#btnImport').attr('disabled',false); //set button enable 
+                
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error import data');
+                $('#btnImport').text('import'); //change button text
+                $('#btnImport').attr('disabled',false); //set button enable 
+    
+            }
+        });  
     }
     
     function delete_data(id)
