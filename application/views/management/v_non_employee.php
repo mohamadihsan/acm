@@ -32,7 +32,7 @@
                         <div class="actions">
                             <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
                                 <i class="fa fa-plus"></i> 
-                                Add Employee
+                                Add Non Employee
                             </button>
                             <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#import" data-toggle="modal">
                                 <i class="fa fa-upload"></i> 

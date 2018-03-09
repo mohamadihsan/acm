@@ -21,6 +21,8 @@ $route['employee/add']              = 'People_Management/ajax_add';
 $route['employee/update']           = 'People_Management/ajax_update';
 $route['excel/people/import']       = 'Excel/upload_people';
 $route['Report']                    = 'Report';
+$route['non_employee']              = 'People_Management/show_non_employee';
+$route['tenant']                    = 'People_Management/show_tenant';
 $route['user']                      = 'User_Management';
 
 // logout web

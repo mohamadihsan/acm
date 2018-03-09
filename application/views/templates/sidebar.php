@@ -22,7 +22,7 @@
             <!-- END SIDEBAR TOGGLER BUTTON -->
             <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
             <li class="nav-item start active open">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a href="<?= site_url('dashboard') ?>" class="nav-link nav-toggle">
                     <i class="icon-home"></i>
                     <span class="title">Dashboard</span>
                     <span class="selected"></span>

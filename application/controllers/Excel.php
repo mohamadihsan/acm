@@ -23,6 +23,8 @@ class Excel extends CI_Controller {
         $i_user = $this->extract_user($this->session->userdata('id_token'));
         
         $fileName = time().$_FILES['file']['name'];
+
+        // var_dump($fileName);exit;
          
         $config['upload_path'] = './assets/data_excel/'; //buat folder dengan nama assets di root folder
         $config['file_name'] = $fileName;
@@ -70,12 +72,10 @@ class Excel extends CI_Controller {
                 //sesuaikan nama dengan nama tabel
                 $insert = $this->People_model->save($data);                  
                 delete_files($config['upload_path']);
-
-                $data['status'] = TRUE;
+               
             }                                                
         }
-
-        redirect(base_url('employee'));
+        echo json_encode(array('status'=>'success'));
     }
 }
 

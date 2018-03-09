@@ -40,113 +40,141 @@
                         <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
                             <thead>
                                 <tr>
-                                    <th> Rendering engine </th>
-                                    <th> Browser </th>
-                                    <th> Platform(s) </th>
-                                    <th> Engine version </th>
-                                    <th> CSS grade </th>
+                                    <th> Card Number </th>
+                                    <th> Type Card </th>
+                                    <th> Identity Card </th>
+                                    <th> Owner </th>
+                                    <th> Date Active </th>
+                                    <th> Status </th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th> Rendering engine </th>
-                                    <th> Browser </th>
-                                    <th> Platform(s) </th>
-                                    <th> Engine version </th>
-                                    <th> CSS grade </th>
+                                    <th> Card Number </th>
+                                    <th> Type Card </th>
+                                    <th> Identity Card </th>
+                                    <th> Owner </th>
+                                    <th> Date Active </th>
+                                    <th> Status </th>
                                 </tr>
                             </tfoot>
                             <tbody>
                                 <tr>
-                                    <td> Trident </td>
-                                    <td> Internet Explorer 4.0 </td>
-                                    <td> Win 95+ </td>
-                                    <td> 4 </td>
-                                    <td> X </td>
+                                    <td> 1001081402007552 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Eko </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Trident </td>
-                                    <td> Internet Explorer 5.0 </td>
-                                    <td> Win 95+ </td>
-                                    <td> 5 </td>
-                                    <td> C </td>
+                                    <td> 1003011501000103 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Lutfi </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Trident </td>
-                                    <td> Internet Explorer 5.5 </td>
-                                    <td> Win 95+ </td>
-                                    <td> 5.5 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007557 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Fajar </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-danger">non active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Trident </td>
-                                    <td> Internet Explorer 6 </td>
-                                    <td> Win 98+ </td>
-                                    <td> 6 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007569 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Septo </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Trident </td>
-                                    <td> Internet Explorer 7 </td>
-                                    <td> Win XP SP2+ </td>
-                                    <td> 7 </td>
-                                    <td> A </td>
+                                    <td> 0001061312000007 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Teguh </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Trident </td>
-                                    <td> AOL browser (AOL desktop) </td>
-                                    <td> Win XP </td>
-                                    <td> 6 </td>
-                                    <td> A </td>
+                                    <td> 1003031601171850 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Yuda </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Gecko </td>
-                                    <td> Firefox 1.0 </td>
-                                    <td> Win 98+ / OSX.2+ </td>
-                                    <td> 1.7 </td>
-                                    <td> A </td>
+                                    <td> 1003011501000101 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Rahmat </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Gecko </td>
-                                    <td> Firefox 1.5 </td>
-                                    <td> Win 98+ / OSX.2+ </td>
-                                    <td> 1.8 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007565 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Heri </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Gecko </td>
-                                    <td> Firefox 2.0 </td>
-                                    <td> Win 98+ / OSX.2+ </td>
-                                    <td> 1.8 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007551 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Rifqi </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Gecko </td>
-                                    <td> Firefox 3.0 </td>
-                                    <td> Win 2k+ / OSX.3+ </td>
-                                    <td> 1.9 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007560 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Ado </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Gecko </td>
-                                    <td> Camino 1.0 </td>
-                                    <td> OSX.2+ </td>
-                                    <td> 1.8 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007560 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Arief </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Gecko </td>
-                                    <td> Camino 1.5 </td>
-                                    <td> OSX.3+ </td>
-                                    <td> 1.8 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007559 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Amrizal </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> Gecko </td>
-                                    <td> Netscape 7.2 </td>
-                                    <td> Win 95+ / Mac OS 8.6-9.2 </td>
-                                    <td> 1.7 </td>
-                                    <td> A </td>
+                                    <td> 1001081402007560 </td>
+                                    <td> 1 </td>
+                                    <td>32001201940006</td>
+                                    <td> Sigit </td>
+                                    <td> 31-03-2018 </td>
+                                    <td class="text-center"> <span class="label label-success">active</span> </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>

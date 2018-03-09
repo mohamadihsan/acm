@@ -34,7 +34,7 @@
                     </div>
                     <div class="details">
                         <div class="number">
-                            <span data-counter="counterup" data-value="1349">0</span>
+                            <span data-counter="counterup" data-value="10">0</span>
                         </div>
                         <div class="desc"> Total Cards </div>
                     </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="details">
                         <div class="number">
-                            <span data-counter="counterup" data-value="12,5">0</span>M$ </div>
+                            <span data-counter="counterup" data-value="0">0</span> </div>
                         <div class="desc"> Total Blacklist Card </div>
                     </div>
                 </a>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="details">
                         <div class="number">
-                            <span data-counter="counterup" data-value="549">0</span>
+                            <span data-counter="counterup" data-value="50">0</span>
                         </div>
                         <div class="desc"> Total Employees </div>
                     </div>
@@ -71,8 +71,8 @@
                         <i class="fa fa-globe"></i>
                     </div>
                     <div class="details">
-                        <div class="number"> +
-                            <span data-counter="counterup" data-value="89"></span>% </div>
+                        <div class="number"> 
+                            <span data-counter="counterup" data-value="75"></span> </div>
                         <div class="desc"> Total Non Employees </div>
                     </div>
                 </a>
