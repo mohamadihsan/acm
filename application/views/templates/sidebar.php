@@ -21,7 +21,7 @@
             </li>
             <!-- END SIDEBAR TOGGLER BUTTON -->
             <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-            <li class="nav-item start active open">
+            <li class="nav-item start <?php if($this->uri->segment(1)=="dashboard") echo 'active open'; ?>">
                 <a href="<?= site_url('dashboard') ?>" class="nav-link nav-toggle">
                     <i class="icon-home"></i>
                     <span class="title">Dashboard</span>
@@ -31,59 +31,59 @@
             <li class="heading">
                 <h3 class="uppercase">Management</h3>
             </li>
-            <li class="nav-item  ">
+            <li class="nav-item <?php if($this->uri->segment(1)=="card") echo 'active' ?>">
                 <a href="<?= site_url('card') ?>" class="nav-link nav-toggle">
                     <i class="icon-puzzle"></i>
                     <span class="title">Card</span>
                 </a>
             </li>
-            <li class="nav-item  ">
+            <li class="nav-item <?php if($this->uri->segment(1)=="employee" OR $this->uri->segment(1)=="non_employee" OR $this->uri->segment(1)=="tenant") echo 'active open'; ?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-diamond"></i>
                     <span class="title">Card Owner</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="nav-item  ">
+                    <li class="nav-item <?php if($this->uri->segment(1)=="employee") echo 'active' ?>">
                         <a href="<?= site_url('employee') ?>" class="nav-link">
                             <span class="title">Employee</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
+                    <li class="nav-item <?php if($this->uri->segment(1)=="tenant") echo 'active' ?>">
                         <a href="<?= site_url('tenant') ?>" class="nav-link ">
                             <span class="title">Tenant / Vendor</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
+                    <li class="nav-item <?php if($this->uri->segment(1)=="non_employee") echo 'active' ?>">
                         <a href="<?= site_url('non_employee') ?>" class="nav-link ">
                             <span class="title">Non Employee</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item  ">
+            <li class="nav-item <?php if($this->uri->segment(1)=="report") echo 'active open' ?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-docs"></i>
                     <span class="title">Report</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="nav-item  ">
+                    <li class="nav-item <?php if($this->uri->segment(2)=="registration") echo 'active' ?>">
                         <a href="<?= site_url('report/registration') ?>" class="nav-link">
                             <span class="title">Registration Card</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
+                    <li class="nav-item <?php if($this->uri->segment(2)=="update_card") echo 'active' ?>">
                         <a href="<?= site_url('report/update_card') ?>" class="nav-link ">
                             <span class="title">Update Card</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
+                    <li class="nav-item <?php if($this->uri->segment(2)=="replacement") echo 'active' ?>">
                         <a href="<?= site_url('report/replacement') ?>" class="nav-link ">
                             <span class="title">Replacement</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
+                    <li class="nav-item <?php if($this->uri->segment(2)=="deletion") echo 'active' ?>">
                         <a href="<?= site_url('report/deletion') ?>" class="nav-link ">
                             <span class="title">Card Deletion</span>
                         </a>

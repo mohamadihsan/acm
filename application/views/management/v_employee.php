@@ -170,6 +170,17 @@
         </div>
         <div class="modal-body">
             <input type="file" name="file" id="file_excel" class="">
+            <input type="hidden" name="type_people" id="type_people" value="employee" readonly>
+            <p>Select Company :</p>
+            <select name="c_company" id="" class="form-control">
+                <?php
+                foreach ($company as $c) {
+                    ?>
+                    <option value="<?= $c->c_company ?>"><?= $c->n_company ?></option>
+                    <?php
+                }
+                ?>
+            </select>
         </div>
         <div class="modal-footer">
             <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
@@ -210,7 +221,6 @@
 <!-- END MODAL EXPORT -->
 
 <script>
-
     var save_method; //for save method string
     var table;
 
@@ -305,11 +315,14 @@
         $('#btnSave').text('saving...'); //change button text
         $('#btnSave').attr('disabled',true); //set button disable 
         var url;
-    
+        var message;
+
         if(save_method == 'add') {
             url = "<?php echo site_url('employee/add')?>";
+            message = 'Data successfully added';
         } else {
             url = "<?php echo site_url('employee/update')?>";
+            message = 'Data successfully updated';
         }
 
         // ajax adding data to database
@@ -323,6 +336,11 @@
     
                 if(data.status) //if success close modal and reload ajax table
                 {
+                    // notif add success
+                    $(document).ready(function() {
+                        toastr.success(message, 'Success')
+                    });
+
                     $('#add_edit').modal('hide');
                     reload_table();
                 }
@@ -341,6 +359,11 @@
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
+                // notif add failed
+                $(document).ready(function() {
+                    toastr.error('Data failed to added', 'Error')
+                }); 
+
                 alert('Error adding / update data');
                 $('#btnSave').text('save'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
@@ -371,24 +394,48 @@
             success: function(data)
             {;
                 if (data.status == 'success') {
+                    
+                    $('#btnImport').text('import'); //change button text
+                    $('#btnImport').attr('disabled',false); //set button enable  
+                    
                     console.log("Import Success")
+
+                    // notif add success
+                    $(document).ready(function() {
+                        toastr.success('Data successfully added', 'Success')
+                    });
+
                     //if success reload ajax table
                     $('#import').modal('hide');
-                    reload_table();    
+                    reload_table();  
+ 
                 }else{
-                    console.log("Import Failed");
-                }
+                    
+                    $('#btnImport').text('import'); //change button text
+                    $('#btnImport').attr('disabled',false); //set button enable
 
-                $('#btnImport').text('import'); //change button text
-                $('#btnImport').attr('disabled',false); //set button enable 
+                    console.log("Import Failed");
+
+                    // notif import failed
+                    $(document).ready(function() {
+                        toastr.error('Data failed to import', 'Error')
+                    });
+
+                }
                 
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
-                console.log(data.status);
-                alert('Error import data');
                 $('#btnImport').text('import'); //change button text
                 $('#btnImport').attr('disabled',false); //set button enable 
+
+                // notif import failed
+                $(document).ready(function() {
+                    toastr.error('File not found. Data failed to import', 'Error')
+                });
+
+                console.log(data.status);
+                alert('Error import data');
     
             }
         });  
@@ -407,12 +454,22 @@
                 dataType: "JSON",
                 success: function(data)
                 {
+                    // notif delete failed
+                    $(document).ready(function() {
+                        toastr.success('Data successfully deleted')
+                    });
+
                     //if success reload ajax table
                     $('#add_edit').modal('hide');
                     reload_table();
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
+                    // notif detele failed
+                    $(document).ready(function() {
+                        toastr.error('Data failed to deleted')
+                    });
+
                     alert('Error deleting data');
                 }
             });

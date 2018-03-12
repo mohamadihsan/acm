@@ -84,7 +84,7 @@
 <!-- MODAL ADD & EDIT-->
 <div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
     <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-user"></i> EMPLOYEE</h4>
+        <h4 class="modal-title"><i class="fa fa-user"></i> NON EMPLOYEE</h4>
     </div>
     <div class="modal-body">
         <!-- BEGIN VALIDATION STATES-->
@@ -111,7 +111,7 @@
                             <span class="help-block">Enter your fullname...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="employee" readonly>
+                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="non employee" readonly>
                             <label for="form_control_1">Type</label>
                         </div>
                         <div class="form-group form-md-line-input">
@@ -170,6 +170,17 @@
         </div>
         <div class="modal-body">
             <input type="file" name="file" id="file_excel" class="">
+            <input type="hidden" name="type_people" id="type_people" value="non employee" readonly>
+            <p>Select Company :</p>
+            <select name="c_company" id="" class="form-control">
+                <?php
+                foreach ($company as $c) {
+                    ?>
+                    <option value="<?= $c->c_company ?>"><?= $c->n_company ?></option>
+                    <?php
+                }
+                ?>
+            </select>
         </div>
         <div class="modal-footer">
             <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
@@ -210,7 +221,6 @@
 <!-- END MODAL EXPORT -->
 
 <script>
-
     var save_method; //for save method string
     var table;
 
@@ -227,7 +237,7 @@
                 "infoFiltered": ""
             },
             "ajax":{
-                "url": "<?php echo base_url() . 'employee/all'; ?>",
+                "url": "<?php echo base_url() . 'non_employee/all'; ?>",
                 "type": "POST"
             },
             "columnDefs":[
@@ -261,7 +271,7 @@
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $('#add_edit').modal('show'); // show bootstrap modal
-        $('.modal-title').text('ADD EMPLOYEE'); // Set title to Bootstrap modal title
+        $('.modal-title').text('ADD NON EMPLOYEE'); // Set title to Bootstrap modal title
     }
     
     function edit_data(id)
@@ -271,7 +281,7 @@
     
         //Ajax Load data from ajax
         $.ajax({
-            url : "<?php echo site_url('employee/')?>/" + id,
+            url : "<?php echo site_url('non_employee/')?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
@@ -286,7 +296,7 @@
                 $('[name="phone"]').val(data.phone);
                 $('[name="card_active"]').val(data.card_active);
                 $('#add_edit').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('EDIT EMPLOYEE'); // Set title to Bootstrap modal title
+                $('.modal-title').text('EDIT NON EMPLOYEE'); // Set title to Bootstrap modal title
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -305,11 +315,14 @@
         $('#btnSave').text('saving...'); //change button text
         $('#btnSave').attr('disabled',true); //set button disable 
         var url;
-    
+        var message;
+
         if(save_method == 'add') {
-            url = "<?php echo site_url('employee/add')?>";
+            url = "<?php echo site_url('non_employee/add')?>";
+            message = 'Data successfully added';
         } else {
-            url = "<?php echo site_url('employee/update')?>";
+            url = "<?php echo site_url('non_employee/update')?>";
+            message = 'Data successfully updated';
         }
 
         // ajax adding data to database
@@ -323,6 +336,11 @@
     
                 if(data.status) //if success close modal and reload ajax table
                 {
+                    // notif add success
+                    $(document).ready(function() {
+                        toastr.success(message, 'Success')
+                    });
+
                     $('#add_edit').modal('hide');
                     reload_table();
                 }
@@ -341,6 +359,11 @@
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
+                // notif add failed
+                $(document).ready(function() {
+                    toastr.error('Data failed to added', 'Error')
+                }); 
+
                 alert('Error adding / update data');
                 $('#btnSave').text('save'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
@@ -371,24 +394,48 @@
             success: function(data)
             {;
                 if (data.status == 'success') {
+                    
                     console.log("Import Success")
+
+                    // notif add success
+                    $(document).ready(function() {
+                        toastr.success('Data successfully added', 'Success')
+                    });
+
                     //if success reload ajax table
                     $('#import').modal('hide');
-                    reload_table();    
-                }else{
-                    console.log("Import Failed");
-                }
+                    reload_table();  
 
-                $('#btnImport').text('import'); //change button text
-                $('#btnImport').attr('disabled',false); //set button enable 
+                    $('#btnImport').text('import'); //change button text
+                    $('#btnImport').attr('disabled',false); //set button enable 
+ 
+                }else{
+                    
+                    $('#btnImport').text('import'); //change button text
+                    $('#btnImport').attr('disabled',false); //set button enable
+
+                    console.log("Import Failed");
+
+                    // notif import failed
+                    $(document).ready(function() {
+                        toastr.error('Data failed to import', 'Error')
+                    });
+
+                }
                 
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
-                console.log(data.status);
-                alert('Error import data');
                 $('#btnImport').text('import'); //change button text
                 $('#btnImport').attr('disabled',false); //set button enable 
+
+                // notif import failed
+                $(document).ready(function() {
+                    toastr.error('File not found. Data failed to import', 'Error')
+                });
+
+                console.log(data.status);
+                alert('Error import data');
     
             }
         });  
@@ -402,17 +449,27 @@
             
             // ajax delete data to database
             $.ajax({
-                url : "<?php echo site_url('employee/delete')?>/"+id,
+                url : "<?php echo site_url('non_employee/delete')?>/"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
                 {
+                    // notif delete failed
+                    $(document).ready(function() {
+                        toastr.success('Data successfully deleted')
+                    });
+
                     //if success reload ajax table
                     $('#add_edit').modal('hide');
                     reload_table();
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
+                    // notif detele failed
+                    $(document).ready(function() {
+                        toastr.error('Data failed to deleted')
+                    });
+
                     alert('Error deleting data');
                 }
             });

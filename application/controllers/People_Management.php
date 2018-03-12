@@ -29,6 +29,12 @@ class People_Management extends CI_Controller {
             }else{
                 $b_active = '<span class="label label-danger">non active</span>';
             }
+
+            if ($field->card_active != null) {
+                $days = 'days';
+            }else{
+                $days = '-';
+            }
             
             $no++;
             $row = array();
@@ -37,7 +43,7 @@ class People_Management extends CI_Controller {
             $row[] = $field->n_people;
             $row[] = $field->n_company;
             $row[] = $b_active;
-            $row[] = $field->card_active.' days';
+            $row[] = $field->card_active.' '.$days;
             $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_people."'".')"><i class="fa fa-pencil"></i> edit</button>
                         <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_people."'".')"><i class="fa fa-trash"></i> delete</button>';
  
@@ -70,7 +76,7 @@ class People_Management extends CI_Controller {
 
     public function all_non_employee()
     {
-        $type_people = 'non_employee';
+        $type_people = 'non employee';
         // call function
         $this->get_json($type_people);
     }
@@ -123,6 +129,8 @@ class People_Management extends CI_Controller {
             redirect('logout','refresh');
             
         } 
+
+        $data['menu'] = 'dashboard';
         
         $this->load->template('management/v_employee', $data);
     }
@@ -142,6 +150,8 @@ class People_Management extends CI_Controller {
                     'subtitle'      => 'Pages',
                     'table_title'   => 'Tenant List'
                 );
+
+                $data['company'] = $this->Company_model->show_data_company();
 
             }else{
 
@@ -191,6 +201,8 @@ class People_Management extends CI_Controller {
                     'subtitle'      => 'Pages',
                     'table_title'   => 'Non Employee List'
                 );
+
+                $data['company'] = $this->Company_model->show_data_company();
 
             }else{
 
@@ -250,6 +262,7 @@ class People_Management extends CI_Controller {
                 'card_active' => $this->input->post('card_active'),
             );
         $insert = $this->People_model->save($data);
+        
         echo json_encode(array("status" => TRUE));
     }
  

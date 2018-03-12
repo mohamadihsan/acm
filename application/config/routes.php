@@ -10,20 +10,30 @@ $route['login']                 = 'User_Authentication';
 $route['verify']['POST']        = 'User_Authentication/verify';
 
 // Menu
-$route['dashboard']                 = 'Dashboard';
-$route['card']                      = 'Card_Management';
-$route['card']                      = 'Card_Management';
-$route['employee']                  = 'People_Management/show_employee';
-$route['employee/all']              = 'People_Management/all_employee';
-$route['employee/(:num)']           = 'People_Management/ajax_edit/$1';
-$route['employee/delete/(:num)']    = 'People_Management/ajax_delete/$1';
-$route['employee/add']              = 'People_Management/ajax_add';
-$route['employee/update']           = 'People_Management/ajax_update';
-$route['excel/people/import']       = 'Excel/upload_people';
-$route['Report']                    = 'Report';
-$route['non_employee']              = 'People_Management/show_non_employee';
-$route['tenant']                    = 'People_Management/show_tenant';
-$route['user']                      = 'User_Management';
+$route['dashboard']                     = 'Dashboard';
+$route['card']                          = 'Card_Management';
+$route['card']                          = 'Card_Management';
+$route['employee']                      = 'People_Management/show_employee';
+$route['employee/all']                  = 'People_Management/all_employee';
+$route['employee/(:num)']               = 'People_Management/ajax_edit/$1';
+$route['employee/delete/(:num)']        = 'People_Management/ajax_delete/$1';
+$route['employee/add']                  = 'People_Management/ajax_add';
+$route['employee/update']               = 'People_Management/ajax_update';
+$route['excel/people/import']           = 'Excel/upload_people';
+$route['Report']                        = 'Report';
+$route['non_employee']                  = 'People_Management/show_non_employee';
+$route['non_employee/all']              = 'People_Management/all_non_employee';
+$route['non_employee/(:num)']           = 'People_Management/ajax_edit/$1';
+$route['non_employee/delete/(:num)']    = 'People_Management/ajax_delete/$1';
+$route['non_employee/add']              = 'People_Management/ajax_add';
+$route['non_employee/update']           = 'People_Management/ajax_update';
+$route['tenant']                        = 'People_Management/show_tenant';
+$route['tenant/all']                    = 'People_Management/all_tenant';
+$route['tenant/(:num)']                 = 'People_Management/ajax_edit/$1';
+$route['tenant/delete/(:num)']          = 'People_Management/ajax_delete/$1';
+$route['tenant/add']                    = 'People_Management/ajax_add';
+$route['tenant/update']                 = 'People_Management/ajax_update';
+$route['user']                          = 'User_Management';
 
 // logout web
 $route['logout']                        = 'User_Authentication/logout';

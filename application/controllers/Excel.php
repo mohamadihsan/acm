@@ -23,6 +23,8 @@ class Excel extends CI_Controller {
         $i_user = $this->extract_user($this->session->userdata('id_token'));
         
         $fileName = time().$_FILES['file']['name'];
+        $type_people = $this->input->post('type_people');
+        $c_company = $this->input->post('c_company');
 
         // var_dump($fileName);exit;
          
@@ -60,10 +62,10 @@ class Excel extends CI_Controller {
                 $data = array(
                     "c_people"      => $rowData[0][0],
                     "n_people"      => $rowData[0][1],
-                    "type_people"   => 'employee',
-                    "c_company"     => $rowData[0][2],
-                    "email"         => $rowData[0][3],
-                    "phone"         => $rowData[0][4],
+                    "type_people"   => $type_people,
+                    "c_company"     => $c_company,
+                    "email"         => $rowData[0][2],
+                    "phone"         => $rowData[0][3],
                     "b_active"      => 't',
                     "e_entry"       => $i_user,
                     "card_active"   => null
