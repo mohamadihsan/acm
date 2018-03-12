@@ -84,6 +84,19 @@ class Card_model extends CI_Model {
         return $query->result();
     }
 
+    public function show($c_card, $i_card_type)
+    {
+        $result = $this->db->query("SELECT * FROM macm.sp_getcard('$c_card','$i_card_type')")->result();
+        
+        return $result;
+    }
+
+    public function show_all()
+    {
+        $result = $this->db->query("SELECT * FROM macm.sp_getcard()")->result();
+        
+        return $result;
+    }
 }
 
 /* End of file Card_model.php */

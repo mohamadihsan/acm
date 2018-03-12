@@ -62,12 +62,19 @@ class TRegistration_API extends REST_Controller {
                 // insert data macm.t_m_desc
                 if($response = $this->Registration_model->insert($uid, $c_card, $i_card_type, $c_people, $n_company, $i_user)){
                     
-                    if($response[0]->c_status == 'f'){
+                    if($response[0]->c_status == 'f' && $response[0]->c_desc == 'CE'){
                         // response success not found data
                         $this->response([
                             'status' => false,
                             'data' => $data_post,
                             'message' => 'Kartu sudah terdaftar'
+                        ], REST_Controller::HTTP_NOT_ACCEPTABLE);
+                    }else if($response[0]->c_status == 'f' && $response[0]->c_desc == 'PN'){
+                        // response success not found data
+                        $this->response([
+                            'status' => false,
+                            'data' => $data_post,
+                            'message' => 'Orang yang mengajukan belum terdaftar di dalam database'
                         ], REST_Controller::HTTP_NOT_ACCEPTABLE);
                     }else if($response[0]->c_status == 't'){
                         //respone success

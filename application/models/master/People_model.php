@@ -99,8 +99,6 @@ class People_model extends CI_Model {
         $this->db->delete($this->table);
     }
 
-
-
     public function show_all($type_people)
     {
         $result = $this->db->query("SELECT * FROM macm.sp_getpeople_by_type('$type_people')")->result();
