@@ -3,50 +3,113 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Card_Management extends CI_Controller {
 
-    public function __construct()
-    {
+    function __construct(){
         parent::__construct();
-        $this->load->library('curl');
+        $this->load->model('master/Card_model');
+        $this->load->library('Token_Validation');
     }
-    
 
-    public function index()
-    {   
-        // get from API
-        $url = site_url('api/show_card');  
+    private function extract_user($token)
+    {
+        $data_token = $this->token_validation->extract($token);
+        $i_user = $data_token['i_user'];
+        return $i_user;
+    }
 
-        // set header
-        $token = $this->session->userdata('id_token');
-        $authorization = array('Authorization' => $token );
-        
-        $request_headers = array();
-        $request_headers[] = 'Authorization: '.$token;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $transaction = curl_exec($ch);
+    public function get_json()
+    {
+        $list = $this->Card_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            
+            if ($field->b_active == 't') {
+                $b_active = '<span class="label label-success">active</span>';
+            }else{
+                $b_active = '<span class="label label-danger">non active</span>';
+            }
 
-        if (curl_errno($ch)) {
-            print "Error: ".curl_error($ch);
-        } else {
-            // Show me the result
-
-            $data = json_decode($transaction);
-            // $data['hari'] = "Senin";
-            // $data['bulan'] = "Fwbruari";
-
-            curl_close($ch);
-
-            // var_dump(json_decode($transaction));
-            // die();
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->c_card;
+            $row[] = $field->i_card_type;
+            $row[] = $field->c_people;
+            $row[] = $field->d_active_card; 
+            $row[] = $b_active;            
+            
+            $data[] = $row;
         }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Card_model->count_all(),
+            "recordsFiltered" => $this->Card_model->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
 
+    public function all()
+    {
+        // call function
+        $this->get_json();
+    }
+
+    public function show()
+    {
+        $token = $this->session->userdata('id_token');
+        
+        if($token){
+            
+            //cek validasi token
+            if($this->token_validation->check($token)){
+                
+                $data = array(  
+                    'menu'          => 'Card', 
+                    'title'         => 'Card Management', 
+                    'subtitle'      => 'Pages',
+                    'table_title'   => 'Card List'
+                );
+
+                
+                $data['card'] = $this->Card_model->show_data_card();
+
+            }else{
+
+                // token expired        
+                ?>  
+                    <script> 
+                        setTimeout(function(){
+                            alert("Token is expired. System will be logout automatically!")
+                        }, 1000);
+                    </script> 
+                <?php
+
+                redirect('logout','refresh');
+                
+            } 
+
+        }else{
+
+            // redirect logout, token not found    
+            ?>  
+                <script> 
+                    setTimeout(function(){
+                        alert("You do not have access to this page!")
+                    }, 1000);
+                </script> 
+            <?php
+
+            redirect('logout','refresh');
+            
+        } 
+
+        $data['menu'] = 'Card';
+        
         $this->load->template('management/v_card', $data);
     }
-
 }
 
 /* End of file Card_Management.php */

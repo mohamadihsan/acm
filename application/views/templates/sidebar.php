@@ -31,15 +31,21 @@
             <li class="heading">
                 <h3 class="uppercase">Management</h3>
             </li>
+            <li class="nav-item <?php if($this->uri->segment(1)=="company") echo 'active' ?>">
+                <a href="<?= site_url('company') ?>" class="nav-link nav-toggle">
+                    <i class="fa fa-building-o"></i>
+                    <span class="title">Company</span>
+                </a>
+            </li>
             <li class="nav-item <?php if($this->uri->segment(1)=="card") echo 'active' ?>">
                 <a href="<?= site_url('card') ?>" class="nav-link nav-toggle">
-                    <i class="icon-puzzle"></i>
+                    <i class="icon-credit-card"></i>
                     <span class="title">Card</span>
                 </a>
             </li>
             <li class="nav-item <?php if($this->uri->segment(1)=="employee" OR $this->uri->segment(1)=="non_employee" OR $this->uri->segment(1)=="tenant") echo 'active open'; ?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-diamond"></i>
+                    <i class="icon-users"></i>
                     <span class="title">Card Owner</span>
                     <span class="arrow"></span>
                 </a>
@@ -61,35 +67,35 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item <?php if($this->uri->segment(1)=="report") echo 'active open' ?>">
+            <li class="nav-item <?php if($this->uri->segment(1)=="trans") echo 'active open' ?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-docs"></i>
-                    <span class="title">Report</span>
+                    <span class="title">Transaction</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item <?php if($this->uri->segment(2)=="registration") echo 'active' ?>">
-                        <a href="<?= site_url('report/registration') ?>" class="nav-link">
+                        <a href="<?= site_url('trans/registration') ?>" class="nav-link">
                             <span class="title">Registration Card</span>
                         </a>
                     </li>
                     <li class="nav-item <?php if($this->uri->segment(2)=="update_card") echo 'active' ?>">
-                        <a href="<?= site_url('report/update_card') ?>" class="nav-link ">
+                        <a href="<?= site_url('trans/update_card') ?>" class="nav-link ">
                             <span class="title">Update Card</span>
                         </a>
                     </li>
                     <li class="nav-item <?php if($this->uri->segment(2)=="replacement") echo 'active' ?>">
-                        <a href="<?= site_url('report/replacement') ?>" class="nav-link ">
+                        <a href="<?= site_url('trans/replacement') ?>" class="nav-link ">
                             <span class="title">Replacement</span>
                         </a>
                     </li>
                     <li class="nav-item <?php if($this->uri->segment(2)=="deletion") echo 'active' ?>">
-                        <a href="<?= site_url('report/deletion') ?>" class="nav-link ">
+                        <a href="<?= site_url('trans/deletion') ?>" class="nav-link ">
                             <span class="title">Card Deletion</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="<?= site_url('report/card_blocked') ?>" class="nav-link ">
+                        <a href="<?= site_url('trans/card_blocked') ?>" class="nav-link ">
                             <span class="title">Card Bocked</span>
                         </a>
                     </li>

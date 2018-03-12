@@ -11,8 +11,14 @@ $route['verify']['POST']        = 'User_Authentication/verify';
 
 // Menu
 $route['dashboard']                     = 'Dashboard';
-$route['card']                          = 'Card_Management';
-$route['card']                          = 'Card_Management';
+$route['company']                       = 'Company_Management/show';
+$route['company/all']                   = 'Company_Management/all';
+$route['company/(:num)']                = 'Company_Management/ajax_edit/$1';
+$route['company/delete/(:num)']         = 'Company_Management/ajax_delete/$1';
+$route['company/add']                   = 'Company_Management/ajax_add';
+$route['company/update']                = 'Company_Management/ajax_update';
+$route['card']                          = 'Card_Management/show';
+$route['card/all']                      = 'Card_Management/all';
 $route['employee']                      = 'People_Management/show_employee';
 $route['employee/all']                  = 'People_Management/all_employee';
 $route['employee/(:num)']               = 'People_Management/ajax_edit/$1';

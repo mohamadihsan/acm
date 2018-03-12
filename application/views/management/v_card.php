@@ -11,14 +11,14 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span>Cards</span>
+                    <span><?= $menu ?></span>
                 </li>
             </ul>
         </div>
         <!-- END PAGE BAR -->
         <!-- BEGIN PAGE TITLE-->
-        <h1 class="page-title"> Card Management
-            <small>Pages</small>
+        <h1 class="page-title"> <?= $title ?>
+            <small><?= $subtitle ?></small>
         </h1>
         <!-- END PAGE TITLE-->
 
@@ -28,155 +28,38 @@
                 <div class="portlet box blue">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-credit-card"></i>Card List </div>
+                            <i class="fa fa-users"></i> <?= $table_title ?> </div>
                         <div class="actions">
-                            <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                <i class="fa fa-plus"></i> Block the Card</a>
-                            <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                <i class="fa fa-file-text-o"></i> Export </a>
+                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                            <i class="fa fa-download"></i> 
+                                Export  
+                            </button>
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
+                        <table class="table table-striped table-bordered table-hover table-header-fixed dt-responsive" id="posts">
                             <thead>
                                 <tr>
+                                    <th> No </th>
                                     <th> Card Number </th>
-                                    <th> Type Card </th>
-                                    <th> Identity Card </th>
-                                    <th> Owner </th>
-                                    <th> Date Active </th>
+                                    <th> Card Type </th>
+                                    <th> Card Owner </th>
+                                    <th> Active </th>
                                     <th> Status </th>
                                 </tr>
                             </thead>
+                            <tbody>
+                            </tbody>
                             <tfoot>
                                 <tr>
+                                    <th> No </th>
                                     <th> Card Number </th>
-                                    <th> Type Card </th>
-                                    <th> Identity Card </th>
-                                    <th> Owner </th>
-                                    <th> Date Active </th>
+                                    <th> Card Type </th>
+                                    <th> Card Owner </th>
+                                    <th> Active </th>
                                     <th> Status </th>
                                 </tr>
                             </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td> 1001081402007552 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Eko </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1003011501000103 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Lutfi </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007557 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Fajar </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-danger">non active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007569 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Septo </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 0001061312000007 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Teguh </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1003031601171850 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Yuda </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1003011501000101 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Rahmat </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007565 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Heri </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007551 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Rifqi </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007560 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Ado </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007560 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Arief </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007559 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Amrizal </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 1001081402007560 </td>
-                                    <td> 1 </td>
-                                    <td>32001201940006</td>
-                                    <td> Sigit </td>
-                                    <td> 31-03-2018 </td>
-                                    <td class="text-center"> <span class="label label-success">active</span> </td>
-                                    
-                                </tr>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -188,51 +71,68 @@
 </div>
 <!-- END CONTENT -->
 
+<!-- MODAL EXPORT -->
+<div id="export" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
+    <div class="modal-body">
+        <i class="fa fa-download"></i> EXPORT
+    </div>
+    <div class="modal-body">
+        <p> Export Data from date: </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
+        <button type="button" class="btn blue">Export</button>
+    </div>
+</div>
+<!-- END MODAL EXPORT -->
 
+<script>
+    var save_method; //for save method string
+    var table;
 
-
-<?php
-// $no = 1;
-// foreach ($data as $d) {
-    
-//     $no++ 
-//     $d->uid 
-//     $d->c_card 
-//     $d->n_card_type 
-//     $d->c_people 
-//     $d->d_active_card 
-
-// }  
-?>
-
-<!-- <script>
-    $(document).ready(function() {
-        $('#example').DataTable( {
-            
+    $( document ).ready(function() {
+        table =  $('#posts').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": {
-                "url": "<?php echo site_url('api/show_card'); ?>",
-                "type": "GET",
-                'beforeSend': function (request) {
-                    request.setRequestHeader("Authorization", 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpX3VzZXIiOiIxIiwiaV9ncm91cF9hY2Nlc3MiOiIxIiwiZF9pbnNlcnQiOiIyMDE4LTAyLTE1IDA5OjQ4OjM3IiwiZXhwaXJlZCI6IjIwMTgtMDItMTYgMDk6NDg6MzciLCJ0ZXJtaW5hbF9pZCI6IkIwMSIsImNfbG9naW4iOiIyMDE4MDIxNTA5NDgzNyJ9.Lv7eulc46QM5bUmeJVsvXwtJXBaWCdUBZ5lmLhjQGu4');
-                },
-                error: function(){  // error handling
-                    console.log('HAHAHHA');
-                    alert('Token invalid / sudah kadaluarsa, Silahkan logout terlebih dahulu');
-                    
-                }
+            "order":[],
+            "language": {
+                "lengthMenu": "Show _MENU_ records per page",
+                "zeroRecords": "Data Not Found...",
+                "info": "Showing page _PAGE_ of _PAGES_",
+                "infoEmpty": "No records available",
+                "infoFiltered": ""
             },
-            "columns": [
-                { "data": "i_card" },
-                { "data": "uid" },
-                { "data": "c_card" },
-                { "data": "n_card_type" },
-                { "data": "c_people" },
-                { "data": "d_active_card" }
+            "ajax":{
+                "url": "<?php echo base_url() . 'card/all'; ?>",
+                "type": "POST"
+            },
+            "columnDefs":[
+                {
+                    "target":[-1],
+                    "orderable":false,
+                }
             ]
-        } );
-    } );
-    
-</script> -->
 
+	    });
+
+        //set input/textarea/select event when change value, remove class error and remove text help block 
+        $("input").change(function(){
+            $(this).parent().parent().removeClass('has-error');
+            $(this).next().empty();
+        });
+        $("textarea").change(function(){
+            $(this).parent().parent().removeClass('has-error');
+            $(this).next().empty();
+        });
+        $("select").change(function(){
+            $(this).parent().parent().removeClass('has-error');
+            $(this).next().empty();
+        });
+    });
+
+    function reload_table()
+    {
+        table.ajax.reload(null,false); //reload datatable ajax 
+    }
+     
+</script>

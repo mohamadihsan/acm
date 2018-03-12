@@ -130,7 +130,7 @@ class People_Management extends CI_Controller {
             
         } 
 
-        $data['menu'] = 'dashboard';
+        $data['menu'] = 'Employee';
         
         $this->load->template('management/v_employee', $data);
     }
@@ -183,6 +183,7 @@ class People_Management extends CI_Controller {
             
         } 
         
+        $data['menu'] = 'Tenant / Vendor';
         $this->load->template('management/v_tenant', $data);
     }
 
@@ -234,6 +235,8 @@ class People_Management extends CI_Controller {
             
         } 
         
+        $data['menu'] = 'Non Employee';
+
         $this->load->template('management/v_non_employee', $data);
     }
 
