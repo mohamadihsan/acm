@@ -1,5 +1,18 @@
 <title>ACMS | <?= $title ?></title>
 
+<!-- notif login success -->
+<?php
+if ($this->session->flashdata('login_success')) {
+    ?>
+    <script>
+        $(document).ready(function() {
+            toastr.info('<?= $this->session->flashdata('login_success') ?>')
+        });
+    </script>
+    <?php
+} 
+?>
+
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->

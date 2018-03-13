@@ -49,12 +49,14 @@
                             <thead>
                                 <tr>
                                     <th> No </th>
-                                    <th> Identity Number </th>
-                                    <th> Name </th>
+                                    <th> Registration Code </th>
+                                    <th> Card Number </th>
+                                    <th> Card Type </th>
+                                    <th> Card Owner </th>
                                     <th> Company </th>
                                     <th> Status </th>
-                                    <th> Card Active </th>
-                                    <th> Action </th>
+                                    <th> Description </th>
+                                    <th> Date </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,12 +64,14 @@
                             <tfoot>
                                 <tr>
                                     <th> No </th>
-                                    <th> Identity Number </th>
-                                    <th> Name </th>
+                                    <th> Registration Code </th>
+                                    <th> Card Number </th>
+                                    <th> Card Type </th>
+                                    <th> Card Owner </th>
                                     <th> Company </th>
                                     <th> Status </th>
-                                    <th> Card Active </th>
-                                    <th> Action </th>
+                                    <th> Description </th>
+                                    <th> Date </th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -237,7 +241,7 @@
                 "infoFiltered": ""
             },
             "ajax":{
-                "url": "<?php echo base_url() . 'employee/all'; ?>",
+                "url": "<?php echo base_url() . 'trans/registration/all'; ?>",
                 "type": "POST"
             },
             "columnDefs":[

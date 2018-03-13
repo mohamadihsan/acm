@@ -395,6 +395,9 @@
             {;
                 if (data.status == 'success') {
                     
+                    $('#btnImport').text('import'); //change button text
+                    $('#btnImport').attr('disabled',false); //set button enable 
+
                     console.log("Import Success")
 
                     // notif add success
@@ -405,9 +408,6 @@
                     //if success reload ajax table
                     $('#import').modal('hide');
                     reload_table();  
-
-                    $('#btnImport').text('import'); //change button text
-                    $('#btnImport').attr('disabled',false); //set button enable 
  
                 }else{
                     

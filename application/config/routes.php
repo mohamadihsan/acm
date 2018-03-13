@@ -1,54 +1,59 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$route['default_controller']    = 'User_Authentication';
-$route['404_override']          = '';
-$route['translate_uri_dashes']  = TRUE;
+$route['default_controller']            = 'auth/User_Authentication';
+$route['404_override']                  = '';
+$route['translate_uri_dashes']          = TRUE;
 
 // authentication 
-$route['login']                 = 'User_Authentication';
-$route['verify']['POST']        = 'User_Authentication/verify';
+$route['login']                         = 'auth/User_Authentication';
+$route['verify']['POST']                = 'auth/User_Authentication/verify';
 
-// Menu
-$route['dashboard']                     = 'Dashboard';
-$route['company']                       = 'Company_Management/show';
-$route['company/all']                   = 'Company_Management/all';
-$route['company/(:num)']                = 'Company_Management/ajax_edit/$1';
-$route['company/delete/(:num)']         = 'Company_Management/ajax_delete/$1';
-$route['company/add']                   = 'Company_Management/ajax_add';
-$route['company/update']                = 'Company_Management/ajax_update';
-$route['card']                          = 'Card_Management/show';
-$route['card/all']                      = 'Card_Management/all';
-$route['employee']                      = 'People_Management/show_employee';
-$route['employee/all']                  = 'People_Management/all_employee';
-$route['employee/(:num)']               = 'People_Management/ajax_edit/$1';
-$route['employee/delete/(:num)']        = 'People_Management/ajax_delete/$1';
-$route['employee/add']                  = 'People_Management/ajax_add';
-$route['employee/update']               = 'People_Management/ajax_update';
+// master
+$route['dashboard']                     = 'general/Dashboard';
+$route['company']                       = 'master/Company_Management/show';
+$route['company/all']                   = 'master/Company_Management/all';
+$route['company/(:num)']                = 'master/Company_Management/ajax_edit/$1';
+$route['company/delete/(:num)']         = 'master/Company_Management/ajax_delete/$1';
+$route['company/add']                   = 'master/Company_Management/ajax_add';
+$route['company/update']                = 'master/Company_Management/ajax_update';
+$route['card']                          = 'master/Card_Management/show';
+$route['card/all']                      = 'master/Card_Management/all';
+$route['employee']                      = 'master/People_Management/show_employee';
+$route['employee/all']                  = 'master/People_Management/all_employee';
+$route['employee/(:num)']               = 'master/People_Management/ajax_edit/$1';
+$route['employee/delete/(:num)']        = 'master/People_Management/ajax_delete/$1';
+$route['employee/add']                  = 'master/People_Management/ajax_add';
+$route['employee/update']               = 'master/People_Management/ajax_update';
+$route['non_employee']                  = 'master/People_Management/show_non_employee';
+$route['non_employee/all']              = 'master/People_Management/all_non_employee';
+$route['non_employee/(:num)']           = 'master/People_Management/ajax_edit/$1';
+$route['non_employee/delete/(:num)']    = 'master/People_Management/ajax_delete/$1';
+$route['non_employee/add']              = 'master/People_Management/ajax_add';
+$route['non_employee/update']           = 'master/People_Management/ajax_update';
+$route['tenant']                        = 'master/People_Management/show_tenant';
+$route['tenant/all']                    = 'master/People_Management/all_tenant';
+$route['tenant/(:num)']                 = 'master/People_Management/ajax_edit/$1';
+$route['tenant/delete/(:num)']          = 'master/People_Management/ajax_delete/$1';
+$route['tenant/add']                    = 'master/People_Management/ajax_add';
+$route['tenant/update']                 = 'master/People_Management/ajax_update';
+$route['user']                          = 'master/User_Management';
+
+// reporting
 $route['excel/people/import']           = 'Excel/upload_people';
-$route['Report']                        = 'Report';
-$route['non_employee']                  = 'People_Management/show_non_employee';
-$route['non_employee/all']              = 'People_Management/all_non_employee';
-$route['non_employee/(:num)']           = 'People_Management/ajax_edit/$1';
-$route['non_employee/delete/(:num)']    = 'People_Management/ajax_delete/$1';
-$route['non_employee/add']              = 'People_Management/ajax_add';
-$route['non_employee/update']           = 'People_Management/ajax_update';
-$route['tenant']                        = 'People_Management/show_tenant';
-$route['tenant/all']                    = 'People_Management/all_tenant';
-$route['tenant/(:num)']                 = 'People_Management/ajax_edit/$1';
-$route['tenant/delete/(:num)']          = 'People_Management/ajax_delete/$1';
-$route['tenant/add']                    = 'People_Management/ajax_add';
-$route['tenant/update']                 = 'People_Management/ajax_update';
-$route['user']                          = 'User_Management';
+
+// transaction
+$route['trans/registration']            = 'transaction/Registration/show';
+$route['trans/registration/all']        = 'transaction/Registration/all';
 
 // logout web
-$route['logout']                        = 'User_Authentication/logout';
+$route['logout']                        = 'auth/User_Authentication/logout';
 
 // MY API Routes
 // login & logout
 $route['api/user_auth/login']['POST']           = 'api/Authentication/login'; //login
 // $route['api/logout/(:num)/(:any)']['GET']       = 'api/Authentication/logout'; // logout aplikasi front end
-$route['api/logout']['GET']       = 'api/transaction/TLog_Logout_API/logout'; // logout aplikasi front end
+$route['api/logout']['GET']                     = 'api/transaction/TLog_Logout_API/logout'; // logout aplikasi front end
 // tacm.t_d_find_card
 $route['api/find_card']['POST']                 = 'api/master/MCard_API/find'; // find card
 $route['api/show_card']['GET']                  = 'api/master/MCard_API/show_all'; // show all card
@@ -68,8 +73,6 @@ $route['api/updatecard']['POST']                = 'api/transaction/TUpdate_Card_
 $route['api/replacement']['POST']               = 'api/transaction/TReplacement_API/replacement'; // replacement card
 // tacm.t_d_deletion_card
 $route['api/deletion']['POST']                  = 'api/transaction/TDeletion_Card_API/deletion_card'; // deletion card
-
-
 
 
 // cek token jwt

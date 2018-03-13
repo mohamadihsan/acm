@@ -36,7 +36,7 @@ class User_Authentication extends CI_Controller {
                 //token expired
                 $this->session->unset_userdata('id_token');
                 
-                redirect(base_url(),'refresh');
+                redirect(site_url('login'),'refresh');
             }
         }else{
             // load from login
@@ -68,24 +68,25 @@ class User_Authentication extends CI_Controller {
                 $this->session->set_userdata($session_data);
                 
                 // set flash data
-                $this->session->set_flashdata('hasil','Insert Data Berhasil');
+                $this->session->set_flashdata('login_success','Welcome to ACMS');
             }else{
                 // data login salah
                 //set flash data
-                $this->session->set_flashdata('hasil','Insert Data Gagal');
+                $this->session->set_flashdata('login_failed','Username & Password wrong!');
             }
             
             //redirect
-            redirect(site_url());
+            redirect(site_url('login'));
 
         }else{
             // request method tidak sesuai
-            redirect(site_url());
+            redirect(site_url('login'));
         }
     }
 
     public function logout()
     {
+        
 
         // get session token
         $token = $this->session->userdata('id_token');
@@ -138,33 +139,33 @@ class User_Authentication extends CI_Controller {
                                 $this->User_model->insert_data_logout($data);
                             }catch(Exception $e){
                                 //respone gagl non aktifkan status login
-                                redirect(site_url());
+                                redirect(site_url('login'));
                             }
                             
                             // respone success logout 
-                            redirect(site_url());
+                            redirect(site_url('login'));
 
                         }else{
 
                             // clear data login failed & logout success
-                            redirect(site_url());
+                            redirect(site_url('login'));
                         
                         }
 
                     }catch(Exception $e){
 
                         // gagal menyimpan data logout
-                        redirect(site_url());
+                        redirect(site_url('login'));
                     
                     }
                     
                     // session telah berhasil di bersihkan
-                    redirect(site_url());
+                    redirect(site_url('login'));
                     
                 }else{
 
                     // gagal unset session token / token invalid
-                    redirect(site_url());
+                    redirect(site_url('login'));
                 
                 }
             }    
@@ -172,9 +173,14 @@ class User_Authentication extends CI_Controller {
         }else{
 
             // respone unauthorized karena token invalid
-            redirect(site_url());
+            redirect(site_url('login'));
         
         }
+    }
+
+    public function register_user()
+    {
+        
     }
 }
 

@@ -28,25 +28,7 @@ $att_btn_login = array(
 ?>
 
 <!DOCTYPE html>
-<!-- 
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
-Version: 4.6
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-Renew Support: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
 <html lang="en">
-    <!--<![endif]-->
-    <!-- BEGIN HEAD -->
 
     <head>
         <meta charset="utf-8" />
@@ -63,6 +45,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="<?= base_url() ?>assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="<?= base_url() ?>assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url() ?>assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url() ?>assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
@@ -76,9 +59,24 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="<?= base_url() ?>assets/apps/img/favicon.ico" />  
+
+        <script src="<?= base_url() ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     </head>
     <!-- END HEAD -->
 
+    <!-- notif login failed -->
+    <?php
+    if ($this->session->flashdata('login_failed')) {
+        ?>
+        <script>
+            $(document).ready(function() {
+                toastr.error('<?= $this->session->flashdata('login_failed') ?>')
+            });
+        </script>
+        <?php
+    } 
+    ?>
+        
     <body class=" login">
         <!-- BEGIN : LOGIN PAGE 5-1 -->
         <div class="user-login-5">
@@ -167,11 +165,11 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END : LOGIN PAGE 5-1 -->
         <!--[if lt IE 9]>
-<script src="<?= base_url() ?>assets/global/plugins/respond.min.js"></script>
-<script src="<?= base_url() ?>assets/global/plugins/excanvas.min.js"></script> 
-<![endif]-->
+        <script src="<?= base_url() ?>assets/global/plugins/respond.min.js"></script>
+        <script src="<?= base_url() ?>assets/global/plugins/excanvas.min.js"></script> 
+        <![endif]-->
+        
         <!-- BEGIN CORE PLUGINS -->
-        <script src="<?= base_url() ?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -183,15 +181,34 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="<?= base_url() ?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/global/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+        <script src="<?= base_url() ?>assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="<?= base_url() ?>assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <script src="<?= base_url() ?>assets/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/pages/scripts/login-5.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->
+        <script>
+        toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-left",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+        }
+    </script>
+
     </body>
 
 </html>

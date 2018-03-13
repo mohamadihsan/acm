@@ -52,7 +52,12 @@
                 <ul class="sub-menu">
                     <li class="nav-item <?php if($this->uri->segment(1)=="employee") echo 'active' ?>">
                         <a href="<?= site_url('employee') ?>" class="nav-link">
-                            <span class="title">Employee</span>
+                            <span class="title">KCI Employee</span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->uri->segment(1)=="non_employee") echo 'active' ?>">
+                        <a href="<?= site_url('non_employee') ?>" class="nav-link ">
+                            <span class="title">Non KCI</span>
                         </a>
                     </li>
                     <li class="nav-item <?php if($this->uri->segment(1)=="tenant") echo 'active' ?>">
@@ -60,17 +65,12 @@
                             <span class="title">Tenant / Vendor</span>
                         </a>
                     </li>
-                    <li class="nav-item <?php if($this->uri->segment(1)=="non_employee") echo 'active' ?>">
-                        <a href="<?= site_url('non_employee') ?>" class="nav-link ">
-                            <span class="title">Non Employee</span>
-                        </a>
-                    </li>
                 </ul>
             </li>
             <li class="nav-item <?php if($this->uri->segment(1)=="trans") echo 'active open' ?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-docs"></i>
-                    <span class="title">Transaction</span>
+                    <span class="title">Report & Transaction</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">

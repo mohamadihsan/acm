@@ -89,7 +89,7 @@
                             
                     <div class="form-body">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="c_company" id="c_company" placeholder="Enter ID">
+                            <input type="text" class="form-control" name="c_company" id="c_company" placeholder="Enter Code">
                             <label for="form_control_1">Company Code
                                 <span class="required">*</span>
                             </label>
