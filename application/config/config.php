@@ -95,6 +95,7 @@ $config['csrf_exclude_uris'] = array(
     'tenant/update',
     'tenant/delete',
     'trans/registration/all',
+    'trans/registration/filter',
     'excel/people/import',
     'logout',
     'report',

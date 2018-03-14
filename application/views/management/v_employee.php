@@ -48,13 +48,15 @@
                         <table class="table table-striped table-bordered table-hover table-header-fixed dt-responsive" id="posts">
                             <thead>
                                 <tr>
-                                    <th> No </th>
-                                    <th> Identity Number </th>
+                                    <th class="all"> No </th>
+                                    <th class="all"> Identity Number </th>
                                     <th> Name </th>
                                     <th> Company </th>
-                                    <th> Status </th>
-                                    <th> Card Active </th>
-                                    <th> Action </th>
+                                    <th class="none"> Email </th>
+                                    <th class="none"> Phone </th>
+                                    <th class="min-tablet"> Status </th>
+                                    <th class="desktop"> Card Active </th>
+                                    <th class="all"> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,6 +67,8 @@
                                     <th> Identity Number </th>
                                     <th> Name </th>
                                     <th> Company </th>
+                                    <th> Email </th>
+                                    <th> Phone </th>
                                     <th> Status </th>
                                     <th> Card Active </th>
                                     <th> Action </th>

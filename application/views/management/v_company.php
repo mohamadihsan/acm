@@ -44,11 +44,11 @@
                         <table class="table table-striped table-bordered table-hover table-header-fixed dt-responsive" id="posts">
                             <thead>
                                 <tr>
-                                    <th> No </th>
-                                    <th> Company Code </th>
-                                    <th> Company Name </th>
+                                    <th class="all"> No </th>
+                                    <th class="all"> Company Code </th>
+                                    <th class="min-tablet"> Company Name </th>
                                     <th> Address </th>
-                                    <th> Action </th>
+                                    <th class="all"> Action </th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -35,6 +35,14 @@ class People_Management extends CI_Controller {
             }else{
                 $days = '-';
             }
+
+            if ($field->email == null) {
+                $field->email = '-';
+            }
+
+            if ($field->phone == null) {
+                $field->phone = '-';
+            }
             
             $no++;
             $row = array();
@@ -42,6 +50,8 @@ class People_Management extends CI_Controller {
             $row[] = $field->c_people;
             $row[] = $field->n_people;
             $row[] = $field->n_company;
+            $row[] = $field->email;
+            $row[] = $field->phone;
             $row[] = $b_active;
             $row[] = $field->card_active.' '.$days;
             $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_people."'".')"><i class="fa fa-pencil"></i> edit</button>

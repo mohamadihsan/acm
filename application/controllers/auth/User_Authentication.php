@@ -79,6 +79,7 @@ class User_Authentication extends CI_Controller {
             redirect(site_url('login'));
 
         }else{
+            $this->session->set_flashdata('login_failed','Please enter button LOGIN!');
             // request method tidak sesuai
             redirect(site_url('login'));
         }

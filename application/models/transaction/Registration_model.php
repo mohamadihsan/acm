@@ -5,12 +5,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Registration_model extends CI_Model {
 
     var $table = 'tacm.t_d_registration'; //nama tabel dari database
-    var $column_order = array(null, "c_registration", "c_card", "i_card_type", "c_people", "n_company", "c_status", "n_desc", "d_entry"); //field yang ada di table user
-    var $column_search = array('c_registration','c_card', 'i_card_type', "c_people", "n_company", "n_desc", "d_entry"); //field yang diizin untuk pencarian 
+    var $column_order = array(null, "r.c_registration", "r.c_card", "r.i_card_type", "r.c_people", "c.n_company", "r.c_status", "d.n_desc", "r.d_entry"); //field yang ada di table user
+    var $column_search = array('r.c_registration','r.c_card', "r.c_people", "c.n_company", "d.n_desc"); //field yang diizin untuk pencarian 
     var $order = array('i_registration' => 'asc'); // default order 
 
-    private function _get_datatables_query()
+    private function _get_datatables_query($param = null, $data = null)
     {
+        if($param == 'filter'){
+            $start_date = $data['start_date'];
+            $end_date   = $data['end_date'];
+            $c_status   = $data['c_status'];
+
+            if ($c_status != "") {
+                $this->db->where(array('c_status' => $c_status));
+            }
+
+            if ($start_date != null) {
+                $this->db->where(array('r.d_entry >=' => $start_date));
+            }
+
+            if ($start_date != null) {
+                $this->db->where(array('r.d_entry <=' => $end_date));
+            }
+        }
+
         $this->db->select(' r.i_registration,
                             r.c_registration,
                             r.uid,
@@ -65,9 +83,13 @@ class Registration_model extends CI_Model {
         }
     }
  
-    function get_datatables()
+    function get_datatables($param = null, $data = null)
     {
-        $this->_get_datatables_query();
+        if ($param == 'filter') {
+            $this->_get_datatables_query('filter', $data);
+        }else{
+            $this->_get_datatables_query();
+        }
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();

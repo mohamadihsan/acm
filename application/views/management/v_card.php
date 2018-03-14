@@ -40,12 +40,12 @@
                         <table class="table table-striped table-bordered table-hover table-header-fixed dt-responsive" id="posts">
                             <thead>
                                 <tr>
-                                    <th> No </th>
-                                    <th> Card Number </th>
-                                    <th> Card Type </th>
-                                    <th> Card Owner </th>
-                                    <th> Active </th>
-                                    <th> Status </th>
+                                    <th class="all"> No </th>
+                                    <th class="all"> Card Number </th>
+                                    <th class="none"> Card Type </th>
+                                    <th class="none"> Card Owner </th>
+                                    <th class="min-tablet"> Active </th>
+                                    <th class="all"> Status </th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -22,22 +22,62 @@
         </h1>
         <!-- END PAGE TITLE-->
 
+        
+
         <div class="row">
+            <div class="col-md-12 ">
+                <!-- BEGIN SAMPLE FORM PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-red-sunglo">
+                            <i class="fa fa-reorder font-red-sunglo"></i>
+                            <span class="caption-subject bold uppercase"> Filter</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form role="form">
+                            <div class="form-body">
+                                <div class="col-md-2">
+                                    <div class="form-group form-md-line-input has-info">
+                                        <label>Status Registration</label>
+                                        <select class="form-control input-sm" id="c_status">
+                                            <option value="">-- All --</option>
+                                            <option value="t">Success</option>
+                                            <option value="f">Failed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group form-md-line-input has-info">
+                                        <label>Start Date</label>
+                                        <input type="date" name="start_date" id="start_date" class="form-control input-sm" value="<?= date('Y-m-d') ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">    
+                                <div class="form-group form-md-line-input has-info">
+                                        <label>End Date</label>
+                                        <input type="date" name="end_date" id="end_date" class="form-control input-sm" value="<?= date('Y-m-d') ?>">
+                                    </div>
+                                </div>    
+                            </div>
+                            <div class="form-actions">
+                                <div class="col-md-1"> 
+                                    <button type="button" id="filter" class="btn btn-sm blue">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END SAMPLE FORM PORTLET-->
+            </div>
+
             <div class="col-md-12">
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                <div class="portlet box blue">
+                <div class="portlet box dark">
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="fa fa-users"></i> <?= $table_title ?> </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
-                                <i class="fa fa-plus"></i> 
-                                Add Employee
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#import" data-toggle="modal">
-                                <i class="fa fa-upload"></i> 
-                                    Import Data 
-                            </button>
                             <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
                             <i class="fa fa-download"></i> 
                                 Export  
@@ -48,15 +88,15 @@
                         <table class="table table-striped table-bordered table-hover table-header-fixed dt-responsive" id="posts">
                             <thead>
                                 <tr>
-                                    <th> No </th>
+                                    <th class="all"> No </th>
                                     <th> Registration Code </th>
-                                    <th> Card Number </th>
+                                    <th class="all"> Card</th>
                                     <th> Card Type </th>
-                                    <th> Card Owner </th>
-                                    <th> Company </th>
+                                    <th class="all"> Card Owner </th>
+                                    <th class="none"> Company </th>
                                     <th> Status </th>
-                                    <th> Description </th>
-                                    <th> Date </th>
+                                    <th class="none"> Description </th>
+                                    <th class="all"> Date </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,7 +105,7 @@
                                 <tr>
                                     <th> No </th>
                                     <th> Registration Code </th>
-                                    <th> Card Number </th>
+                                    <th> Card</th>
                                     <th> Card Type </th>
                                     <th> Card Owner </th>
                                     <th> Company </th>
@@ -224,260 +264,98 @@
 </div>
 <!-- END MODAL EXPORT -->
 
-<script>
-    var save_method; //for save method string
-    var table;
+<script type="text/javascript">
+    var TableDatatablesManaged = function () {
 
-    $( document ).ready(function() {
-        table =  $('#posts').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order":[],
-            "language": {
-                "lengthMenu": "Show _MENU_ records per page",
-                "zeroRecords": "Data Not Found...",
-                "info": "Showing page _PAGE_ of _PAGES_",
-                "infoEmpty": "No records available",
-                "infoFiltered": ""
-            },
-            "ajax":{
-                "url": "<?php echo base_url() . 'trans/registration/all'; ?>",
-                "type": "POST"
-            },
-            "columnDefs":[
-                {
-                    "target":[-1],
-                    "orderable":false,
+        var initTable1 = function () {
+
+            var table = $('#posts');
+
+            table.dataTable({
+                "ajax": {
+                    "url": "<?php echo base_url() . 'trans/registration/filter'; ?>",
+                    "type": "POST",
+                    "data": function (d) {
+                        d.c_status = $('#c_status').val();
+                        d.start_date = $('#start_date').val();
+                        d.end_date = $('#end_date').val();
+                    },
+                },
+                "serverSide": true,
+                // "processing": true,
+                "fnPreDrawCallback": function () {
+                    $('#posts').addClass('loading')
+                },
+                "fnDrawCallback": function () {
+                    setTimeout(function(){
+                        $('#posts').removeClass('loading')
+                    }, 1000);
+                },
+                "bStateSave": true,
+                "pageLength": 10,
+                "pagingType": "bootstrap_full_number",
+                "columnDefs": [
+                    {
+                        'orderable': false,
+                        'targets': [0]
+                    },
+                    {
+                        "searchable": false,
+                        "targets": [0]
+                    },
+                    {
+                        "className": "dt-right"
+                    }
+                ],
+                "order": [
+                    [1, "asc"]
+                ]
+            });
+
+            $('#filter').on("click", function () {
+                var data_tables = $('#posts').DataTable();
+                // var c_status = $("#c_status").val();
+                // var start_date = $("#start_date").val();
+                // var end_date = $("#end_date").val();
+    
+                // if (c_status == 't') {
+                //     btnapproval.addClass("hidden");
+                //     data_tables.column(0).visible(false);
+                // }
+                // else {
+                //     btnapproval.removeClass("hidden");
+                //     data_tables.column(0).visible(true);
+                // }
+
+                data_tables.draw();
+            });
+        }
+
+        return {
+
+            init: function () {
+                if (!jQuery().dataTable) {
+                    return;
                 }
-            ]
 
-	    });
+                initTable1();
+            }
 
-        //set input/textarea/select event when change value, remove class error and remove text help block 
-        $("input").change(function(){
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
-        $("textarea").change(function(){
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
-        $("select").change(function(){
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
+        };
+
+    }();
+
+    jQuery(document).ready(function () {
+        TableDatatablesManaged.init();
+
+        var data_tables = $('#posts').DataTable();
+
+        data_tables.column(0).visible(true);
+
+        // Fungsi chekbox
+        $('#select_all').change(function(){
+            var cells = data_tables.cells().nodes();
+            $( cells ).find(':checkbox').prop('checked', $(this).is(':checked'));
         });
     });
-
-    function add_data()
-    {
-        save_method = 'add';
-        $('#form')[0].reset(); // reset form on modals
-        $('.form-group').removeClass('has-error'); // clear error class
-        $('.help-block').empty(); // clear error string
-        $('#add_edit').modal('show'); // show bootstrap modal
-        $('.modal-title').text('ADD EMPLOYEE'); // Set title to Bootstrap modal title
-    }
-    
-    function edit_data(id)
-    {
-        save_method = 'update';
-        $('#form')[0].reset(); // reset form on modals
-    
-        //Ajax Load data from ajax
-        $.ajax({
-            url : "<?php echo site_url('employee/')?>/" + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-    
-                $('[name="i_people"]').val(data.i_people);
-                $('[name="c_people"]').val(data.c_people);
-                $('[name="n_people"]').val(data.n_people);
-                $('[name="type_people"]').val(data.type_people);
-                $('[name="c_company"]').val(data.c_company);
-                $('[name="email"]').val(data.email);
-                $('[name="phone"]').val(data.phone);
-                $('[name="card_active"]').val(data.card_active);
-                $('#add_edit').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('EDIT EMPLOYEE'); // Set title to Bootstrap modal title
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error get data from ajax');
-            }
-        });
-    }
-    
-    function reload_table()
-    {
-        table.ajax.reload(null,false); //reload datatable ajax 
-    }
-    
-    function save()
-    {
-        $('#btnSave').text('saving...'); //change button text
-        $('#btnSave').attr('disabled',true); //set button disable 
-        var url;
-        var message;
-
-        if(save_method == 'add') {
-            url = "<?php echo site_url('employee/add')?>";
-            message = 'Data successfully added';
-        } else {
-            url = "<?php echo site_url('employee/update')?>";
-            message = 'Data successfully updated';
-        }
-
-        // ajax adding data to database
-        $.ajax({
-            url : url,
-            type: "POST",
-            data: $('#form').serialize(),
-            dataType: "JSON",
-            success: function(data)
-            {
-    
-                if(data.status) //if success close modal and reload ajax table
-                {
-                    // notif add success
-                    $(document).ready(function() {
-                        toastr.success(message, 'Success')
-                    });
-
-                    $('#add_edit').modal('hide');
-                    reload_table();
-                }
-                else
-                {
-                    for (var i = 0; i < data.inputerror.length; i++) 
-                    {
-                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
-                    }
-                }
-                $('#btnSave').text('save'); //change button text
-                $('#btnSave').attr('disabled',false); //set button enable 
-    
-    
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                // notif add failed
-                $(document).ready(function() {
-                    toastr.error('Data failed to added', 'Error')
-                }); 
-
-                alert('Error adding / update data');
-                $('#btnSave').text('save'); //change button text
-                $('#btnSave').attr('disabled',false); //set button enable 
-    
-            }
-        });
-    }
-
-    function import_data()
-    {
-        var form = new FormData($('#form_import')[0]);
-        // var form = $(this).closest("#form_import").get(0);
-        // console.log(form);
-        $('#btnImport').text('importing...'); //change button text
-        $('#btnImport').attr('disabled',true); //set button disable 
-
-        var url = "<?php echo site_url('excel/people/import')?>";
-        
-        // ajax adding data to database
-        $.ajax({
-            url : url,
-            type: "POST",
-            data: form,
-            contentType: false,
-            cache: false,
-            dataType: "json",
-            processData: false,
-            success: function(data)
-            {;
-                if (data.status == 'success') {
-                    
-                    $('#btnImport').text('import'); //change button text
-                    $('#btnImport').attr('disabled',false); //set button enable  
-                    
-                    console.log("Import Success")
-
-                    // notif add success
-                    $(document).ready(function() {
-                        toastr.success('Data successfully added', 'Success')
-                    });
-
-                    //if success reload ajax table
-                    $('#import').modal('hide');
-                    reload_table();  
- 
-                }else{
-                    
-                    $('#btnImport').text('import'); //change button text
-                    $('#btnImport').attr('disabled',false); //set button enable
-
-                    console.log("Import Failed");
-
-                    // notif import failed
-                    $(document).ready(function() {
-                        toastr.error('Data failed to import', 'Error')
-                    });
-
-                }
-                
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                $('#btnImport').text('import'); //change button text
-                $('#btnImport').attr('disabled',false); //set button enable 
-
-                // notif import failed
-                $(document).ready(function() {
-                    toastr.error('File not found. Data failed to import', 'Error')
-                });
-
-                console.log(data.status);
-                alert('Error import data');
-    
-            }
-        });  
-    }
-    
-    function delete_data(id)
-    {
-        
-        if(confirm('Are you sure delete this data?'))
-        {
-            
-            // ajax delete data to database
-            $.ajax({
-                url : "<?php echo site_url('employee/delete')?>/"+id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    // notif delete failed
-                    $(document).ready(function() {
-                        toastr.success('Data successfully deleted')
-                    });
-
-                    //if success reload ajax table
-                    $('#add_edit').modal('hide');
-                    reload_table();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    // notif detele failed
-                    $(document).ready(function() {
-                        toastr.error('Data failed to deleted')
-                    });
-
-                    alert('Error deleting data');
-                }
-            });
-            
-        }
-    } 
-</script>
+</script>            

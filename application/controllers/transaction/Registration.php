@@ -17,9 +17,14 @@ class Registration extends CI_Controller {
         return $i_user;
     }
 
-    public function get_json()
+    public function get_json($param = null, $data = null)
     {
-        $list = $this->Registration_model->get_datatables();
+        if ($param == 'filter') {
+            $list = $this->Registration_model->get_datatables($param, $data);
+        }else{
+            $list = $this->Registration_model->get_datatables();
+        }
+
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $field) {
@@ -59,6 +64,17 @@ class Registration extends CI_Controller {
     {
         // call function
         $this->get_json();
+    }
+
+    public function filter()
+    {
+        $data = array(
+            'c_status' => $this->input->post('c_status'),
+            'start_date' => $this->input->post('start_date'),
+            'end_date' => $this->input->post('end_date')
+        );
+        // call function
+        $this->get_json('filter', $data);
     }
 
     public function show()

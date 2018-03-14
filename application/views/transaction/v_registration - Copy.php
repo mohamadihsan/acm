@@ -22,7 +22,63 @@
         </h1>
         <!-- END PAGE TITLE-->
 
+        
+
         <div class="row">
+            <div class="col-md-12 ">
+                <!-- BEGIN SAMPLE FORM PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-red-sunglo">
+                            <i class="icon-settings font-red-sunglo"></i>
+                            <span class="caption-subject bold uppercase"> Filter</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form role="form" id="filter">
+                            <div class="form-body">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label>First Date</label>
+                                        <select class="form-control">
+                                            <option>Option 1</option>
+                                            <option>Option 2</option>
+                                            <option>Option 3</option>
+                                            <option>Option 4</option>
+                                            <option>Option 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">    
+                                    <div class="form-group">
+                                        <label>End Date</label>
+                                        <select class="form-control">
+                                            <option>Option 1</option>
+                                            <option>Option 2</option>
+                                            <option>Option 3</option>
+                                            <option>Option 4</option>
+                                            <option>Option 5</option>
+                                        </select>
+                                    </div>
+                                </div>    
+                            </div>
+                            <div class="form-actions">
+                                <div class="col-md-12"> 
+                                    <button type="submit" class="btn blue">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END SAMPLE FORM PORTLET-->
+            </div>
+
             <div class="col-md-12">
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <div class="portlet box blue">
@@ -32,7 +88,7 @@
                         <div class="actions">
                             <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
                                 <i class="fa fa-plus"></i> 
-                                Add Non Employee
+                                Add Employee
                             </button>
                             <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#import" data-toggle="modal">
                                 <i class="fa fa-upload"></i> 
@@ -49,14 +105,14 @@
                             <thead>
                                 <tr>
                                     <th class="all"> No </th>
-                                    <th class="all"> Identity Number </th>
-                                    <th> Name </th>
-                                    <th> Company </th>
-                                    <th class="none"> Email </th>
-                                    <th class="none"> Phone </th>
-                                    <th class="min-tablet"> Status </th>
-                                    <th class="desktop"> Card Active </th>
-                                    <th class="all"> Action </th>
+                                    <th> Registration Code </th>
+                                    <th class="all"> Card</th>
+                                    <th> Card Type </th>
+                                    <th class="all"> Card Owner </th>
+                                    <th class="none"> Company </th>
+                                    <th> Status </th>
+                                    <th class="none"> Description </th>
+                                    <th class="all"> Date </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,14 +120,14 @@
                             <tfoot>
                                 <tr>
                                     <th> No </th>
-                                    <th> Identity Number </th>
-                                    <th> Name </th>
+                                    <th> Registration Code </th>
+                                    <th> Card</th>
+                                    <th> Card Type </th>
+                                    <th> Card Owner </th>
                                     <th> Company </th>
-                                    <th> Email </th>
-                                    <th> Phone </th>
                                     <th> Status </th>
-                                    <th> Card Active </th>
-                                    <th> Action </th>
+                                    <th> Description </th>
+                                    <th> Date </th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -88,7 +144,7 @@
 <!-- MODAL ADD & EDIT-->
 <div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
     <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-user"></i> NON EMPLOYEE</h4>
+        <h4 class="modal-title"><i class="fa fa-user"></i> EMPLOYEE</h4>
     </div>
     <div class="modal-body">
         <!-- BEGIN VALIDATION STATES-->
@@ -115,7 +171,7 @@
                             <span class="help-block">Enter your fullname...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="non employee" readonly>
+                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="employee" readonly>
                             <label for="form_control_1">Type</label>
                         </div>
                         <div class="form-group form-md-line-input">
@@ -174,7 +230,7 @@
         </div>
         <div class="modal-body">
             <input type="file" name="file" id="file_excel" class="">
-            <input type="hidden" name="type_people" id="type_people" value="non employee" readonly>
+            <input type="hidden" name="type_people" id="type_people" value="employee" readonly>
             <p>Select Company :</p>
             <select name="c_company" id="" class="form-control">
                 <?php
@@ -241,7 +297,7 @@
                 "infoFiltered": ""
             },
             "ajax":{
-                "url": "<?php echo base_url() . 'non_employee/all'; ?>",
+                "url": "<?php echo base_url() . 'trans/registration/all'; ?>",
                 "type": "POST"
             },
             "columnDefs":[
@@ -251,9 +307,29 @@
                 }
             ]
 
-	    });
+        });
 
-        //set input/textarea/select event when change value, remove class error and remove text help block 
+        $("#filter").on("submit", function(e) {
+            e.preventDefault();
+
+            $.ajax({
+
+                "data": function (d) {
+                    d.status_approval = $('#status_approval').val();
+                },
+
+                sucess: function(data){
+                    // Script dari ado ganteng
+                    var data_tables  = $('#posts').DataTable();
+                    data_tables
+                        .search( this.value )
+                        .draw();
+                }
+            })
+            
+
+
+        // set input/textarea/select event when change value, remove class error and remove text help block 
         $("input").change(function(){
             $(this).parent().parent().removeClass('has-error');
             $(this).next().empty();
@@ -268,6 +344,25 @@
         });
     });
 
+        // table =  $('#posts').DataTable({
+            
+	    // });
+
+        //set input/textarea/select event when change value, remove class error and remove text help block 
+        // $("input").change(function(){
+        //     $(this).parent().parent().removeClass('has-error');
+        //     $(this).next().empty();
+        // });
+        // $("textarea").change(function(){
+        //     $(this).parent().parent().removeClass('has-error');
+        //     $(this).next().empty();
+        // });
+        // $("select").change(function(){
+        //     $(this).parent().parent().removeClass('has-error');
+        //     $(this).next().empty();
+        // });
+    });
+
     function add_data()
     {
         save_method = 'add';
@@ -275,7 +370,7 @@
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $('#add_edit').modal('show'); // show bootstrap modal
-        $('.modal-title').text('ADD NON EMPLOYEE'); // Set title to Bootstrap modal title
+        $('.modal-title').text('ADD EMPLOYEE'); // Set title to Bootstrap modal title
     }
     
     function edit_data(id)
@@ -285,7 +380,7 @@
     
         //Ajax Load data from ajax
         $.ajax({
-            url : "<?php echo site_url('non_employee/')?>/" + id,
+            url : "<?php echo site_url('employee/')?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
@@ -300,7 +395,7 @@
                 $('[name="phone"]').val(data.phone);
                 $('[name="card_active"]').val(data.card_active);
                 $('#add_edit').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('EDIT NON EMPLOYEE'); // Set title to Bootstrap modal title
+                $('.modal-title').text('EDIT EMPLOYEE'); // Set title to Bootstrap modal title
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -322,10 +417,10 @@
         var message;
 
         if(save_method == 'add') {
-            url = "<?php echo site_url('non_employee/add')?>";
+            url = "<?php echo site_url('employee/add')?>";
             message = 'Data successfully added';
         } else {
-            url = "<?php echo site_url('non_employee/update')?>";
+            url = "<?php echo site_url('employee/update')?>";
             message = 'Data successfully updated';
         }
 
@@ -400,8 +495,8 @@
                 if (data.status == 'success') {
                     
                     $('#btnImport').text('import'); //change button text
-                    $('#btnImport').attr('disabled',false); //set button enable 
-
+                    $('#btnImport').attr('disabled',false); //set button enable  
+                    
                     console.log("Import Success")
 
                     // notif add success
@@ -453,7 +548,7 @@
             
             // ajax delete data to database
             $.ajax({
-                url : "<?php echo site_url('non_employee/delete')?>/"+id,
+                url : "<?php echo site_url('employee/delete')?>/"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
