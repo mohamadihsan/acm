@@ -46,6 +46,9 @@ $route['excel/people/import']           = 'Excel/upload_people';
 $route['trans/registration']            = 'transaction/Registration/show';
 $route['trans/registration/all']        = 'transaction/Registration/all';
 $route['trans/registration/filter']     = 'transaction/Registration/filter';
+$route['trans/update_card']            = 'transaction/Update_Card/show';
+$route['trans/update_card/all']        = 'transaction/Update_Card/all';
+$route['trans/update_card/filter']     = 'transaction/Update_Card/filter';
 
 // logout web
 $route['logout']                        = 'auth/User_Authentication/logout';

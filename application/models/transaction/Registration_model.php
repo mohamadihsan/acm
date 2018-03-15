@@ -142,9 +142,9 @@ class Registration_model extends CI_Model {
         return $query->result();
     }
 
-    public function insert($uid, $c_card, $i_card_type, $c_people, $c_card, $i_user)
+    public function insert($uid, $c_card, $i_card_type, $c_people, $c_company, $i_user)
     {
-        $result = $this->db->query("SELECT * FROM tacm.sp_registration('$uid', '$c_card', '$i_card_type', '$c_people', '$c_card', '$i_user')")->result();
+        $result = $this->db->query("SELECT * FROM tacm.sp_registration('$uid', '$c_card', '$i_card_type', '$c_people', '$c_company', '$i_user')")->result();
         
         return $result;
     }

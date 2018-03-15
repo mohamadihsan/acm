@@ -97,7 +97,7 @@
             "order":[],
             "language": {
                 "lengthMenu": "Show _MENU_ records per page",
-                "zeroRecords": "Data Not Found...",
+                "zeroRecords": "No matching records found",
                 "info": "Showing page _PAGE_ of _PAGES_",
                 "infoEmpty": "No records available",
                 "infoFiltered": ""
