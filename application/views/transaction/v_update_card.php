@@ -56,7 +56,7 @@
                                 <div class="col-md-2">    
                                 <div class="form-group form-md-line-input has-info">
                                         <label>End Date</label>
-                                        <input type="date" name="end_date" id="end_date" class="form-control input-sm" value="<?= date('Y-m-d', strtotime('+1 days', strtotime(date('Y-m-d')))) ?>">
+                                        <input type="date" name="end_date" id="end_date" class="form-control input-sm" value="<?= date('Y-m-d') ?>">
                                     </div>
                                 </div>    
                             </div>

@@ -91,7 +91,7 @@
                     </li>
                     <li class="nav-item <?php if($this->uri->segment(2)=="deletion") echo 'active' ?>">
                         <a href="<?= site_url('trans/deletion') ?>" class="nav-link ">
-                            <span class="title">Card Deletion</span>
+                            <span class="title">Deletion Card</span>
                         </a>
                     </li>
                     <li class="nav-item  ">

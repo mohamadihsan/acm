@@ -21,11 +21,11 @@ class Registration_model extends CI_Model {
             }
 
             if ($start_date != null) {
-                $this->db->where(array('r.d_entry >=' => $start_date));
+                $this->db->where(array('r.d_entry >=' => $start_date.' 00:00:00'));
             }
 
             if ($start_date != null) {
-                $this->db->where(array('r.d_entry <=' => $end_date));
+                $this->db->where(array('r.d_entry <=' => $end_date.' 23:59:59'));
             }
         }
 

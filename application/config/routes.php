@@ -43,12 +43,22 @@ $route['user']                          = 'master/User_Management';
 $route['excel/people/import']           = 'Excel/upload_people';
 
 // transaction
+$route['trans/deletion']                = 'transaction/Deletion/show';
+$route['trans/deletion/all']            = 'transaction/Deletion/all';
+$route['trans/deletion/(:num)']         = 'transaction/Deletion/ajax_edit/$1';
+$route['trans/deletion/delete/(:num)']  = 'transaction/Deletion/ajax_delete/$1';
+$route['trans/deletion/add']            = 'transaction/Deletion/ajax_add';
+$route['trans/deletion/update']         = 'transaction/Deletion/ajax_update';
+$route['trans/deletion/filter']         = 'transaction/Deletion/filter';
 $route['trans/registration']            = 'transaction/Registration/show';
 $route['trans/registration/all']        = 'transaction/Registration/all';
 $route['trans/registration/filter']     = 'transaction/Registration/filter';
-$route['trans/update_card']            = 'transaction/Update_Card/show';
-$route['trans/update_card/all']        = 'transaction/Update_Card/all';
-$route['trans/update_card/filter']     = 'transaction/Update_Card/filter';
+$route['trans/replacement']             = 'transaction/Replacement/show';
+$route['trans/replacement/all']         = 'transaction/Replacement/all';
+$route['trans/replacement/filter']      = 'transaction/Replacement/filter';
+$route['trans/update_card']             = 'transaction/Update_Card/show';
+$route['trans/update_card/all']         = 'transaction/Update_Card/all';
+$route['trans/update_card/filter']      = 'transaction/Update_Card/filter';
 
 // logout web
 $route['logout']                        = 'auth/User_Authentication/logout';

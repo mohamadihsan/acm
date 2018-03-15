@@ -42,26 +42,69 @@ class TReplacement_API extends REST_Controller {
 
                 }else{
 
+                    $uid                = $json['uid'];
+                    $c_card_before      = $json['c_card_before'];
+                    $c_card             = $json['c_card'];
+                    $i_card_type        = $json['i_card_type'];
+                    $c_people           = $json['c_people'];
+                    $c_company          = $json['c_company'];
+                    $c_physical_card    = $json['c_physical_card'];
+
                     // action untuk data post format json
                     $data_post = array(
-                        'uid'           => $json['uid'],
-                        'c_card'        => $json['c_card'],
-                        'i_card_type'   => $json['i_card_type'],
-                        'c_people'      => $json['c_people'],
-                        'n_company'     => $json['n_company'],
-                        'i_user'        => $i_user
+                        'uid'               => $uid,
+                        'c_card_before'     => $c_card_before,
+                        'c_card'            => $c_card,
+                        'i_card_type'       => $i_card_type,
+                        'c_people'          => $c_people,
+                        'c_company'         => $c_company,
+                        'c_physical_card'   => $c_physical_card,
+                        'i_user'            => $i_user
                     );
 
                 }
 
                 // insert data macm.t_m_desc
-                if($this->Replacement_model->insert($data_post)){
-                    //respone success
-                    $this->response([
-                        'status' => true,
-                        'data' => $data_post,
-                        'message' => 'Penggantian Kartu berhasil'
-                    ], REST_Controller::HTTP_ACCEPTED);
+                if($response = $this->Replacement_model->insert($uid, $c_card_before, $c_card, $i_card_type, $c_people, $c_company, $i_user, $c_physical_card)){
+                    
+                    
+                    if($response[0]->c_status == 'f' && $response[0]->c_desc == 'RF'){
+                        
+                        //respone success
+                        $this->response([
+                            'status' => true,
+                            'data' => $data_post,
+                            'message' => 'Kartu sudah terdaftar sebelumnya'
+                        ], REST_Controller::HTTP_NOT_ACCEPTABLE);
+
+                    }else if($response[0]->c_status == 'f' && $response[0]->c_desc == 'NP'){
+                        
+                        //respone success
+                        $this->response([
+                            'status' => true,
+                            'data' => $data_post,
+                            'message' => 'Kartu sebelumnya tidak cocok dengan pemegang kartu'
+                        ], REST_Controller::HTTP_NOT_ACCEPTABLE);
+
+                    }else if($response[0]->c_status == 'f' && $response[0]->c_desc == 'RS'){
+                        
+                        //respone success
+                        $this->response([
+                            'status' => true,
+                            'data' => $data_post,
+                            'message' => 'Kartu sudah tercatat dalam proses replacement'
+                        ], REST_Controller::HTTP_NOT_ACCEPTABLE);
+
+                    }else{
+
+                        //respone success process but failed replacement
+                        $this->response([
+                            'status' => true,
+                            'data' => $data_post,
+                            'message' => 'Penggantian Kartu berhasil'
+                        ], REST_Controller::HTTP_ACCEPTED);
+
+                    }
 
                 }else{
                     // respone failed

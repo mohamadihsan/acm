@@ -39,7 +39,7 @@
                             <div class="form-body">
                                 <div class="col-md-2">
                                     <div class="form-group form-md-line-input has-info">
-                                        <label>Status Registration</label>
+                                        <label>Status Replacement</label>
                                         <select class="form-control input-sm" id="c_status">
                                             <option value="">-- All --</option>
                                             <option value="t">Success</option>
@@ -89,10 +89,11 @@
                             <thead>
                                 <tr>
                                     <th class="all"> No </th>
-                                    <th> Registration Code </th>
-                                    <th class="all"> Card</th>
+                                    <th class="all"> New Card</th>
+                                    <th class="all"> Old Card</th>
                                     <th> Card Type </th>
-                                    <th class="all"> Card Owner </th>
+                                    <th class="min-tablet"> Card Owner </th>
+                                    <th class="none"> Card Condition </th>
                                     <th class="none"> Company </th>
                                     <th> Status </th>
                                     <th class="none"> Description </th>
@@ -104,10 +105,11 @@
                             <tfoot>
                                 <tr>
                                     <th> No </th>
-                                    <th> Registration Code </th>
-                                    <th> Card</th>
+                                    <th> New Card</th>
+                                    <th> Old Card</th>
                                     <th> Card Type </th>
                                     <th> Card Owner </th>
+                                    <th> Card Condition </th>
                                     <th> Company </th>
                                     <th> Status </th>
                                     <th> Description </th>
@@ -124,130 +126,6 @@
     <!-- END CONTENT BODY -->
 </div>
 <!-- END CONTENT -->
-
-<!-- MODAL ADD & EDIT-->
-<div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
-    <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-user"></i> EMPLOYEE</h4>
-    </div>
-    <div class="modal-body">
-        <!-- BEGIN VALIDATION STATES-->
-        <div class="portlet light portlet-fit portlet-form bordered">
-            <div class="portlet-body">
-                <!-- BEGIN FORM-->
-                <form action="#" id="form">
-
-                    <input type="hidden" class="form-control" name="i_people" id="i_people" required>
-                            
-                    <div class="form-body">
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="c_people" id="c_people" placeholder="Enter ID">
-                            <label for="form_control_1">Identity Number
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Enter your ID...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="n_people" id="form_control_1" placeholder="Enter your Fullname">
-                            <label for="form_control_1">Full Name
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Enter your fullname...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="employee" readonly>
-                            <label for="form_control_1">Type</label>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <select class="form-control" name="c_company">
-                                <option value="">Select</option>
-                                <?php
-                                foreach ($company as $c) {
-                                    ?>
-                                    <option value="<?= $c->c_company ?>"><?= $c->n_company ?></option>
-                                    <?php
-                                }
-                                ?>
-                            </select>
-                            <label for="form_control_1">Company
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Please Choice company...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="email" placeholder="Enter your email">
-                            <label for="form_control_1">Email
-                                <span class="required"></span>
-                            </label>
-                            <span class="help-block">Please enter your email...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="phone" placeholder="Enter phone number">
-                            <label for="form_control_1">Phone Number
-                                <span class="required"></span>
-                            </label>
-                            <span class="help-block">Please enter your phone...</span>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-12 text-right">
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-                                <button type="button" id="btnSave" onclick="save()" class="btn blue">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- END FORM-->
-            </div>
-        </div>
-        <!-- END VALIDATION STATES-->
-    </div>
-</div>
-<!-- END MODAL ADD & EDIT-->
-
-<!-- MODAL IMPORT -->
-<div id="import" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
-<form action="#" id="form_import" method="POST" enctype="multipart/form-data">
-        <div class="modal-header">
-            <i class="fa fa-upload"></i> IMPORT DATA
-        </div>
-        <div class="modal-body">
-            <input type="file" name="file" id="file_excel" class="">
-            <input type="hidden" name="type_people" id="type_people" value="employee" readonly>
-            <p>Select Company :</p>
-            <select name="c_company" id="" class="form-control">
-                <?php
-                foreach ($company as $c) {
-                    ?>
-                    <option value="<?= $c->c_company ?>"><?= $c->n_company ?></option>
-                    <?php
-                }
-                ?>
-            </select>
-        </div>
-        <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-            <button type="button" id="btnImport" onclick="import_data()" class="btn blue">Import</button>
-        </div>
-    </form>    
-</div>
-<!-- END MODAL IMPORT -->
-
-<!-- <div id="import" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
-<form action="<?= base_url().'excel/people/import' ?>"  method="POST" enctype="multipart/form-data">
-        <div class="modal-header">
-            <i class="fa fa-upload"></i> IMPORT DATA
-        </div>
-        <div class="modal-body">
-            <input type="file" name="file" id="" class="form-control" require>
-        </div>
-        <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-            <button type="submit"  class="btn blue">Import</button>
-        </div>
-    </form>    
-</div> -->
 
 <!-- MODAL EXPORT -->
 <div id="export" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
@@ -273,7 +151,7 @@
 
             table.dataTable({
                 "ajax": {
-                    "url": "<?php echo base_url() . 'trans/registration/filter'; ?>",
+                    "url": "<?php echo base_url() . 'trans/replacement/filter'; ?>",
                     "type": "POST",
                     "data": function (d) {
                         d.c_status = $('#c_status').val();
@@ -314,19 +192,6 @@
 
             $('#filter').on("click", function () {
                 var data_tables = $('#posts').DataTable();
-                // var c_status = $("#c_status").val();
-                // var start_date = $("#start_date").val();
-                // var end_date = $("#end_date").val();
-    
-                // if (c_status == 't') {
-                //     btnapproval.addClass("hidden");
-                //     data_tables.column(0).visible(false);
-                // }
-                // else {
-                //     btnapproval.removeClass("hidden");
-                //     data_tables.column(0).visible(true);
-                // }
-
                 data_tables.draw();
             });
         }

@@ -2,11 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Update_Card extends CI_Controller {
+class Replacement extends CI_Controller {
 
     function __construct(){
         parent::__construct();
-        $this->load->model('transaction/Update_Card_model');
+        $this->load->model('transaction/Replacement_model');
         $this->load->library('Token_Validation');
     }
 
@@ -20,9 +20,9 @@ class Update_Card extends CI_Controller {
     public function get_json($param = null, $data = null)
     {
         if ($param == 'filter') {
-            $list = $this->Update_Card_model->get_datatables($param, $data);
+            $list = $this->Replacement_model->get_datatables($param, $data);
         }else{
-            $list = $this->Update_Card_model->get_datatables();
+            $list = $this->Replacement_model->get_datatables();
         }
 
         $data = array();
@@ -39,22 +39,22 @@ class Update_Card extends CI_Controller {
             $row = array();
             $row[] = $no;
             $row[] = $field->c_card;
+            $row[] = $field->c_card_before;
             $row[] = $field->i_card_type;
             $row[] = $field->c_people;
+            $row[] = $field->c_physical_card;
             $row[] = $field->n_company;
             $row[] = $c_status;
-            $row[] = $field->d_active_card_before;
-            $row[] = $field->d_active_card;
             $row[] = $field->n_desc;  
-            $row[] = $field->d_update_card;  
-
+            $row[] = $field->d_replacement;  
+            
             $data[] = $row;
         }
  
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->Update_Card_model->count_all(),
-            "recordsFiltered" => $this->Update_Card_model->count_filtered(),
+            "recordsTotal" => $this->Replacement_model->count_all(),
+            "recordsFiltered" => $this->Replacement_model->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
@@ -88,14 +88,14 @@ class Update_Card extends CI_Controller {
             if($this->token_validation->check($token)){
                 
                 $data = array(  
-                    'menu'          => 'Update Card', 
-                    'title'         => 'Update Card', 
+                    'menu'          => 'Replacement Card', 
+                    'title'         => 'Replacement Card', 
                     'subtitle'      => 'Pages',
-                    'table_title'   => 'Update Card History'
+                    'table_title'   => 'Replacement Card History'
                 );
 
                 
-                $data['update_card'] = $this->Update_Card_model->show_data_update_card();
+                $data['replacement'] = $this->Replacement_model->show_data_replacement();
 
             }else{
 
@@ -127,11 +127,11 @@ class Update_Card extends CI_Controller {
             
         } 
 
-        $data['menu'] = 'Update Card';
+        $data['menu'] = 'Replacement Card';
         
-        $this->load->template('transaction/v_update_card', $data);
+        $this->load->template('transaction/v_replacement', $data);
     }
 
 }
 
-/* End of file Update_Card.php */
+/* End of file Replacement.php */

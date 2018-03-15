@@ -21,11 +21,11 @@ class Update_Card_model extends CI_Model {
             }
 
             if ($start_date != null) {
-                $this->db->where(array('u.d_update_card >=' => $start_date));
+                $this->db->where(array('u.d_update_card >=' => $start_date.' 00:00:00'));
             }
 
             if ($start_date != null) {
-                $this->db->where(array('u.d_update_card <=' => $end_date));
+                $this->db->where(array('u.d_update_card <=' => $end_date.' 23:59:59'));
             }
         }
 
