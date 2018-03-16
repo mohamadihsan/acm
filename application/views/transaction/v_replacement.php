@@ -76,7 +76,7 @@
                 <div class="portlet box dark">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-file-text-o"></i> <?= $table_title ?> </div>
+                            <i class="fa fa-exchange"></i> <?= $table_title ?> </div>
                         <div class="actions">
                             <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
                             <i class="fa fa-download"></i> 

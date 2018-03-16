@@ -16,7 +16,7 @@ class Company_model extends CI_Model {
      
         foreach ($this->column_search as $item) // looping awal
         {
-            if($_POST['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+            if(isset($_POST['search']['value'])) // jika datatable mengirimkan pencarian dengan metode POST
             {
                  
                 if($i===0) // looping awal

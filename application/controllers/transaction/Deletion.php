@@ -86,6 +86,7 @@ class Deletion extends CI_Controller {
 
                 
                 $data['deletion'] = $this->Deletion_Card_model->show_data_deletion_card();
+                $data['card'] = $this->Deletion_Card_model->show_data_card();
 
             }else{
 
@@ -140,6 +141,53 @@ class Deletion extends CI_Controller {
             );
         $this->Deletion_Card_model->update(array('i_deletion_card' => $this->input->post('i_deletion_card')), $data);
         echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajax_delete($id)
+    {
+        $this->People_model->delete_by_id($id);
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajax_add()
+    {
+        $this->_validate();
+        // get user entry
+        $i_user = $this->extract_user($this->session->userdata('id_token'));
+
+        $c_card         = $this->input->post('c_card');
+        $description    = $this->input->post('description');
+
+        $data = array(
+                'c_card' => $c_card,
+                'description' => $description,
+                'i_user' => $i_user
+            );
+        $insert = $this->Deletion_Card_model->save($c_card, $description, $i_user);
+        
+        echo json_encode(array("status" => $data));
+    }
+
+    private function _validate()
+    {
+        $data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+        $data['status'] = TRUE;
+ 
+        if($this->input->post('c_card') == '')
+        {
+            $data['inputerror'][] = 'c_card';
+            $data['error_string'][] = 'The Card is required';
+            $data['status'] = FALSE;
+        }
+
+        if($this->input->post('description') == '')
+        {
+            $data['inputerror'][] = 'description';
+            $data['error_string'][] = 'Description / Reason is required';
+            $data['status'] = FALSE;
+        }
     }
 
 }

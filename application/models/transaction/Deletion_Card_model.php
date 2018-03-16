@@ -48,7 +48,7 @@ class Deletion_Card_model extends CI_Model {
      
         foreach ($this->column_search as $item) // looping awal
         {
-            if($_POST['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+            if(isset($_POST['search']['value'])) // jika datatable mengirimkan pencarian dengan metode POST
             {
                  
                 if($i===0) // looping awal
@@ -113,10 +113,11 @@ class Deletion_Card_model extends CI_Model {
         return $query->row();
     }
  
-    public function save($data)
+    public function save($c_card, $description, $i_user)
     {
-        $this->db->insert($this->table, $data);
-        return $this->db->insert_id();
+        $result = $this->db->query("SELECT * FROM tacm.sp_deletion_card('$c_card', '$description', $i_user)")->result();
+        
+        return $result;
     }
  
     public function update($where, $data)
@@ -135,6 +136,15 @@ class Deletion_Card_model extends CI_Model {
     {
         $query = $this->db->get($this->table);
         return $query->result();
+    }
+
+    public function show_data_card()
+    {
+        $this->db->where('b_active', 't');
+        $this->db->where('c_card NOT IN( SELECT c_card FROM tacm.t_d_deletion_card)', NULL, FALSE);
+        $query = $this->db->get('macm.t_m_card')->result();
+
+        return $query;        
     }
 
 }

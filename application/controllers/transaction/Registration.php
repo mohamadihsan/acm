@@ -42,6 +42,7 @@ class Registration extends CI_Controller {
             $row[] = $field->c_card;
             $row[] = $field->i_card_type;
             $row[] = $field->c_people;
+            $row[] = $field->n_people;
             $row[] = $field->n_company;
             $row[] = $c_status;
             $row[] = $field->n_desc;  

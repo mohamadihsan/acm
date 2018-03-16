@@ -93,6 +93,7 @@
                                     <th class="all"> Card</th>
                                     <th> Card Type </th>
                                     <th class="all"> Card Owner </th>
+                                    <th class="none"> Card Owner Name </th>
                                     <th class="none"> Company </th>
                                     <th> Status </th>
                                     <th class="none"> Description </th>
@@ -108,6 +109,7 @@
                                     <th> Card</th>
                                     <th> Card Type </th>
                                     <th> Card Owner </th>
+                                    <th> Card Owner Name </th>
                                     <th> Company </th>
                                     <th> Status </th>
                                     <th> Description </th>

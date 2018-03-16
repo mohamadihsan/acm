@@ -5,8 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Registration_model extends CI_Model {
 
     var $table = 'tacm.t_d_registration'; //nama tabel dari database
-    var $column_order = array(null, "r.c_registration", "r.c_card", "r.i_card_type", "r.c_people", "c.n_company", "r.c_status", "d.n_desc", "r.d_entry"); //field yang ada di table user
-    var $column_search = array('r.c_registration','r.c_card', "r.c_people", "c.n_company", "d.n_desc"); //field yang diizin untuk pencarian 
+    var $column_order = array(null, "r.c_registration", "r.c_card", "r.i_card_type", "r.c_people", "p.n_people", "c.n_company", "r.c_status", "d.n_desc", "r.d_entry"); //field yang ada di table user
+    var $column_search = array('r.c_registration','r.c_card', "r.c_people", "p.n_people", "c.n_company", "d.n_desc"); //field yang diizin untuk pencarian 
     var $order = array('i_registration' => 'asc'); // default order 
 
     private function _get_datatables_query($param = null, $data = null)
@@ -53,7 +53,7 @@ class Registration_model extends CI_Model {
      
         foreach ($this->column_search as $item) // looping awal
         {
-            if($_POST['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+            if(isset($_POST['search']['value'])) // jika datatable mengirimkan pencarian dengan metode POST
             {
                  
                 if($i===0) // looping awal

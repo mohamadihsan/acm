@@ -22,8 +22,6 @@
         </h1>
         <!-- END PAGE TITLE-->
 
-        
-
         <div class="row">
             <div class="col-md-12 ">
                 <!-- BEGIN SAMPLE FORM PORTLET-->
@@ -66,8 +64,12 @@
                 <div class="portlet box dark">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-file-text-o"></i> <?= $table_title ?> </div>
+                            <i class="fa fa-trash"></i> <?= $table_title ?> </div>
                         <div class="actions">
+                            <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
+                                <i class="fa fa-plus"></i> 
+                                Deletion Card
+                            </button>
                             <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
                             <i class="fa fa-download"></i> 
                                 Export  
@@ -114,7 +116,7 @@
 <!-- MODAL ADD & EDIT-->
 <div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
     <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-user"></i> EMPLOYEE</h4>
+        <h4 class="modal-title"><i class="fa fa-trash"></i> DELETION</h4>
     </div>
     <div class="modal-body">
         <!-- BEGIN VALIDATION STATES-->
@@ -127,59 +129,31 @@
                             
                     <div class="form-body">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="c_people" id="c_people" placeholder="Enter ID">
-                            <label for="form_control_1">Identity Number
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Enter your ID...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="n_people" id="form_control_1" placeholder="Enter your Fullname">
-                            <label for="form_control_1">Full Name
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Enter your fullname...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="employee" readonly>
-                            <label for="form_control_1">Type</label>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <select class="form-control" name="c_company">
+                            <select class="form-control" name="c_card">
                                 <option value="">Select</option>
                                 <?php
-                                foreach ($company as $c) {
+                                foreach ($card as $c) {
                                     ?>
-                                    <option value="<?= $c->c_company ?>"><?= $c->n_company ?></option>
+                                    <option value="<?= $c->c_card ?>"><?= $c->c_card ?></option>
                                     <?php
                                 }
                                 ?>
                             </select>
-                            <label for="form_control_1">Company
+                            <label for="form_control_1">Select the card to delete
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Please Choice company...</span>
+                            <span class="help-block">Please Choice the card...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="email" placeholder="Enter your email">
-                            <label for="form_control_1">Email
-                                <span class="required"></span>
-                            </label>
-                            <span class="help-block">Please enter your email...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="phone" placeholder="Enter phone number">
-                            <label for="form_control_1">Phone Number
-                                <span class="required"></span>
-                            </label>
-                            <span class="help-block">Please enter your phone...</span>
+                            <textarea name="description" id="description" cols="30" rows="5" class="form-control"></textarea>
+                            <label for="form_control_1">Description / Reason</label>
                         </div>
                     </div>
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-                                <button type="button" id="btnSave" onclick="save()" class="btn blue">Save</button>
+                                <button type="button" id="btnSave" onclick="save()" class="btn red">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -287,4 +261,115 @@
             $( cells ).find(':checkbox').prop('checked', $(this).is(':checked'));
         });
     });
+
+    function add_data()
+    {
+        save_method = 'add';
+        $('#form')[0].reset(); // reset form on modals
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.help-block').empty(); // clear error string
+        $('#add_edit').modal('show'); // show bootstrap modal
+        $('.modal-title').text('DELETION CARD'); // Set title to Bootstrap modal title
+    }
+    
+    // function reload_table()
+    // {
+    //     table.ajax.reload(null,false); //reload datatable ajax 
+    // }
+    
+    function save()
+    {
+        $('#btnSave').text('saving...'); //change button text
+        $('#btnSave').attr('disabled',true); //set button disable 
+        var url;
+        var message;
+
+        if(save_method == 'add') {
+            url = "<?php echo site_url('trans/deletion/delete')?>";
+            message = 'The card successfully deleted';
+        }
+
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+                console.log(data);
+    
+                if(data.status) //if success close modal and reload ajax table
+                {
+                    // notif add success
+                    $(document).ready(function() {
+                        toastr.success(message, 'Success')
+                    });
+
+                    $('#add_edit').modal('hide');
+                    // reload_table();
+                }
+                else
+                {
+                    for (var i = 0; i < data.inputerror.length; i++) 
+                    {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
+                }
+                $('#btnSave').text('save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
+    
+    
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                // notif add failed
+                $(document).ready(function() {
+                    toastr.error('The card failed to delete', 'Error')
+                }); 
+
+                alert('Error to delete card');
+                $('#btnSave').text('save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
+    
+            }
+        });
+    }
+
+    function delete_data(id)
+    {
+        
+        if(confirm('Are you sure to restore this card?'))
+        {
+            
+            // ajax restore data to database
+            $.ajax({
+                url : "<?php echo site_url('trans/deletion/restore')?>/"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    // notif delete failed
+                    $(document).ready(function() {
+                        toastr.success('The card successfully restored')
+                    });
+
+                    //if success reload ajax table
+                    $('#add_edit').modal('hide');
+                    reload_table();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    // notif detele failed
+                    $(document).ready(function() {
+                        toastr.error('The card failed to deleted')
+                    });
+
+                    alert('Error restoring data');
+                }
+            });
+            
+        }
+    } 
 </script>            
