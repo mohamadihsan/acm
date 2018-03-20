@@ -23,7 +23,8 @@ class Deletion_Card_model extends CI_Model {
                 $this->db->where(array('r.d_deletion_card <=' => $end_date.' 23:59:59'));
             }
         }
-        $this->db->where('b_delete', null);
+        $this->db->where('b_delete IS NOT NULL', null, false);
+        $this->db->where('r.c_desc !=', 'SR');
         
         $this->db->select(' r.i_deletion_card,
                             r.uid,
@@ -120,10 +121,11 @@ class Deletion_Card_model extends CI_Model {
         return $result;
     }
  
-    public function update($where, $data)
+    public function restore($i_deletion_card, $i_user)
     {
-        $this->db->update($this->table, $data, $where);
-        return $this->db->affected_rows();
+        $result = $this->db->query("SELECT * FROM tacm.sp_restore_card($i_deletion_card, $i_user)")->result();
+        
+        return $result;
     }
  
     public function delete_by_id($id)
@@ -139,9 +141,9 @@ class Deletion_Card_model extends CI_Model {
     }
 
     public function show_data_card()
-    {
+    {   
         $this->db->where('b_active', 't');
-        $this->db->where('c_card NOT IN( SELECT c_card FROM tacm.t_d_deletion_card)', NULL, FALSE);
+        $this->db->where('c_card NOT IN( SELECT c_card FROM tacm.t_d_deletion_card WHERE c_desc != \'SR\')', NULL, FALSE);
         $query = $this->db->get('macm.t_m_card')->result();
 
         return $query;        

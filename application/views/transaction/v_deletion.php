@@ -87,6 +87,7 @@
                                     <th class="none"> Company </th>
                                     <th class="none"> Description </th>
                                     <th class="all"> Date </th>
+                                    <th class="all"> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,6 +101,7 @@
                                     <th> Company </th>
                                     <th> Description </th>
                                     <th> Date </th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -212,15 +214,17 @@
                 "pagingType": "bootstrap_full_number",
                 "columnDefs": [
                     {
+                        "width": "5%",
                         'orderable': false,
+                        "searchable": false,
                         'targets': [0]
                     },
                     {
-                        "searchable": false,
-                        "targets": [0]
+                        "width": "15%",
+                        'targets': [2]
                     },
                     {
-                        "className": "dt-right"
+                        "className": "text-center", "targets":[0,1,2,3,6,7]
                     }
                 ],
                 "order": [
@@ -296,9 +300,7 @@
             data: $('#form').serialize(),
             dataType: "JSON",
             success: function(data)
-            {
-                console.log(data);
-    
+            {    
                 if(data.status) //if success close modal and reload ajax table
                 {
                     // notif add success
@@ -307,7 +309,7 @@
                     });
 
                     $('#add_edit').modal('hide');
-                    // reload_table();
+                    reload_table();
                 }
                 else
                 {
@@ -329,7 +331,7 @@
                     toastr.error('The card failed to delete', 'Error')
                 }); 
 
-                alert('Error to delete card');
+                alert('Error to delete cards');
                 $('#btnSave').text('save'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
     
@@ -337,7 +339,7 @@
         });
     }
 
-    function delete_data(id)
+    function restore_data(id)
     {
         
         if(confirm('Are you sure to restore this card?'))

@@ -38,6 +38,7 @@ class Deletion extends CI_Controller {
             $row[] = $field->n_company;
             $row[] = $field->n_desc;  
             $row[] = $field->d_deletion_card;  
+            $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_deletion_card."'".')"><i class="fa fa-refresh"></i> restore</button>';
 
             $data[] = $row;
         }
@@ -143,9 +144,12 @@ class Deletion extends CI_Controller {
         echo json_encode(array("status" => TRUE));
     }
 
-    public function ajax_delete($id)
+    public function ajax_restore($id)
     {
-        $this->People_model->delete_by_id($id);
+        // get user entry
+        $i_user = $this->extract_user($this->session->userdata('id_token'));
+        
+        $this->Deletion_Card_model->restore($id, $i_user);
         echo json_encode(array("status" => TRUE));
     }
 
@@ -163,9 +167,10 @@ class Deletion extends CI_Controller {
                 'description' => $description,
                 'i_user' => $i_user
             );
+            
         $insert = $this->Deletion_Card_model->save($c_card, $description, $i_user);
         
-        echo json_encode(array("status" => $data));
+        echo json_encode(array("status" => TRUE));
     }
 
     private function _validate()

@@ -45,7 +45,7 @@ $route['excel/people/import']           = 'Excel/upload_people';
 // transaction
 $route['trans/deletion']                = 'transaction/Deletion/show';
 $route['trans/deletion/all']            = 'transaction/Deletion/all';
-$route['trans/deletion/restore/(:num)'] = 'transaction/Deletion/ajax_delete/$1';
+$route['trans/deletion/restore/(:num)'] = 'transaction/Deletion/ajax_restore/$1';
 $route['trans/deletion/delete']         = 'transaction/Deletion/ajax_add';
 $route['trans/deletion/filter']         = 'transaction/Deletion/filter';
 $route['trans/registration']            = 'transaction/Registration/show';

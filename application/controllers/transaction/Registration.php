@@ -30,9 +30,9 @@ class Registration extends CI_Controller {
         foreach ($list as $field) {
             
             if ($field->c_status == 't') {
-                $c_status = '<span class="label label-success">success</span>';
+                $c_status = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> success</span>';
             }else{
-                $c_status = '<span class="label label-danger">failed</span>';
+                $c_status = '<span class="badge badge-danger badge-roundless"><i class="fa fa-close"></i> failed</span>';
             }
 
             $no++;

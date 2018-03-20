@@ -298,15 +298,21 @@
                 "pagingType": "bootstrap_full_number",
                 "columnDefs": [
                     {
+                        "width": "5%",
                         'orderable': false,
+                        "searchable": false,
                         'targets': [0]
                     },
                     {
-                        "searchable": false,
-                        "targets": [0]
+                        "width": "10%",
+                        'targets': [3]
                     },
                     {
-                        "className": "dt-right"
+                        "width": "15%",
+                        'targets': [9]
+                    },
+                    {
+                        "className": "dt-center", "targets": [0,1,2,3,4,5,6,7,8,9]
                     }
                 ],
                 "order": [
