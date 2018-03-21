@@ -2,11 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Deletion extends CI_Controller {
+class Blacklist extends CI_Controller {
 
     function __construct(){
         parent::__construct();
-        $this->load->model('transaction/Deletion_Card_model');
+        $this->load->model('transaction/Blacklist_model');
         $this->load->library('Token_Validation');
     }
 
@@ -20,9 +20,9 @@ class Deletion extends CI_Controller {
     public function get_json($param = null, $data = null)
     {
         if ($param == 'filter') {
-            $list = $this->Deletion_Card_model->get_datatables($param, $data);
+            $list = $this->Blacklist_model->get_datatables($param, $data);
         }else{
-            $list = $this->Deletion_Card_model->get_datatables();
+            $list = $this->Blacklist_model->get_datatables();
         }
 
         $data = array();
@@ -36,17 +36,17 @@ class Deletion extends CI_Controller {
             $row[] = $field->i_card_type;
             $row[] = $field->c_people;
             $row[] = $field->n_company;
-            $row[] = $field->n_desc;  
-            $row[] = $field->d_deletion_card;  
-            $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_deletion_card."'".')"><i class="fa fa-refresh"></i> restore</button>';
+            $row[] = $field->d_blacklist;
+            $row[] = $field->description;  
+            $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_blacklist."'".')"><i class="fa fa-refresh"></i> restore</button>';
 
             $data[] = $row;
         }
  
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->Deletion_Card_model->count_all(),
-            "recordsFiltered" => $this->Deletion_Card_model->count_filtered(),
+            "recordsTotal" => $this->Blacklist_model->count_all(),
+            "recordsFiltered" => $this->Blacklist_model->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
@@ -79,15 +79,15 @@ class Deletion extends CI_Controller {
             if($this->token_validation->check($token)){
                 
                 $data = array(  
-                    'menu'          => 'Deletion Card', 
-                    'title'         => 'Deletion Card', 
+                    'menu'          => 'Blacklist', 
+                    'title'         => 'Blacklist', 
                     'subtitle'      => 'Pages',
-                    'table_title'   => 'Deletion Card History'
+                    'table_title'   => 'Blacklist History'
                 );
 
                 
-                $data['deletion'] = $this->Deletion_Card_model->show_data_deletion_card();
-                $data['card'] = $this->Deletion_Card_model->show_data_card();
+                $data['blacklist'] = $this->Blacklist_model->show_data_blacklist();
+                $data['card'] = $this->Blacklist_model->show_data_card();
 
             }else{
 
@@ -119,29 +119,9 @@ class Deletion extends CI_Controller {
             
         } 
 
-        $data['menu'] = 'Deletion Card';
+        $data['menu'] = 'Blacklist';
         
-        $this->load->template('transaction/v_deletion', $data);
-    }
-
-    public function ajax_edit($id)
-    {
-        $data = $this->Deletion_Card_model->get_by_id($id);
-        echo json_encode($data);
-    }
- 
-    public function ajax_update()
-    {
-        $this->_validate();
-        // get user entry
-        $i_user = $this->extract_user($this->session->userdata('id_token'));
-        
-        $data = array(
-                'b_delete' => $this->input->post('b_delete'),
-                'e_entry' => $i_user
-            );
-        $this->Deletion_Card_model->update(array('i_deletion_card' => $this->input->post('i_deletion_card')), $data);
-        echo json_encode(array("status" => TRUE));
+        $this->load->template('transaction/v_blacklist', $data);
     }
 
     public function ajax_restore($id)
@@ -149,7 +129,7 @@ class Deletion extends CI_Controller {
         // get user entry
         $i_user = $this->extract_user($this->session->userdata('id_token'));
         
-        $this->Deletion_Card_model->restore($id, $i_user);
+        $this->Blacklist_model->restore($id, $i_user);
         echo json_encode(array("status" => TRUE));
     }
 
@@ -169,7 +149,7 @@ class Deletion extends CI_Controller {
                 'i_user' => $i_user
             );
             
-        $insert = $this->Deletion_Card_model->save($c_card, $description, $i_user);
+        $insert = $this->Blacklist_model->save($c_card, $description, $i_user);
         
         echo json_encode(array("status" => TRUE));
     }
@@ -198,4 +178,4 @@ class Deletion extends CI_Controller {
 
 }
 
-/* End of file Deletion.php */
+/* End of file Blacklist.php */

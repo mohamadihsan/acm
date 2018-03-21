@@ -24,9 +24,9 @@ class Card_Management extends CI_Controller {
         foreach ($list as $field) {
             
             if ($field->b_active == 't') {
-                $b_active = '<span class="label label-success">active</span>';
+                $b_active = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> active</span>';
             }else{
-                $b_active = '<span class="label label-danger">non active</span>';
+                $b_active = '<span class="badge badge-danger badge-roundless"><i class="fa fa-check"></i> non active</span>';
             }
 
             $no++;

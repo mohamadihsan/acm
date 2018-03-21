@@ -110,10 +110,10 @@
                             <span class="title">Deletion Card</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
-                        <a href="<?= site_url('trans/card_blocked') ?>" class="nav-link ">
+                    <li class="nav-item <?php if($this->uri->segment(2)=="blacklist") echo 'active' ?>">
+                        <a href="<?= site_url('trans/blacklist') ?>" class="nav-link ">
                             <i class="fa fa-ban"></i>
-                            <span class="title">Card Blocked</span>
+                            <span class="title">Blacklist</span>
                         </a>
                     </li>
                 </ul>

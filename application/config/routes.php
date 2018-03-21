@@ -43,6 +43,11 @@ $route['user']                          = 'master/User_Management';
 $route['excel/people/import']           = 'Excel/upload_people';
 
 // transaction
+$route['trans/blacklist']                = 'transaction/Blacklist/show';
+$route['trans/blacklist/all']            = 'transaction/Blacklist/all';
+$route['trans/blacklist/restore/(:num)'] = 'transaction/Blacklist/ajax_restore/$1';
+$route['trans/blacklist/delete']         = 'transaction/Blacklist/ajax_add';
+$route['trans/blacklist/filter']         = 'transaction/Blacklist/filter';
 $route['trans/deletion']                = 'transaction/Deletion/show';
 $route['trans/deletion/all']            = 'transaction/Deletion/all';
 $route['trans/deletion/restore/(:num)'] = 'transaction/Deletion/ajax_restore/$1';

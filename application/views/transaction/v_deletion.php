@@ -66,7 +66,7 @@
                         <div class="caption">
                             <i class="fa fa-trash"></i> <?= $table_title ?> </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
+                            <button type="button" class="btn btn-danger btn-sm btn-circle" onclick="add_data()">
                                 <i class="fa fa-plus"></i> 
                                 Deletion Card
                             </button>
@@ -276,10 +276,10 @@
         $('.modal-title').text('DELETION CARD'); // Set title to Bootstrap modal title
     }
     
-    // function reload_table()
-    // {
-    //     table.ajax.reload(null,false); //reload datatable ajax 
-    // }
+    function reload_table()
+    {
+        table.ajax.reload(null,false); //reload datatable ajax 
+    }
     
     function save()
     {

@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                <div class="portlet box blue">
+                <div class="portlet box dark">
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="fa fa-users"></i> <?= $table_title ?> </div>
@@ -42,8 +42,8 @@
                                 <tr>
                                     <th class="all"> No </th>
                                     <th class="all"> Card Number </th>
-                                    <th class="none"> Card Type </th>
-                                    <th class="none"> Card Owner </th>
+                                    <th class="min-tablet"> Card Type </th>
+                                    <th class="min-tablet"> Card Owner </th>
                                     <th class="min-tablet"> Active </th>
                                     <th class="all"> Status </th>
                                 </tr>
@@ -108,8 +108,25 @@
             },
             "columnDefs":[
                 {
-                    "target":[-1],
-                    "orderable":false,
+                    "width": "5%",
+                    'orderable': false,
+                    "searchable": false,
+                    'targets': [0]
+                },
+                {
+                    "width": "15%",
+                    'targets': [1,3]
+                },
+                {
+                    "width": "10%",
+                    'targets': [2,4]
+                },
+                {
+                    "width": "10%",
+                    'targets': [5]
+                },
+                {
+                    "className": "text-center", "targets":[0,2,4,5]
                 }
             ]
 

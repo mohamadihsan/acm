@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                <div class="portlet box blue">
+                <div class="portlet box dark">
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="fa fa-users"></i> <?= $table_title ?> </div>
@@ -246,8 +246,19 @@
             },
             "columnDefs":[
                 {
-                    "target":[-1],
-                    "orderable":false,
+                    "width": "5%",
+                    'orderable': false,
+                    "searchable": false,
+                    'targets': [0]
+                },
+                {
+                    "className": "text-center", "targets":[0,6,7,8]
+                },
+                {
+                    "width": "17%",
+                    'orderable': false,
+                    "searchable": false,
+                    'targets': [8]
                 }
             ]
 
