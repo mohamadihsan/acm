@@ -24,7 +24,7 @@ class Blacklist_model extends CI_Model {
             }
         }
         
-        $this->db->where('r.c_desc !=', 'SB');
+        $this->db->where('r.c_desc =', 'SB');
         
         $this->db->select(' r.i_blacklist,
                             r.uid,
@@ -123,7 +123,7 @@ class Blacklist_model extends CI_Model {
  
     public function restore($i_blacklist, $i_user)
     {
-        $result = $this->db->query("SELECT * FROM tacm.sp_blacklist_discard($i_blacklist, $i_user)")->result();
+        $result = $this->db->query("SELECT * FROM tacm.sp_reactivate_card($i_blacklist, $i_user)")->result();
         
         return $result;
     }
@@ -142,8 +142,10 @@ class Blacklist_model extends CI_Model {
 
     public function show_data_card()
     {   
+        $status = ['SB', 'BL'];
+        
         $this->db->where('b_active', 't');
-        $this->db->where('c_card NOT IN( SELECT c_card FROM tacm.t_d_blacklist WHERE c_desc != \'SB\')', NULL, FALSE);
+        $this->db->where("c_card NOT IN( SELECT c_card FROM tacm.t_d_blacklist WHERE c_desc IN ('SB', 'BL'))", NULL, FALSE);
         $query = $this->db->get('macm.t_m_card')->result();
 
         return $query;        

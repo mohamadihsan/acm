@@ -342,7 +342,7 @@
     function restore_data(id)
     {
         
-        if(confirm('Are you sure to restore this card?'))
+        if(confirm('Are you sure to re-active this card?'))
         {
             
             // ajax restore data to database
@@ -354,7 +354,7 @@
                 {
                     // notif delete failed
                     $(document).ready(function() {
-                        toastr.success('The card successfully restored')
+                        toastr.success('The card has been reactivated')
                     });
 
                     //if success reload ajax table
@@ -365,7 +365,7 @@
                 {
                     // notif detele failed
                     $(document).ready(function() {
-                        toastr.error('The card failed to blacklist')
+                        toastr.error('The card failed to reactivate')
                     });
 
                     alert('Error restoring data');

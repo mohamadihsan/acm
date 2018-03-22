@@ -38,7 +38,7 @@ class Blacklist extends CI_Controller {
             $row[] = $field->n_company;
             $row[] = $field->d_blacklist;
             $row[] = $field->description;  
-            $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_blacklist."'".')"><i class="fa fa-refresh"></i> restore</button>';
+            $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_blacklist."'".')"><i class="fa fa-refresh"></i> Re-Activate</button>';
 
             $data[] = $row;
         }
