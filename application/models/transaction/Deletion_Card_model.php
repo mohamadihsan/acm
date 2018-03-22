@@ -38,7 +38,8 @@ class Deletion_Card_model extends CI_Model {
                             r.c_desc,
                             d.n_desc,
                             r.e_entry,
-                            r.d_deletion_card 
+                            r.d_deletion_card,
+                            r.description 
                         ');
         $this->db->from(' tacm.t_d_deletion_card r');
         $this->db->join(' macm.t_m_people p', 'p.c_people = r.c_people' ,'left');

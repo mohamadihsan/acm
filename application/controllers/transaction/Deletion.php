@@ -36,7 +36,7 @@ class Deletion extends CI_Controller {
             $row[] = $field->i_card_type;
             $row[] = $field->c_people;
             $row[] = $field->n_company;
-            $row[] = $field->n_desc;  
+            $row[] = $field->description;  
             $row[] = $field->d_deletion_card;  
             $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_deletion_card."'".')"><i class="fa fa-refresh"></i> restore</button>';
 
