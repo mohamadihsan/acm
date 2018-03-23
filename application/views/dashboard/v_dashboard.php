@@ -47,7 +47,7 @@ if ($this->session->flashdata('login_success')) {
                     </div>
                     <div class="details">
                         <div class="number">
-                            <span data-counter="counterup" data-value="10">0</span>
+                            <span data-counter="counterup" data-value="<?= $total_card_active ?>">0</span>
                         </div>
                         <div class="desc"> Total Cards </div>
                     </div>
@@ -60,7 +60,7 @@ if ($this->session->flashdata('login_success')) {
                     </div>
                     <div class="details">
                         <div class="number">
-                            <span data-counter="counterup" data-value="0">0</span> </div>
+                            <span data-counter="counterup" data-value="<?= $total_blacklist ?>">0</span> </div>
                         <div class="desc"> Total Blacklist Card </div>
                     </div>
                 </a>
@@ -72,7 +72,7 @@ if ($this->session->flashdata('login_success')) {
                     </div>
                     <div class="details">
                         <div class="number">
-                            <span data-counter="counterup" data-value="50">0</span>
+                            <span data-counter="counterup" data-value="<?= $total_employee ?>">0</span>
                         </div>
                         <div class="desc"> Total Employees </div>
                     </div>
@@ -85,7 +85,7 @@ if ($this->session->flashdata('login_success')) {
                     </div>
                     <div class="details">
                         <div class="number"> 
-                            <span data-counter="counterup" data-value="75"></span> </div>
+                            <span data-counter="counterup" data-value="<?= $total_non_employee ?>"></span> </div>
                         <div class="desc"> Total Non Employees </div>
                     </div>
                 </a>

@@ -82,6 +82,7 @@ $config['csrf_exclude_uris'] = array(
     'company/add',
     'company/update',
     'company/delete',
+    'dashboard',
     'employee/all',
     'employee/add',
     'employee/update',

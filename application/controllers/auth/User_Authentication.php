@@ -30,7 +30,8 @@ class User_Authentication extends CI_Controller {
                 
                 $data['title'] = 'Dashboard';
                 //token masih berlaku
-                $this->load->template('dashboard/v_dashboard', $data);
+                // $this->load->template('dashboard/v_dashboard', $data);
+                redirect(site_url('dashboard'),'refresh');
                 
             }else{
                 //token expired
