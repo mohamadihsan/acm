@@ -70,7 +70,7 @@ class Authentication extends REST_Controller {
             $i_user_from_db     = $user[0]->i_user;
             $username_from_db   = $user[0]->username;
             $password_from_db   = $user[0]->password;
-            $i_group_access     = $user[0]->i_group_access;
+            $i_group            = $user[0]->i_group;
 
             // cek data apakah username terdaftar atau tidak 
             if (count($user) > 0) {
@@ -115,7 +115,7 @@ class Authentication extends REST_Controller {
 
                         // JWT
                         $payload['i_user']          =   $i_user_from_db;
-                        $payload['i_group_access']  =   $i_group_access;
+                        $payload['i_group']         =   $i_group;
                         $payload['expired']         =   $expired;
                         $payload['terminal_id']     =   $terminal_id;
                         $payload['c_login']         =   $c_login;
@@ -126,7 +126,7 @@ class Authentication extends REST_Controller {
                         // data login success
                         $data_login_success = array(
                             'c_login'           => $c_login,
-                            'i_group_access'    => $i_group_access,
+                            'i_group'           => $i_group,
                             'i_user'            => $i_user_from_db,
                             'ip_address'        => $ip_address,
                             'id_token'          => $output['id_token'],

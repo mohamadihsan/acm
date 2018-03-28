@@ -77,7 +77,7 @@ class Token_Validation {
                 // token masih berlaku
                 $data = array(
                     'status'=> true, 
-                    'i_group_access' => $decode->i_group_access,
+                    'i_group' => $decode->i_group,
                     'i_user' => $decode->i_user,
                     'c_login' => $decode->c_login,
                     'terminal_id' => $decode->terminal_id,

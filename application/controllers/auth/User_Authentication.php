@@ -28,10 +28,39 @@ class User_Authentication extends CI_Controller {
             //cek masa berlaku token
             if($this->token_validation->check($token)){
                 
-                $data['title'] = 'Dashboard';
-                //token masih berlaku
-                // $this->load->template('dashboard/v_dashboard', $data);
-                redirect(site_url('dashboard'),'refresh');
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+                
+                // parameter
+                $param = array('i_group' => $i_group_from_token );
+
+                $data_role = $this->User_model->show_user_role($param)->result();
+                $group = $data_role[0]->n_group;
+                
+                // rediret route based on user role
+                switch ($group) {
+                    case 'admin':
+                        
+                        $data['title'] = 'Dashboard';
+                        //token masih berlaku
+                        // $this->load->template('dashboard/v_dashboard', $data);
+                        redirect(site_url('dashboard'),'refresh');
+                    
+                        break;
+                    
+                    case 'GCG':
+                        # code...
+                        break;
+                    
+                    case 'penjualan':
+                        # code...
+                        break;
+
+                    default:
+                        redirect(site_url('login'));
+                        break;
+                }
                 
             }else{
                 //token expired
@@ -70,6 +99,7 @@ class User_Authentication extends CI_Controller {
                 
                 // set flash data
                 $this->session->set_flashdata('login_success','Welcome to ACMS');
+
             }else{
                 // data login salah
                 //set flash data
@@ -106,7 +136,7 @@ class User_Authentication extends CI_Controller {
                 $i_user = $extract['i_user'];
                 $c_login = $extract['c_login'];
                 $terminal_id = $extract['terminal_id'];
-                $i_group_access = $extract['i_group_access'];
+                $i_group = $extract['i_group'];
 
                 $ip_address = $this->input->ip_address();
                 if (!$this->input->valid_ip($ip_address)) {
@@ -118,7 +148,7 @@ class User_Authentication extends CI_Controller {
                     
                     $data = array(
                         'i_user' => $i_user,
-                        'i_group_access' => $i_group_access,
+                        'i_group' => $i_group,
                         'ip_address' => $ip_address
                     );
                     
@@ -130,7 +160,7 @@ class User_Authentication extends CI_Controller {
                             
                             $data = array(
                                 'i_user' => $i_user,
-                                'i_group_access' => $i_group_access,
+                                'i_group' => $i_group,
                                 'c_login' => $c_login,
                                 'terminal_id' => $terminal_id,
                                 'ip_address' => $ip_address

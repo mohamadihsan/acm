@@ -23,6 +23,15 @@ class User_model extends CI_Model {
         
         return $user;
     }   
+
+    public function show_user_role($param)
+    {
+        // tampilkan semua data user
+        $this->db->select('n_group')->from('macm.t_m_group')->where($param);
+        $role = $this->db->get();
+        
+        return $role;
+    }   
     
     public function insert_login_success($data)
     {
