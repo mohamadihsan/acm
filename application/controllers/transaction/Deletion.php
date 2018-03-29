@@ -7,6 +7,7 @@ class Deletion extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->model('transaction/Deletion_Card_model');
+        $this->load->model('general/Menu_model');
         $this->load->library('Token_Validation');
     }
 
@@ -19,36 +20,67 @@ class Deletion extends CI_Controller {
 
     public function get_json($param = null, $data = null)
     {
-        if ($param == 'filter') {
-            $list = $this->Deletion_Card_model->get_datatables($param, $data);
-        }else{
-            $list = $this->Deletion_Card_model->get_datatables();
-        }
-
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $field) {
+        $output = null;
+        $token = $this->session->userdata('id_token');
+        
+        if($token){
             
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $field->c_card;
-            $row[] = $field->i_card_type;
-            $row[] = $field->c_people;
-            $row[] = $field->n_company;
-            $row[] = $field->description;  
-            $row[] = $field->d_deletion_card;  
-            $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_deletion_card."'".')"><i class="fa fa-refresh"></i> restore</button>';
+            //cek validasi token
+            if($this->token_validation->check($token)){
 
-            $data[] = $row;
+                // BEGIN
+                // INCLUDE THIS SCRIPT TO SET USER ROLE
+                // get user role 
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+                // menu name must pair with n_menu on macm.t_m_menu
+                $n_menu = 'card deletion';
+
+                // show user role for action this menu
+                $action = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $view   = $action[0]->b_view;
+                $insert = $action[0]->b_insert;
+                $update = $action[0]->b_update;
+                $delete = $action[0]->b_delete;
+                
+                //  END SCRIPT TO SET USER ROLE
+
+                if ($param == 'filter') {
+                    $list = $this->Deletion_Card_model->get_datatables($param, $data);
+                }else{
+                    $list = $this->Deletion_Card_model->get_datatables();
+                }
+
+                $data = array();
+                $no = $_POST['start'];
+                foreach ($list as $field) {
+                    
+                    $no++;
+                    $row = array();
+                    $row[] = $no;
+                    $row[] = $field->c_card;
+                    $row[] = $field->i_card_type;
+                    $row[] = $field->c_people;
+                    $row[] = $field->n_company;
+                    $row[] = $field->description;  
+                    $row[] = $field->d_deletion_card;  
+
+                    if ($update == 't') {
+                        $row[] = '  <button type="button" class="btn btn-info btn-sm" onclick="restore_data('."'".$field->i_deletion_card."'".')"><i class="fa fa-refresh"></i> restore</button>';
+                    }else{
+                        $row[] = '';
+                    }
+                    $data[] = $row;
+                }
+        
+                $output = array(
+                    "draw" => $_POST['draw'],
+                    "recordsTotal" => $this->Deletion_Card_model->count_all(),
+                    "recordsFiltered" => $this->Deletion_Card_model->count_filtered(),
+                    "data" => $data,
+                );
+            }
         }
- 
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->Deletion_Card_model->count_all(),
-            "recordsFiltered" => $this->Deletion_Card_model->count_filtered(),
-            "data" => $data,
-        );
         //output dalam format JSON
         echo json_encode($output);
     }
@@ -85,6 +117,15 @@ class Deletion extends CI_Controller {
                     'table_title'   => 'Deletion Card History'
                 );
 
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+
+                // show menu based on group user
+                $data['menu_single'] = $this->Menu_model->show_menu_user($i_group_from_token, null);
+                $data['menu_master'] = $this->Menu_model->show_menu_user($i_group_from_token, 'master');
+                $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
+                $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
                 $data['deletion'] = $this->Deletion_Card_model->show_data_deletion_card();
                 $data['card'] = $this->Deletion_Card_model->show_data_card();

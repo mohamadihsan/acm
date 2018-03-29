@@ -7,6 +7,7 @@ class Update_Card extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->model('transaction/Update_Card_model');
+        $this->load->model('general/Menu_model');
         $this->load->library('Token_Validation');
     }
 
@@ -19,44 +20,54 @@ class Update_Card extends CI_Controller {
 
     public function get_json($param = null, $data = null)
     {
-        if ($param == 'filter') {
-            $list = $this->Update_Card_model->get_datatables($param, $data);
-        }else{
-            $list = $this->Update_Card_model->get_datatables();
-        }
-
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $field) {
+        $output = null;
+        $token = $this->session->userdata('id_token');
+        
+        if($token){
             
-            if ($field->c_status == 't') {
-                $c_status = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> success</span>';
-            }else{
-                $c_status = '<span class="badge badge-danger badge-roundless"><i class="fa fa-close"></i> failed</span>';
+            //cek validasi token
+            if($this->token_validation->check($token)){
+
+                if ($param == 'filter') {
+                    $list = $this->Update_Card_model->get_datatables($param, $data);
+                }else{
+                    $list = $this->Update_Card_model->get_datatables();
+                }
+
+                $data = array();
+                $no = $_POST['start'];
+                foreach ($list as $field) {
+                    
+                    if ($field->c_status == 't') {
+                        $c_status = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> success</span>';
+                    }else{
+                        $c_status = '<span class="badge badge-danger badge-roundless"><i class="fa fa-close"></i> failed</span>';
+                    }
+
+                    $no++;
+                    $row = array();
+                    $row[] = $no;
+                    $row[] = $field->c_card;
+                    $row[] = $field->i_card_type;
+                    $row[] = $field->c_people;
+                    $row[] = $field->n_company;
+                    $row[] = $c_status;
+                    $row[] = $field->d_active_card_before;
+                    $row[] = $field->d_active_card;
+                    $row[] = $field->n_desc;  
+                    $row[] = $field->d_update_card;  
+
+                    $data[] = $row;
+                }
+        
+                $output = array(
+                    "draw" => $_POST['draw'],
+                    "recordsTotal" => $this->Update_Card_model->count_all(),
+                    "recordsFiltered" => $this->Update_Card_model->count_filtered(),
+                    "data" => $data,
+                );
             }
-
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $field->c_card;
-            $row[] = $field->i_card_type;
-            $row[] = $field->c_people;
-            $row[] = $field->n_company;
-            $row[] = $c_status;
-            $row[] = $field->d_active_card_before;
-            $row[] = $field->d_active_card;
-            $row[] = $field->n_desc;  
-            $row[] = $field->d_update_card;  
-
-            $data[] = $row;
         }
- 
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->Update_Card_model->count_all(),
-            "recordsFiltered" => $this->Update_Card_model->count_filtered(),
-            "data" => $data,
-        );
         //output dalam format JSON
         echo json_encode($output);
     }
@@ -94,6 +105,15 @@ class Update_Card extends CI_Controller {
                     'table_title'   => 'Update Card History'
                 );
 
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+
+                // show menu based on group user
+                $data['menu_single'] = $this->Menu_model->show_menu_user($i_group_from_token, null);
+                $data['menu_master'] = $this->Menu_model->show_menu_user($i_group_from_token, 'master');
+                $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
+                $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
                 $data['update_card'] = $this->Update_Card_model->show_data_update_card();
 

@@ -7,6 +7,7 @@ class People_Management extends CI_Controller {
         parent::__construct();
         $this->load->model('master/People_model');
         $this->load->model('master/Company_model');
+        $this->load->model('general/Menu_model');
         $this->load->library('Token_Validation');
     }
 
@@ -17,78 +18,119 @@ class People_Management extends CI_Controller {
         return $i_user;
     }
 
-    public function get_json($type_people)
+    public function get_json($type_people, $n_menu)
     {
-        $list = $this->People_model->get_datatables($type_people);
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $field) {
+        $output = null;
+        $token = $this->session->userdata('id_token');
+        
+        if($token){
             
-            if ($field->b_active == 't') {
-                $b_active = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> active</span>';
-            }else{
-                $b_active = '<span class="badge badge-danger badge-roundless"><i class="fa fa-check"></i> non active</span>';
-            }
+            //cek validasi token
+            if($this->token_validation->check($token)){
 
-            if ($field->card_active != null) {
-                $days = 'days';
-            }else{
-                $days = '-';
-            }
+                // BEGIN
+                // INCLUDE THIS SCRIPT TO SET USER ROLE
+                // get user role 
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
 
-            if ($field->email == null) {
-                $field->email = '-';
-            }
+                // show user role for action this menu
+                $action = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $view   = $action[0]->b_view;
+                $insert = $action[0]->b_insert;
+                $update = $action[0]->b_update;
+                $delete = $action[0]->b_delete;
+                
+                //  END SCRIPT TO SET USER ROLE
 
-            if ($field->phone == null) {
-                $field->phone = '-';
-            }
-            
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $field->c_people;
-            $row[] = $field->n_people;
-            $row[] = $field->n_company;
-            $row[] = $field->email;
-            $row[] = $field->phone;
-            $row[] = $b_active;
-            $row[] = $field->card_active.' '.$days;
-            $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_people."'".')"><i class="fa fa-pencil"></i> edit</button>
+                $list = $this->People_model->get_datatables($type_people);
+                $data = array();
+                $no = $_POST['start'];
+                foreach ($list as $field) {
+                    
+                    if ($field->b_active == 't') {
+                        $b_active = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> active</span>';
+                    }else{
+                        $b_active = '<span class="badge badge-danger badge-roundless"><i class="fa fa-check"></i> non active</span>';
+                    }
+
+                    if ($field->card_active != null) {
+                        $days = 'days';
+                    }else{
+                        $days = '-';
+                    }
+
+                    if ($field->email == null) {
+                        $field->email = '-';
+                    }
+
+                    if ($field->phone == null) {
+                        $field->phone = '-';
+                    }
+                    
+                    $no++;
+                    $row = array();
+                    $row[] = $no;
+                    $row[] = $field->c_people;
+                    $row[] = $field->n_people;
+                    $row[] = $field->n_company;
+                    $row[] = $field->email;
+                    $row[] = $field->phone;
+                    $row[] = $b_active;
+                    $row[] = $field->card_active.' '.$days;
+
+                    if ($update == 't' AND $delete == 't') {
+                        $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_people."'".')"><i class="fa fa-pencil"></i> edit</button>
                         <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_people."'".')"><i class="fa fa-trash"></i> delete</button>';
- 
-            $data[] = $row;
+                    }else if ($update == 't' AND $delete == 'f') {
+                        $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_people."'".')"><i class="fa fa-pencil"></i> edit</button>';
+                    }else if ($update == 'f' AND $delete == 't') {
+                        $row[] = '  <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_people."'".')"><i class="fa fa-trash"></i> delete</button>';
+                    }else{
+                        $row[] = '';
+                    }
+        
+                    $data[] = $row;
+                }
+        
+                $output = array(
+                    "draw" => $_POST['draw'],
+                    "recordsTotal" => $this->People_model->count_all($type_people),
+                    "recordsFiltered" => $this->People_model->count_filtered($type_people),
+                    "data" => $data,
+                );
+            }
         }
- 
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->People_model->count_all($type_people),
-            "recordsFiltered" => $this->People_model->count_filtered($type_people),
-            "data" => $data,
-        );
+
         //output dalam format JSON
         echo json_encode($output);
     }
 
     public function all_employee()
     {
+        // menu name must pair with n_menu on macm.t_m_menu
+        $n_menu = 'kci employee';
         $type_people = 'employee';
         // call function
-        $this->get_json($type_people);
+        $this->get_json($type_people, $n_menu);
     }
 
     public function all_tenant()
     {
+        // menu name must pair with n_menu on macm.t_m_menu
+        $n_menu = 'tenant / vendor';
         $type_people = 'tenant';
         // call function
-        $this->get_json($type_people);
+        $this->get_json($type_people, $n_menu);
     }
 
     public function all_non_employee()
     {
+        // menu name must pair with n_menu on macm.t_m_menu
+        $n_menu = 'non kci';
         $type_people = 'non employee';
         // call function
-        $this->get_json($type_people);
+        $this->get_json($type_people, $n_menu);
     }
 
     public function show_employee()
@@ -107,6 +149,15 @@ class People_Management extends CI_Controller {
                     'table_title'   => 'Employee List'
                 );
 
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+
+                // show menu based on group user
+                $data['menu_single'] = $this->Menu_model->show_menu_user($i_group_from_token, null);
+                $data['menu_master'] = $this->Menu_model->show_menu_user($i_group_from_token, 'master');
+                $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
+                $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
                 $data['company'] = $this->Company_model->show_data_company();
 
@@ -161,6 +212,16 @@ class People_Management extends CI_Controller {
                     'table_title'   => 'Tenant List'
                 );
 
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+
+                // show menu based on group user
+                $data['menu_single'] = $this->Menu_model->show_menu_user($i_group_from_token, null);
+                $data['menu_master'] = $this->Menu_model->show_menu_user($i_group_from_token, 'master');
+                $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
+                $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
+                
                 $data['company'] = $this->Company_model->show_data_company();
 
             }else{
@@ -213,6 +274,16 @@ class People_Management extends CI_Controller {
                     'table_title'   => 'Non Employee List'
                 );
 
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+
+                // show menu based on group user
+                $data['menu_single'] = $this->Menu_model->show_menu_user($i_group_from_token, null);
+                $data['menu_master'] = $this->Menu_model->show_menu_user($i_group_from_token, 'master');
+                $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
+                $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
+                
                 $data['company'] = $this->Company_model->show_data_company();
 
             }else{

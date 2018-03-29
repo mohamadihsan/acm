@@ -6,6 +6,7 @@ class Card_Management extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->model('master/Card_model');
+        $this->load->model('general/Menu_model');
         $this->load->library('Token_Validation');
     }
 
@@ -18,35 +19,45 @@ class Card_Management extends CI_Controller {
 
     public function get_json()
     {
-        $list = $this->Card_model->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $field) {
+        $output = null;
+        $token = $this->session->userdata('id_token');
+        
+        if($token){
             
-            if ($field->b_active == 't') {
-                $b_active = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> active</span>';
-            }else{
-                $b_active = '<span class="badge badge-danger badge-roundless"><i class="fa fa-check"></i> non active</span>';
-            }
+            //cek validasi token
+            if($this->token_validation->check($token)){
 
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $field->c_card;
-            $row[] = $field->i_card_type;
-            $row[] = $field->c_people;
-            $row[] = $field->d_active_card; 
-            $row[] = $b_active;            
-            
-            $data[] = $row;
+                $list = $this->Card_model->get_datatables();
+                $data = array();
+                $no = $_POST['start'];
+                foreach ($list as $field) {
+                    
+                    if ($field->b_active == 't') {
+                        $b_active = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> active</span>';
+                    }else{
+                        $b_active = '<span class="badge badge-danger badge-roundless"><i class="fa fa-check"></i> non active</span>';
+                    }
+
+                    $no++;
+                    $row = array();
+                    $row[] = $no;
+                    $row[] = $field->c_card;
+                    $row[] = $field->i_card_type;
+                    $row[] = $field->c_people;
+                    $row[] = $field->d_active_card; 
+                    $row[] = $b_active;            
+                    
+                    $data[] = $row;
+                }
+        
+                $output = array(
+                    "draw" => $_POST['draw'],
+                    "recordsTotal" => $this->Card_model->count_all(),
+                    "recordsFiltered" => $this->Card_model->count_filtered(),
+                    "data" => $data,
+                );
+            }
         }
- 
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->Card_model->count_all(),
-            "recordsFiltered" => $this->Card_model->count_filtered(),
-            "data" => $data,
-        );
         //output dalam format JSON
         echo json_encode($output);
     }
@@ -73,6 +84,15 @@ class Card_Management extends CI_Controller {
                     'table_title'   => 'Card List'
                 );
 
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+
+                // show menu based on group user
+                $data['menu_single'] = $this->Menu_model->show_menu_user($i_group_from_token, null);
+                $data['menu_master'] = $this->Menu_model->show_menu_user($i_group_from_token, 'master');
+                $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
+                $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
                 $data['card'] = $this->Card_model->show_data_card();
 
