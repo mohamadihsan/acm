@@ -32,11 +32,7 @@
                         <div class="actions">
                             <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
                                 <i class="fa fa-plus"></i> 
-                                Add User
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
-                            <i class="fa fa-download"></i> 
-                                Export  
+                                Add Menu
                             </button>
                         </div>
                     </div>
@@ -45,12 +41,13 @@
                             <thead>
                                 <tr>
                                     <th class="all"> No </th>
-                                    <th class="all"> Username </th>
-                                    <th class="min-tablet"> Group </th>
-                                    <th> Owner Name </th>
-                                    <th class="min-tablet"> Status </th>
-                                    <th class="none"> Date entry </th>
-                                    <th class="none"> Last Updated </th>
+                                    <th class="all"> Menu Name </th>
+                                    <th class="min-tablet"> Level </th>
+                                    <th class="none"> Parent </th>
+                                    <th class="min-tablet"> Url </th>
+                                    <th class="none"> Segment Name </th>
+                                    <th class="none"> Icon </th>
+                                    <th> Status </th>
                                     <th class="all"> Action </th>
                                 </tr>
                             </thead>
@@ -59,12 +56,13 @@
                             <tfoot>
                                 <tr>
                                     <th> No </th>
-                                    <th> Username </th>
-                                    <th> Group </th>
-                                    <th> Owner Name </th>
+                                    <th> Menu Name </th>
+                                    <th> Level </th>
+                                    <th> Parent </th>
+                                    <th> Url </th>
+                                    <th> Segment Name </th>
+                                    <th> Icon </th>
                                     <th> Status </th>
-                                    <th> Date entry </th>
-                                    <th> Last Updated </th>
                                     <th> Action </th>
                                 </tr>
                             </tfoot>
@@ -82,7 +80,7 @@
 <!-- MODAL ADD & EDIT-->
 <div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
     <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-building"></i> USER</h4>
+        <h4 class="modal-title"><i class="fa fa-building"></i> MENU</h4>
     </div>
     <div class="modal-body">
         <!-- BEGIN VALIDATION STATES-->
@@ -91,54 +89,69 @@
                 <!-- BEGIN FORM-->
                 <form action="#" id="form">
 
-                    <input type="hidden" class="form-control" name="i_user" id="i_user" required>
+                    <input type="hidden" class="form-control" name="i_menu" id="i_menu" required>
                             
                     <div class="form-body">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
-                            <label for="form_control_1">Username
+                            <input type="text" class="form-control" name="n_menu" id="n_menu" placeholder="Enter Menu Name">
+                            <label for="form_control_1">Menu Name
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Enter Username...</span>
+                            <span class="help-block">Enter Menu Name...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
-                            <label for="form_control_1">Password
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Enter Password...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <select class="form-control" name="i_group">
-                                <option value="">Select</option>
-                                <?php
-                                foreach ($groups as $group) {
-                                    ?>
-                                    <option value="<?= $group->i_group ?>"><?= $group->n_group ?></option>
-                                    <?php
-                                }
-                                ?>
+                            <select class="form-control" name="n_parent">
+                                <option value="">No Parent</option>
+                                <option value="Master">Master</option>
+                                <option value="Card Owner">Card Owner</option>
+                                <option value="Report Transaction">Report & Transaction</option>
                             </select>
-                            <label for="form_control_1">Group
-                                <span class="required">*</span>
+                            <label for="form_control_1">Parent
+                                <span class="required"></span>
                             </label>
-                            <span class="help-block">Please Choice group...</span>
+                            <span class="help-block">Please Choice Parent...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <select class="form-control" name="i_people">
-                                <option value="">Select</option>
-                                <?php
-                                foreach ($people as $person) {
-                                    ?>
-                                    <option value="<?= $person->i_people ?>"><?= $person->n_people ?></option>
-                                    <?php
-                                }
-                                ?>
+                            <select class="form-control" name="level">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
-                            <label for="form_control_1">Owner Name
+                            <label for="form_control_1">Level
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Please Choice the owner...</span>
+                            <span class="help-block">Please Choice Status...</span>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" name="site_url" id="site_url" placeholder="Enter Site Url">
+                            <label for="form_control_1">Site Url
+                                <span class="required"></span>
+                            </label>
+                            <span class="help-block">Enter Site Url...</span>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" name="segment_name" id="segment_name" placeholder="Enter Segment Name">
+                            <label for="form_control_1">Segment Name
+                                <span class="required">*</span>
+                            </label>
+                            <span class="help-block">Enter Segment Name...</span>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" name="icon" id="icon" placeholder="icon-user">
+                            <label for="form_control_1">Icon
+                                <span class="required"></span>
+                            </label>
+                            <span class="help-block">Enter Icon...</span>
+                        </div>
+                        <div class="form-group form-md-line-input">
+                            <select class="form-control" name="b_active">
+                                <option value="t">Active</option>
+                                <option value="f">Non Active</option>
+                            </select>
+                            <label for="form_control_1">Status
+                                <span class="required">*</span>
+                            </label>
+                            <span class="help-block">Please Choice Status...</span>
                         </div>
                     </div>
                     <div class="form-actions">
@@ -158,7 +171,6 @@
 </div>
 <!-- END MODAL ADD & EDIT-->
 
-
 <script>
     var save_method; //for save method string
     var table;
@@ -175,7 +187,7 @@
                 "infoFiltered": ""
             },
             "ajax":{
-                "url": "<?php echo base_url() . 'user/all'; ?>",
+                "url": "<?php echo base_url() . 'menu/all'; ?>",
                 "type": "POST"
             },
             "columnDefs":[
@@ -190,12 +202,12 @@
                     'targets': [1]
                 },
                 {
-                    "className": "text-center", "targets":[0,1,4]
+                    "className": "text-center", "targets":[0, 1, 2, 7, 8]
                 },
                 {
                     'width': '20%',
                     'orderable': false, 
-                    'targets': [4, 7]
+                    'targets': [7,8]
                 }
             ]
 
@@ -223,7 +235,7 @@
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $('#add_edit').modal('show'); // show bootstrap modal
-        $('.modal-title').text('ADD USER'); // Set title to Bootstrap modal title
+        $('.modal-title').text('ADD MENU'); // Set title to Bootstrap modal title
     }
     
     function edit_data(id)
@@ -233,19 +245,22 @@
     
         //Ajax Load data from ajax
         $.ajax({
-            url : "<?php echo site_url('user/')?>/" + id,
+            url : "<?php echo site_url('menu/')?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
             {
     
-                $('[name="i_user"]').val(data.i_user);
-                $('[name="username"]').val(data.username);
-                $('[name="password"]').val(data.password);
-                $('[name="i_group"]').val(data.i_group);
-                $('[name="i_people"]').val(data.i_people);
+                $('[name="i_menu"]').val(data.i_menu);
+                $('[name="n_menu"]').val(data.n_menu);
+                $('[name="level"]').val(data.level);
+                $('[name="b_active"]').val(data.b_active);
+                $('[name="n_parent"]').val(data.n_parent);
+                $('[name="site_url"]').val(data.site_url);
+                $('[name="segment_name"]').val(data.segment_name);
+                $('[name="icon"]').val(data.icon);
                 $('#add_edit').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('EDIT USER'); // Set title to Bootstrap modal title
+                $('.modal-title').text('EDIT MENU'); // Set title to Bootstrap modal title
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -267,10 +282,10 @@
         var message;
 
         if(save_method == 'add') {
-            url = "<?php echo site_url('user/add')?>";
+            url = "<?php echo site_url('menu/add')?>";
             message = 'Data successfully added';
         } else {
-            url = "<?php echo site_url('user/update')?>";
+            url = "<?php echo site_url('menu/update')?>";
             message = 'Data successfully updated';
         }
 
@@ -288,22 +303,18 @@
                     // notif add success
                     $(document).ready(function() {
                         toastr.success(message, 'Success')
-                    });    
-                    
+                    });
+
                     $('#add_edit').modal('hide');
                     reload_table();
                 }
                 else
                 {
-                    // notif add failed
-                    $(document).ready(function() {
-                        toastr.error('Inputan tidak boleh kosong atau Username sudah digunakan', 'Error')
-                    });
-                    // for (var i = 0; i < data.inputerror.length; i++) 
-                    // {
-                    //     $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                    //     $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
-                    // }
+                    for (var i = 0; i < data.inputerror.length; i++) 
+                    {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
                 }
                 $('#btnSave').text('save'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
@@ -333,7 +344,7 @@
             
             // ajax delete data to database
             $.ajax({
-                url : "<?php echo site_url('user/delete')?>/"+id,
+                url : "<?php echo site_url('menu/delete')?>/"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)

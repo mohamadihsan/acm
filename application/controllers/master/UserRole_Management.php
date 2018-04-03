@@ -1,13 +1,14 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_Management extends CI_Controller {
+class UserRole_Management extends CI_Controller {
 
     function __construct(){
         parent::__construct();
-        $this->load->model('master/User_model');
-        $this->load->model('master/People_model');
+        $this->load->model('master/UserRole_model');
         $this->load->model('master/Group_model');
+        $this->load->model('master/User_model');
+        $this->load->model('master/MenuUser_model');
         $this->load->model('general/Menu_model');
         $this->load->library('Token_Validation');
     }
@@ -19,7 +20,7 @@ class User_Management extends CI_Controller {
         return $i_user;
     }
 
-    public function get_json($n_menu)
+    public function get_json($n_menu, $param = null, $data = null)
     {
         $output = null;
         $token = $this->session->userdata('id_token');
@@ -36,53 +37,76 @@ class User_Management extends CI_Controller {
                 $i_group_from_token = $data_token['i_group'];
 
                 // show user role for action this menu
-                $action = $this->Menu_model->check_action($i_group_from_token, $n_menu);
-                $view   = $action[0]->b_view;
-                $insert = $action[0]->b_insert;
-                $update = $action[0]->b_update;
-                $delete = $action[0]->b_delete;
+                // $action = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                // $view   = $action[0]->b_view;
+                // $insert = $action[0]->b_insert;
+                // $update = $action[0]->b_update;
+                // $delete = $action[0]->b_delete;
                 
                 //  END SCRIPT TO SET USER ROLE
 
-                $list = $this->User_model->get_datatables();
+                
+                if ($param == 'filter') {
+                    $list = $this->UserRole_model->get_datatables($param, $data);
+                }else{
+                    $list = $this->UserRole_model->get_datatables();
+                }
+
                 $data = array();
                 $no = $_POST['start'];
                 foreach ($list as $field) {
-
-                    if ($field->b_active == 't') {
-                        $b_active = '<span class="badge badge-success badge-roundless"><i class="fa fa-check"></i> active</span>';
-                    }else{
-                        $b_active = '<span class="badge badge-danger badge-roundless"><i class="fa fa-check"></i> non active</span>';
-                    }
                     
+                    if ($field->b_view == 't') {
+                        $b_view = 'checked';
+                    }else{
+                        $b_view = '';
+                    }
+                    if ($field->b_insert == 't') {
+                        $b_insert = 'checked';
+                    }else{
+                        $b_insert = '';
+                    }
+                    if ($field->b_update == 't') {
+                        $b_update = 'checked';
+                    }else{
+                        $b_update = '';
+                    }
+                    if ($field->b_delete == 't') {
+                        $b_delete = 'checked';
+                    }else{
+                        $b_delete = '';
+                    }
+
                     $no++;
                     $row = array();
                     $row[] = $no;
-                    $row[] = $field->username;
+                    $row[] = $field->n_menu;
+                    $row[] = $field->n_parent;
                     $row[] = $field->n_group;
-                    $row[] = $field->n_people;
-                    $row[] = $b_active;   
-                    $row[] = $field->d_entry;   
-                    $row[] = $field->d_updated;    
-                    
-                    if ($update == 't' AND $delete == 't') {
-                        $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_user."'".')"><i class="fa fa-pencil"></i> edit</button>
-                                <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_user."'".')"><i class="fa fa-trash"></i> delete</button>';
-                    }else if ($update == 't' AND $delete == 'f') {
-                        $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_user."'".')"><i class="fa fa-pencil"></i> edit</button>';
-                    }else if ($update == 'f' AND $delete == 't') {
-                        $row[] = '  <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_user."'".')"><i class="fa fa-trash"></i> delete</button>';
-                    }else{
-                        $row[] = '';
-                    }
+                    $row[] = '  <label class="mt-checkbox">
+                                    <input type="checkbox" name="b_view" id="b_view" '.$b_view.' />
+                                    <span></span>
+                                </label>';
+                    $row[] = '  <label class="mt-checkbox">
+                        <input type="checkbox" name="b_insert" id="b_insert" '.$b_insert.' />
+                        <span></span>
+                    </label>';
+                    $row[] = '  <label class="mt-checkbox">
+                        <input type="checkbox" name="b_update" id="b_update" '.$b_update.' />
+                        <span></span>
+                    </label>';
+                    $row[] = '  <label class="mt-checkbox">
+                        <input type="checkbox" name="b_delete" id="b_delete" '.$b_delete.' />
+                        <span></span>
+                    </label>';
                     
                     $data[] = $row;
                 }
         
                 $output = array(
                     "draw" => $_POST['draw'],
-                    "recordsTotal" => $this->User_model->count_all(),
-                    "recordsFiltered" => $this->User_model->count_filtered(),
+                    "recordsTotal" => $this->UserRole_model->count_all(),
+                    "recordsFiltered" => $this->UserRole_model->count_filtered(),
                     "data" => $data,
                 );
             }
@@ -92,10 +116,21 @@ class User_Management extends CI_Controller {
         echo json_encode($output);
     }
 
+    public function filter()
+    {
+        $n_menu = 'User Role';
+
+        $data = array(
+            'i_group' => $this->input->post('i_group')
+        );
+        // call function
+        $this->get_json($n_menu, 'filter', $data);
+    }
+
     public function all()
     {
         // menu name must pair with n_menu on macm.t_m_menu
-        $n_menu = 'user';
+        $n_menu = 'User Role';
 
         // call function
         $this->get_json($n_menu);
@@ -111,10 +146,10 @@ class User_Management extends CI_Controller {
             if($this->token_validation->check($token)){
                 
                 $data = array(  
-                    'menu'          => 'User', 
-                    'title'         => 'User Management', 
+                    'menu'          => 'User Role', 
+                    'title'         => 'User Role Management', 
                     'subtitle'      => 'Pages',
-                    'table_title'   => 'User List'
+                    'table_title'   => 'User Role List'
                 );
 
                 // get user role
@@ -127,9 +162,8 @@ class User_Management extends CI_Controller {
                 $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
                 $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
-                $data['user'] = $this->User_model->show();
-                $data['people'] = $this->People_model->show_all('employee');
                 $data['groups'] = $this->Group_model->show();
+                $data['menus'] = $this->MenuUser_model->show();
 
             }else{
 
@@ -161,14 +195,14 @@ class User_Management extends CI_Controller {
             
         } 
 
-        $data['menu'] = 'User';
+        $data['menu'] = 'User Role';
         
-        $this->load->template('management/v_user', $data);
+        $this->load->template('management/v_user_role', $data);
     }
 
     public function ajax_edit($id)
     {
-        $data = $this->User_model->get_by_id($id);
+        $data = $this->UserRole_model->get_by_id($id);
         echo json_encode($data);
     }
  
@@ -179,17 +213,14 @@ class User_Management extends CI_Controller {
         $i_user = $this->extract_user($this->session->userdata('id_token'));
 
         $data = array(
-                'username' => $this->input->post('username'),
-                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                'i_people'   => $this->input->post('i_people'),
-                'i_group'   => $this->input->post('i_group'),
-                'b_active' => 't'
+                'c_company' => $this->input->post('c_company'),
+                'n_company' => $this->input->post('n_company'),
+                'address'   => $this->input->post('address'),
+                'e_entry' => $i_user
             );
-        if($this->User_model->save($data) == false){
-            echo json_encode(array("status" => FALSE));
-        }else{
-            echo json_encode(array("status" => TRUE));
-        }
+        $insert = $this->UserRole_model->save($data);
+        
+        echo json_encode(array("status" => TRUE));
     }
  
     public function ajax_update()
@@ -199,18 +230,18 @@ class User_Management extends CI_Controller {
         $i_user = $this->extract_user($this->session->userdata('id_token'));
         
         $data = array(
-                'username' => $this->input->post('username'),
-                'password' => password_hash($this->input->post('password')),
-                'i_people'   => $this->input->post('i_people'),
-                'b_active' => $this->input->post('b_active')
+                'c_company' => $this->input->post('c_company'),
+                'n_company' => $this->input->post('n_company'),
+                'address'   => $this->input->post('address'),
+                'e_entry' => $i_user
             );
-        $this->User_model->update(array('i_user' => $this->input->post('i_user')), $data);
+        $this->UserRole_model->update(array('i_company' => $this->input->post('i_company')), $data);
         echo json_encode(array("status" => TRUE));
     }
  
     public function ajax_delete($id)
     {
-        $this->User_model->delete_by_id($id);
+        $this->UserRole_model->delete_by_id($id);
         echo json_encode(array("status" => TRUE));
     }
  
@@ -222,31 +253,17 @@ class User_Management extends CI_Controller {
         $data['inputerror'] = array();
         $data['status'] = TRUE;
  
-        if($this->input->post('username') == '')
+        if($this->input->post('c_company') == '')
         {
-            $data['inputerror'][] = 'username';
-            $data['error_string'][] = 'Username is required';
+            $data['inputerror'][] = 'c_company';
+            $data['error_string'][] = 'Company Code is required';
             $data['status'] = FALSE;
         }
  
-        if($this->input->post('password') == '')
+        if($this->input->post('n_company') == '')
         {
-            $data['inputerror'][] = 'password';
-            $data['error_string'][] = 'Password is required';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('i_people') == '')
-        {
-            $data['inputerror'][] = 'i_people';
-            $data['error_string'][] = 'Person is required';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('i_group') == '')
-        {
-            $data['inputerror'][] = 'i_group';
-            $data['error_string'][] = 'Group is required';
+            $data['inputerror'][] = 'n_company';
+            $data['error_string'][] = 'Company Name is required';
             $data['status'] = FALSE;
         }
  
@@ -256,7 +273,6 @@ class User_Management extends CI_Controller {
             exit();
         }
     }
-
 }
 
-/* End of file User_Management.php */
+/* End of file UserRole_Management.php */

@@ -28,15 +28,11 @@
                 <div class="portlet box dark">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-users"></i> <?= $table_title ?> </div>
+                            <i class="icon-list"></i> <?= $table_title ?> </div>
                         <div class="actions">
                             <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
                                 <i class="fa fa-plus"></i> 
-                                Add User
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
-                            <i class="fa fa-download"></i> 
-                                Export  
+                                Add Group
                             </button>
                         </div>
                     </div>
@@ -45,12 +41,9 @@
                             <thead>
                                 <tr>
                                     <th class="all"> No </th>
-                                    <th class="all"> Username </th>
-                                    <th class="min-tablet"> Group </th>
-                                    <th> Owner Name </th>
+                                    <th class="all"> Group Name </th>
+                                    <th class="min-tablet"> Description </th>
                                     <th class="min-tablet"> Status </th>
-                                    <th class="none"> Date entry </th>
-                                    <th class="none"> Last Updated </th>
                                     <th class="all"> Action </th>
                                 </tr>
                             </thead>
@@ -59,12 +52,9 @@
                             <tfoot>
                                 <tr>
                                     <th> No </th>
-                                    <th> Username </th>
-                                    <th> Group </th>
-                                    <th> Owner Name </th>
+                                    <th> Group Name </th>
+                                    <th> Description </th>
                                     <th> Status </th>
-                                    <th> Date entry </th>
-                                    <th> Last Updated </th>
                                     <th> Action </th>
                                 </tr>
                             </tfoot>
@@ -82,7 +72,7 @@
 <!-- MODAL ADD & EDIT-->
 <div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
     <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-building"></i> USER</h4>
+        <h4 class="modal-title"><i class="fa fa-building"></i> GROUP ACCESS</h4>
     </div>
     <div class="modal-body">
         <!-- BEGIN VALIDATION STATES-->
@@ -91,54 +81,29 @@
                 <!-- BEGIN FORM-->
                 <form action="#" id="form">
 
-                    <input type="hidden" class="form-control" name="i_user" id="i_user" required>
+                    <input type="hidden" class="form-control" name="i_group" id="i_group" required>
                             
                     <div class="form-body">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
-                            <label for="form_control_1">Username
+                            <input type="text" class="form-control" name="n_group" id="n_group" placeholder="Enter Group Name">
+                            <label for="form_control_1">Group Name
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Enter Username...</span>
+                            <span class="help-block">Enter Group Name...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
-                            <label for="form_control_1">Password
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Enter Password...</span>
+                            <textarea name="e_desc" id="e_desc" cols="30" rows="5" class="form-control"></textarea>
+                            <label for="form_control_1">Description</label>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <select class="form-control" name="i_group">
-                                <option value="">Select</option>
-                                <?php
-                                foreach ($groups as $group) {
-                                    ?>
-                                    <option value="<?= $group->i_group ?>"><?= $group->n_group ?></option>
-                                    <?php
-                                }
-                                ?>
+                            <select class="form-control" name="b_active">
+                                <option value="t">Active</option>
+                                <option value="f">Non Active</option>
                             </select>
-                            <label for="form_control_1">Group
+                            <label for="form_control_1">Status
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Please Choice group...</span>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <select class="form-control" name="i_people">
-                                <option value="">Select</option>
-                                <?php
-                                foreach ($people as $person) {
-                                    ?>
-                                    <option value="<?= $person->i_people ?>"><?= $person->n_people ?></option>
-                                    <?php
-                                }
-                                ?>
-                            </select>
-                            <label for="form_control_1">Owner Name
-                                <span class="required">*</span>
-                            </label>
-                            <span class="help-block">Please Choice the owner...</span>
+                            <span class="help-block">Please Choice Status...</span>
                         </div>
                     </div>
                     <div class="form-actions">
@@ -175,7 +140,7 @@
                 "infoFiltered": ""
             },
             "ajax":{
-                "url": "<?php echo base_url() . 'user/all'; ?>",
+                "url": "<?php echo base_url() . 'group/all'; ?>",
                 "type": "POST"
             },
             "columnDefs":[
@@ -195,7 +160,7 @@
                 {
                     'width': '20%',
                     'orderable': false, 
-                    'targets': [4, 7]
+                    'targets': [4]
                 }
             ]
 
@@ -223,7 +188,7 @@
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $('#add_edit').modal('show'); // show bootstrap modal
-        $('.modal-title').text('ADD USER'); // Set title to Bootstrap modal title
+        $('.modal-title').text('ADD GROUP ACCESS'); // Set title to Bootstrap modal title
     }
     
     function edit_data(id)
@@ -233,19 +198,18 @@
     
         //Ajax Load data from ajax
         $.ajax({
-            url : "<?php echo site_url('user/')?>/" + id,
+            url : "<?php echo site_url('group/')?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
             {
     
-                $('[name="i_user"]').val(data.i_user);
-                $('[name="username"]').val(data.username);
-                $('[name="password"]').val(data.password);
                 $('[name="i_group"]').val(data.i_group);
-                $('[name="i_people"]').val(data.i_people);
+                $('[name="n_group"]').val(data.n_group);
+                $('[name="e_desc"]').val(data.e_desc);
+                $('[name="b_active"]').val(data.b_active);
                 $('#add_edit').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('EDIT USER'); // Set title to Bootstrap modal title
+                $('.modal-title').text('EDIT GROUP ACCESS'); // Set title to Bootstrap modal title
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -267,10 +231,10 @@
         var message;
 
         if(save_method == 'add') {
-            url = "<?php echo site_url('user/add')?>";
+            url = "<?php echo site_url('group/add')?>";
             message = 'Data successfully added';
         } else {
-            url = "<?php echo site_url('user/update')?>";
+            url = "<?php echo site_url('group/update')?>";
             message = 'Data successfully updated';
         }
 
@@ -297,7 +261,7 @@
                 {
                     // notif add failed
                     $(document).ready(function() {
-                        toastr.error('Inputan tidak boleh kosong atau Username sudah digunakan', 'Error')
+                        toastr.error('Inputan tidak boleh kosong atau Nama Group sudah digunakan', 'Error')
                     });
                     // for (var i = 0; i < data.inputerror.length; i++) 
                     // {
@@ -333,7 +297,7 @@
             
             // ajax delete data to database
             $.ajax({
-                url : "<?php echo site_url('user/delete')?>/"+id,
+                url : "<?php echo site_url('group/delete')?>/"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)

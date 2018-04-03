@@ -42,7 +42,14 @@
             if (isset($menu_master)) {
                 if (count($menu_master) > 0) {
                     ?>
-                    <li class="nav-item <?php if($this->uri->segment(1)=="company" OR $this->uri->segment(1)=="card") echo 'active open'; ?>">
+                    <li class="nav-item <?php if(
+                        $this->uri->segment(1)=="company" OR 
+                        $this->uri->segment(1)=="card" OR 
+                        $this->uri->segment(1)=="group" OR 
+                        $this->uri->segment(1)=="user" OR  
+                        $this->uri->segment(1)=="user_role" OR 
+                        $this->uri->segment(1)=="menu") echo 'active open'; ?>">
+
                         <a href="javascript:;" class="nav-link nav-toggle">
                             <i class="fa fa-medium"></i>
                             <span class="title">Master</span>

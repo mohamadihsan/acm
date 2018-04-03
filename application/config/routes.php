@@ -25,19 +25,43 @@ $route['employee/(:num)']               = 'master/People_Management/ajax_edit/$1
 $route['employee/delete/(:num)']        = 'master/People_Management/ajax_delete/$1';
 $route['employee/add']                  = 'master/People_Management/ajax_add';
 $route['employee/update']               = 'master/People_Management/ajax_update';
+$route['group']                         = 'master/GroupAccess_Management/show';
+$route['group/all']                     = 'master/GroupAccess_Management/all';
+$route['group/(:num)']                  = 'master/GroupAccess_Management/ajax_edit/$1';
+$route['group/delete/(:num)']           = 'master/GroupAccess_Management/ajax_delete/$1';
+$route['group/add']                     = 'master/GroupAccess_Management/ajax_add';
+$route['group/update']                  = 'master/GroupAccess_Management/ajax_update';
 $route['non_employee']                  = 'master/People_Management/show_non_employee';
 $route['non_employee/all']              = 'master/People_Management/all_non_employee';
 $route['non_employee/(:num)']           = 'master/People_Management/ajax_edit/$1';
 $route['non_employee/delete/(:num)']    = 'master/People_Management/ajax_delete/$1';
 $route['non_employee/add']              = 'master/People_Management/ajax_add';
 $route['non_employee/update']           = 'master/People_Management/ajax_update';
+$route['menu']                          = 'master/MenuUser_Management/show';
+$route['menu/all']                      = 'master/MenuUser_Management/all';
+$route['menu/(:num)']                   = 'master/MenuUser_Management/ajax_edit/$1';
+$route['menu/delete/(:num)']            = 'master/MenuUser_Management/ajax_delete/$1';
+$route['menu/add']                      = 'master/MenuUser_Management/ajax_add';
+$route['menu/update']                   = 'master/MenuUser_Management/ajax_update';
 $route['tenant']                        = 'master/People_Management/show_tenant';
 $route['tenant/all']                    = 'master/People_Management/all_tenant';
 $route['tenant/(:num)']                 = 'master/People_Management/ajax_edit/$1';
 $route['tenant/delete/(:num)']          = 'master/People_Management/ajax_delete/$1';
 $route['tenant/add']                    = 'master/People_Management/ajax_add';
 $route['tenant/update']                 = 'master/People_Management/ajax_update';
-$route['user']                          = 'master/User_Management';
+$route['user']                          = 'master/User_Management/show';
+$route['user/all']                      = 'master/User_Management/all';
+$route['user/(:num)']                   = 'master/User_Management/ajax_edit/$1';
+$route['user/delete/(:num)']            = 'master/User_Management/ajax_delete/$1';
+$route['user/add']                      = 'master/User_Management/ajax_add';
+$route['user/update']                   = 'master/User_Management/ajax_update';
+$route['user_role']                     = 'master/UserRole_Management/show';
+$route['user_role/all']                 = 'master/UserRole_Management/all';
+$route['user_role/(:num)']              = 'master/UserRole_Management/ajax_edit/$1';
+$route['user_role/delete/(:num)']       = 'master/UserRole_Management/ajax_delete/$1';
+$route['user_role/add']                 = 'master/UserRole_Management/ajax_add';
+$route['user_role/update']              = 'master/UserRole_Management/ajax_update';
+$route['user_role/filter']              = 'master/UserRole_Management/filter';
 
 // reporting
 $route['excel/people/import']           = 'Excel/upload_people';
@@ -67,6 +91,8 @@ $route['trans/update_card/filter']      = 'transaction/Update_Card/filter';
 $route['logout']                        = 'auth/User_Authentication/logout';
 
 // MY API Routes
+// register
+$route['api/user/register']['POST']             = 'api/master/MUser_API/register_user';
 // login & logout
 $route['api/user_auth/login']['POST']           = 'api/Authentication/login'; //login
 // $route['api/logout/(:num)/(:any)']['GET']       = 'api/Authentication/logout'; // logout aplikasi front end

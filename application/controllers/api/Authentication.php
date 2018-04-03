@@ -82,26 +82,30 @@ class Authentication extends REST_Controller {
                         'i_user' => $i_user_from_db,
                         'b_active' => 't'
                     );
-                    // cek apakah user sedang login / belum logout dari boot
-                    $log = $this->User_model->check_login_active($data_login_active);
-                    //exract data
-                    $log2 = $log->result();
 
-                    if($log->num_rows() > 0){
+                    // validasi status active untuk aplikasi frontend
+                    if ($terminal_id != '' OR $terminal_id != null) {
+                        // cek apakah user sedang login / belum logout dari boot
+                        $log = $this->User_model->check_login_active($data_login_active);
+                        //exract data
+                        $log2 = $log->result();
 
-                        if (TRIM($log2[0]->terminal_id) != TRIM($terminal_id) AND TRIM($log2[0]->terminal_id) != null) {
-                            
-                            $output = array(
-                                'status' => false,
-                                'username' => $username_from_db,
-                                'message' => 'User sedang aktif di boot lain'
-                            );
-                            //user sedang aktif di boot lain/ belum melakukan logout
-                            $this->response($output, REST_Controller::HTTP_FORBIDDEN);
+                        if($log->num_rows() > 0){
 
+                            if (TRIM($log2[0]->terminal_id) != TRIM($terminal_id) AND TRIM($log2[0]->terminal_id) != null) {
+                                
+                                $output = array(
+                                    'status' => false,
+                                    'username' => $username_from_db,
+                                    'message' => 'User sedang aktif di boot lain'
+                                );
+                                //user sedang aktif di boot lain/ belum melakukan logout
+                                $this->response($output, REST_Controller::HTTP_FORBIDDEN);
+
+                            }
                         }
                     }
-
+                    
                     $iat        = date('Y-m-d H:i:s');
                     $expired    = date('Y-m-d H:i:s', strtotime('+1 days', strtotime($iat)));
                     // set ip address
