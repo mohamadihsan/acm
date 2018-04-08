@@ -109,10 +109,13 @@ $route['api/tmdesc/insert']['POST']             = 'api/master/TMDesc_API/desc_in
 $route['api/tmdesc/update/(:num)']['PUT']       = 'api/master/TMDesc_API/desc_update'; // update data desc
 $route['api/tmdesc/delete/(:num)']['DELETE']    = 'api/master/TMDesc_API/desc_softdelete'; // delete data desc
 // tacm.t_d_registration
+$route['api/register/check']['POST']            = 'api/transaction/TRegistration_API/check_registration'; // registration
 $route['api/register']['POST']                  = 'api/transaction/TRegistration_API/registration'; // registration
 // tacm.t_d_update_card
+$route['api/updatecard/check']['POST']          = 'api/transaction/TUpdate_Card_API/check_update_card'; // update card
 $route['api/updatecard']['POST']                = 'api/transaction/TUpdate_Card_API/update_card'; // update card
 // tacm.t_d_replacement
+$route['api/replacement/check']['POST']         = 'api/transaction/TReplacement_API/check_replacement'; // replacement card
 $route['api/replacement']['POST']               = 'api/transaction/TReplacement_API/replacement'; // replacement card
 // tacm.t_d_deletion_card
 $route['api/deletion']['POST']                  = 'api/transaction/TDeletion_Card_API/deletion_card'; // deletion card

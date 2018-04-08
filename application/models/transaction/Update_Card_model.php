@@ -143,6 +143,13 @@ class Update_Card_model extends CI_Model {
         return $query->result();
     }
 
+    public function check($uid, $c_card, $i_card_type, $c_people, $i_user)
+    {
+        $result = $this->db->query("SELECT * FROM tacm.sp_check_update_card('$uid', '$c_card', '$i_card_type', '$c_people', '$i_user')")->result();
+        
+        return $result;
+    }
+
     public function insert($uid, $c_card, $i_card_type, $c_people, $i_user)
     {
         $result = $this->db->query("SELECT * FROM tacm.sp_update_card('$uid', '$c_card', '$i_card_type', '$c_people', '$i_user')")->result();

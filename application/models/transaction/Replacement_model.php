@@ -125,6 +125,13 @@ class Replacement_model extends CI_Model {
         return $query->result();
     }
 
+    public function check($uid, $c_card_before, $c_card, $i_card_type, $c_people, $c_company, $i_user, $c_physical_card)
+    {
+        $result = $this->db->query("SELECT * FROM tacm.sp_check_card_replacement('$uid', '$c_card_before', '$c_card', '$i_card_type', '$c_people', '$c_company', '$i_user', '$c_physical_card')")->result();
+        
+        return $result;
+    }
+
     public function insert($uid, $c_card_before, $c_card, $i_card_type, $c_people, $c_company, $i_user, $c_physical_card)
     {
         $result = $this->db->query("SELECT * FROM tacm.sp_card_replacement('$uid', '$c_card_before', '$c_card', '$i_card_type', '$c_people', '$c_company', '$i_user', '$c_physical_card')")->result();

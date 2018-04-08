@@ -149,6 +149,13 @@ class Registration_model extends CI_Model {
         return $result;
     }
 
+    public function check($uid, $c_card, $i_card_type, $c_people, $c_company, $i_user)
+    {
+        $result = $this->db->query("SELECT * FROM tacm.sp_check_registration('$uid', '$c_card', '$i_card_type', '$c_people', '$c_company', '$i_user')")->result();
+        
+        return $result;
+    }
+
 }
 
 /* End of file Registration_model.php */
