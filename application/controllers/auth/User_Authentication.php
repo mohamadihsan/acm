@@ -50,11 +50,11 @@ class User_Authentication extends CI_Controller {
                         break;
                     
                     case 'GCG':
-                        # code...
+                        redirect(site_url('dashboard'),'refresh');
                         break;
                     
                     case 'penjualan':
-                        # code...
+                        redirect(site_url('dashboard'),'refresh');
                         break;
 
                     default:
