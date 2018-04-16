@@ -96,7 +96,8 @@ class MenuUser_model extends CI_Model {
     }
 
     function show()
-    {
+    {   
+        $this->db->order_by('n_menu', 'asc');
         $query = $this->db->get($this->table);
         return $query->result();
     }

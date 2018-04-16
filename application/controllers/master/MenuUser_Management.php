@@ -67,9 +67,9 @@ class MenuUser_Management extends CI_Controller {
                     if ($update == 't' AND $delete == 't') {
                         $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_menu."'".')"><i class="fa fa-pencil"></i> edit</button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_menu."'".')"><i class="fa fa-trash"></i> delete</button>';
-                    }else if ($update == 't' AND $delete == 'f') {
+                    }else if ($update == 't' AND $delete == 'f' OR $delete == null) {
                         $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_menu."'".')"><i class="fa fa-pencil"></i> edit</button>';
-                    }else if ($update == 'f' AND $delete == 't') {
+                    }else if ($update == 'f' OR $update == null AND $delete == 't') {
                         $row[] = '  <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_menu."'".')"><i class="fa fa-trash"></i> delete</button>';
                     }else{
                         $row[] = '';

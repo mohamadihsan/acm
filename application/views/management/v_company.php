@@ -30,7 +30,8 @@
                         <div class="caption">
                             <i class="fa fa-users"></i> <?= $table_title ?> </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
+                            <!-- <div id="add_button"></div> -->
+                            <button type="button" class="btn btn-default btn-sm btn-circle add_test" onclick="add_data()">
                                 <i class="fa fa-plus"></i> 
                                 Add Company
                             </button>

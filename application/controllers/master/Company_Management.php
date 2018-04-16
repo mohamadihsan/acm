@@ -39,6 +39,8 @@ class Company_Management extends CI_Controller {
                 $insert = $action[0]->b_insert;
                 $update = $action[0]->b_update;
                 $delete = $action[0]->b_delete;
+
+                
                 
                 //  END SCRIPT TO SET USER ROLE
 
@@ -57,9 +59,9 @@ class Company_Management extends CI_Controller {
                     if ($update == 't' AND $delete == 't') {
                         $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_company."'".')"><i class="fa fa-pencil"></i> edit</button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_company."'".')"><i class="fa fa-trash"></i> delete</button>';
-                    }else if ($update == 't' AND $delete == 'f') {
+                    }else if ($update == 't' AND $delete == 'f' OR $delete == null) {
                         $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_company."'".')"><i class="fa fa-pencil"></i> edit</button>';
-                    }else if ($update == 'f' AND $delete == 't') {
+                    }else if ($update == 'f' OR $update == null AND $delete == 't') {
                         $row[] = '  <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_company."'".')"><i class="fa fa-trash"></i> delete</button>';
                     }else{
                         $row[] = '';

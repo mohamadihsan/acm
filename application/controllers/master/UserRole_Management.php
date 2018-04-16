@@ -37,11 +37,11 @@ class UserRole_Management extends CI_Controller {
                 $i_group_from_token = $data_token['i_group'];
 
                 // show user role for action this menu
-                // $action = $this->Menu_model->check_action($i_group_from_token, $n_menu);
-                // $view   = $action[0]->b_view;
-                // $insert = $action[0]->b_insert;
-                // $update = $action[0]->b_update;
-                // $delete = $action[0]->b_delete;
+                $action = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $view   = $action[0]->b_view;
+                $insert = $action[0]->b_insert;
+                $update = $action[0]->b_update;
+                $delete = $action[0]->b_delete;
                 
                 //  END SCRIPT TO SET USER ROLE
 
@@ -84,21 +84,32 @@ class UserRole_Management extends CI_Controller {
                     $row[] = $field->n_parent;
                     $row[] = $field->n_group;
                     $row[] = '  <label class="mt-checkbox">
-                                    <input type="checkbox" name="b_view" id="b_view" '.$b_view.' />
+                                    <input type="checkbox" name="b_view" id="b_view" '.$b_view.' disabled="disabled" />
                                     <span></span>
                                 </label>';
                     $row[] = '  <label class="mt-checkbox">
-                        <input type="checkbox" name="b_insert" id="b_insert" '.$b_insert.' />
+                        <input type="checkbox" name="b_insert" id="b_insert" '.$b_insert.' disabled="disabled" />
                         <span></span>
                     </label>';
                     $row[] = '  <label class="mt-checkbox">
-                        <input type="checkbox" name="b_update" id="b_update" '.$b_update.' />
+                        <input type="checkbox" name="b_update" id="b_update" '.$b_update.' disabled="disabled" />
                         <span></span>
                     </label>';
                     $row[] = '  <label class="mt-checkbox">
-                        <input type="checkbox" name="b_delete" id="b_delete" '.$b_delete.' />
+                        <input type="checkbox" name="b_delete" id="b_delete" '.$b_delete.' disabled="disabled" />
                         <span></span>
                     </label>';
+
+                    if ($update == 't' AND $delete == 't') {
+                        $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_group_access."'".')"><i class="fa fa-pencil"></i> edit</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_group_access."'".')"><i class="fa fa-trash"></i> delete</button>';
+                    }else if ($update == 't' AND $delete == 'f') {
+                        $row[] = '  <button type="button" class="btn btn-warning btn-sm" onclick="edit_data('."'".$field->i_group_access."'".')"><i class="fa fa-pencil"></i> edit</button>';
+                    }else if ($update == 'f' AND $delete == 't') {
+                        $row[] = '  <button type="button" class="btn btn-danger btn-sm" onclick="delete_data('."'".$field->i_group_access."'".')"><i class="fa fa-trash"></i> delete</button>';
+                    }else{
+                        $row[] = '';
+                    }
                     
                     $data[] = $row;
                 }
@@ -209,14 +220,24 @@ class UserRole_Management extends CI_Controller {
     public function ajax_add()
     {
         $this->_validate();
-        // get user entry
-        $i_user = $this->extract_user($this->session->userdata('id_token'));
+
+        $b_view = 'f';
+        $b_insert = 'f';
+        $b_update = 'f';
+        $b_delete = 'f';
+        
+        $b_view = $this->input->post('b_view');
+        $b_insert = $this->input->post('b_insert');
+        $b_update = $this->input->post('b_update');
+        $b_delete = $this->input->post('b_delete');
 
         $data = array(
-                'c_company' => $this->input->post('c_company'),
-                'n_company' => $this->input->post('n_company'),
-                'address'   => $this->input->post('address'),
-                'e_entry' => $i_user
+                'i_group' => $this->input->post('i_group'),
+                'i_menu' => $this->input->post('i_menu'),
+                'b_view'   => $b_view,
+                'b_insert'   => $b_insert,
+                'b_update'   => $b_update,
+                'b_delete'   => $b_delete
             );
         $insert = $this->UserRole_model->save($data);
         
@@ -226,16 +247,26 @@ class UserRole_Management extends CI_Controller {
     public function ajax_update()
     {
         $this->_validate();
-        // get user entry
-        $i_user = $this->extract_user($this->session->userdata('id_token'));
-        
+
+        $b_view = 'f';
+        $b_insert = 'f';
+        $b_update = 'f';
+        $b_delete = 'f';
+
+        $b_view = $this->input->post('b_view');
+        $b_insert = $this->input->post('b_insert');
+        $b_update = $this->input->post('b_update');
+        $b_delete = $this->input->post('b_delete');
+
         $data = array(
-                'c_company' => $this->input->post('c_company'),
-                'n_company' => $this->input->post('n_company'),
-                'address'   => $this->input->post('address'),
-                'e_entry' => $i_user
+                'i_group' => $this->input->post('i_group'),
+                'i_menu' => $this->input->post('i_menu'),
+                'b_view'   => $b_view,
+                'b_insert'   => $b_insert,
+                'b_update'   => $b_update,
+                'b_delete'   => $b_delete
             );
-        $this->UserRole_model->update(array('i_company' => $this->input->post('i_company')), $data);
+        $this->UserRole_model->update(array('i_group_access' => $this->input->post('i_group_access')), $data);
         echo json_encode(array("status" => TRUE));
     }
  
@@ -253,17 +284,17 @@ class UserRole_Management extends CI_Controller {
         $data['inputerror'] = array();
         $data['status'] = TRUE;
  
-        if($this->input->post('c_company') == '')
+        if($this->input->post('i_group') == '')
         {
-            $data['inputerror'][] = 'c_company';
-            $data['error_string'][] = 'Company Code is required';
+            $data['inputerror'][] = 'i_group';
+            $data['error_string'][] = 'Group User is required';
             $data['status'] = FALSE;
         }
  
-        if($this->input->post('n_company') == '')
+        if($this->input->post('i_menu') == '')
         {
-            $data['inputerror'][] = 'n_company';
-            $data['error_string'][] = 'Company Name is required';
+            $data['inputerror'][] = 'i_menu';
+            $data['error_string'][] = 'Menu is required';
             $data['status'] = FALSE;
         }
  

@@ -68,6 +68,12 @@
                         <div class="caption">
                             <i class="fa fa-users"></i> <?= $table_title ?> 
                         </div>
+                        <div class="actions">
+                            <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
+                                <i class="fa fa-plus"></i> 
+                                Add User Role
+                            </button>
+                        </div>
                     </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover table-header-fixed dt-responsive" id="posts">
@@ -81,6 +87,7 @@
                                     <th class="all"> Insert </th>
                                     <th class="all"> Update </th>
                                     <th class="all"> Delete </th>
+                                    <th class="all"> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,6 +102,7 @@
                                     <th> Insert </th>
                                     <th> Update </th>
                                     <th> Delete </th>
+                                    <th> Action </th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -107,6 +115,133 @@
     <!-- END CONTENT BODY -->
 </div>
 <!-- END CONTENT -->
+
+<!-- MODAL ADD & EDIT-->
+<div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
+    <div class="modal-header">
+        <h4 class="modal-title"><i class="fa fa-building"></i> COMPANY</h4>
+    </div>
+    <div class="modal-body">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light portlet-fit portlet-form bordered">
+            <div class="portlet-body">
+                <!-- BEGIN FORM-->
+                <form action="#" id="form">
+
+                    <input type="hidden" class="form-control" name="i_group_access" id="i_group_access" required>
+                            
+                    <div class="form-body">
+
+                        <div id="select_disabled">
+                            <div class="form-group form-md-line-input">
+                                <select class="form-control" name="i_group_disabled" id="i_group_disabled">
+                                    <option value="">Select</option>
+                                    <?php
+                                    foreach ($groups as $group) {
+                                        ?>
+                                        <option value="<?= $group->i_group ?>"><?= $group->n_group ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <label for="form_control_1">Group User 
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block">Please Choice Group User...</span>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <select class="form-control" name="i_menu_disabled" id="i_menu_disabled">
+                                    <option value="">Select</option>
+                                    <?php
+                                    foreach ($menus as $menu) {
+                                        ?>
+                                        <option value="<?= $menu->i_menu ?>"><?= $menu->n_menu ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <label for="form_control_1">Menu 
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block">Please Choice Menu...</span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group form-md-line-input" id="select_i_group">
+                            <select class="form-control" name="i_group" id="i_group">
+                                <option value="">Select</option>
+                                <?php
+                                foreach ($groups as $group) {
+                                    ?>
+                                    <option value="<?= $group->i_group ?>"><?= $group->n_group ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                            <label for="form_control_1">Group User 
+                                <span class="required">*</span>
+                            </label>
+                            <span class="help-block">Please Choice Group User...</span>
+                        </div>
+                        <div class="form-group form-md-line-input" id="select_i_menu">
+                            <select class="form-control" name="i_menu" id="i_menu">
+                                <option value="">Select</option>
+                                <?php
+                                foreach ($menus as $menu) {
+                                    ?>
+                                    <option value="<?= $menu->i_menu ?>"><?= $menu->n_menu ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                            <label for="form_control_1">Menu 
+                                <span class="required">*</span>
+                            </label>
+                            <span class="help-block">Please Choice Menu...</span>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label class="mt-checkbox">View
+                                <input type="checkbox" name="b_view"/>
+                                <span></span>
+                            </label>
+                        </div>  
+                        <div class="form-group">  
+                            <label class="mt-checkbox">Insert
+                                <input type="checkbox" name="b_insert"/>
+                                <span></span>
+                            </label>
+                        </div>    
+                        <div class="form-group">
+                            <label class="mt-checkbox">Update
+                                <input type="checkbox" name="b_update"/>
+                                <span></span>
+                            </label>
+                        </div>    
+                        <div class="form-group">
+                            <label class="mt-checkbox">Delete
+                                <input type="checkbox" name="b_delete"/>
+                                <span></span>
+                            </label>
+                        </div>    
+                    </div> -->
+                    <div id="role"></div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
+                                <button type="button" id="btnSave" onclick="save()" class="btn blue">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+<!-- END MODAL ADD & EDIT-->
 
 <script type="text/javascript">
     var TableDatatablesManaged = function () {
@@ -155,6 +290,13 @@
                         'width': '10%',
                         'orderable': false, 
                         'targets': [3,4,5,6,7]
+                    },
+                    {
+                        "width": "17%",
+                        'orderable': false,
+                        "searchable": false,
+                        "className": "text-center",
+                        'targets': [8]
                     }
                 ],
                 "order": [
@@ -203,138 +345,39 @@
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $('#add_edit').modal('show'); // show bootstrap modal
-        $('.modal-title').text('DELETION CARD'); // Set title to Bootstrap modal title
-    }
-    
-    function reload_table()
-    {
-        table.ajax.reload(null,false); //reload datatable ajax 
-    }
-    
-    function save()
-    {
-        $('#btnSave').text('saving...'); //change button text
-        $('#btnSave').attr('disabled',true); //set button disable 
-        var url;
-        var message;
-
-        if(save_method == 'add') {
-            url = "<?php echo site_url('user_role/delete')?>";
-            message = 'The card successfully deleted';
-        }
-
-        // ajax adding data to database
-        $.ajax({
-            url : url,
-            type: "POST",
-            data: $('#form').serialize(),
-            dataType: "JSON",
-            success: function(data)
-            {    
-                if(data.status) //if success close modal and reload ajax table
-                {
-                    // notif add success
-                    $(document).ready(function() {
-                        toastr.success(message, 'Success')
-                    });
-
-                    $('#add_edit').modal('hide');
-                    reload_table();
-                }
-                else
-                {
-                    for (var i = 0; i < data.inputerror.length; i++) 
-                    {
-                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
-                    }
-                }
-                $('#btnSave').text('save'); //change button text
-                $('#btnSave').attr('disabled',false); //set button enable 
-    
-    
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                // notif add failed
-                $(document).ready(function() {
-                    toastr.error('The card failed to delete', 'Error')
-                }); 
-
-                alert('Error to delete cards');
-                $('#btnSave').text('save'); //change button text
-                $('#btnSave').attr('disabled',false); //set button enable 
-    
-            }
-        });
-    }
-</script>            
-
-<!-- <script>
-    var save_method; //for save method string
-    var table;
-
-    $( document ).ready(function() {
-        table =  $('#posts').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order":[],
-            "language": {
-                "lengthMenu": "Show _MENU_ records per page",
-                "info": "Showing page _PAGE_ of _PAGES_",
-                "infoEmpty": "No records available",
-                "infoFiltered": ""
-            },
-            "ajax":{
-                "url": "<?php echo base_url() . 'user_role/all'; ?>",
-                "type": "POST"
-            },
-            "columnDefs":[
-                {
-                    "width": "5%",
-                    'orderable': false,
-                    "searchable": false,
-                    'targets': [0]
-                },
-                {
-                    "width": "15%",
-                    'targets': [1]
-                },
-                {
-                    "className": "text-center", "targets":[0,2,3,4,5,6,7]
-                },
-                {
-                    'width': '10%',
-                    'orderable': false, 
-                    'targets': [3,4,5,6,7]
-                }
-            ]
-
-	    });
-
-        //set input/textarea/select event when change value, remove class error and remove text help block 
-        $("input").change(function(){
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
-        $("textarea").change(function(){
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
-        $("select").change(function(){
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
-    });
-
-    function add_data()
-    {
-        save_method = 'add';
-        $('#form')[0].reset(); // reset form on modals
-        $('.form-group').removeClass('has-error'); // clear error class
-        $('.help-block').empty(); // clear error string
-        $('#add_edit').modal('show'); // show bootstrap modal
         $('.modal-title').text('ADD USER ROLE'); // Set title to Bootstrap modal title
+        
+        // $('#select_i_group').removeAttr('disabled');
+        // $('#select_i_menu').removeAttr('disabled');
+        $('#select_i_group').show();
+        $('#select_i_menu').show();
+        $('#select_disabled').hide();
+
+        $('#role').html('<div class="form-group">'+
+                        '<label class="mt-checkbox">View'+
+                            '<input type="checkbox" name="b_view" value="t"/>'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div>'+  
+                    '<div class="form-group">'+  
+                        '<label class="mt-checkbox">Insert'+
+                            '<input type="checkbox" name="b_insert" value="t"/>'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div> '+   
+                    '<div class="form-group">'+
+                        '<label class="mt-checkbox">Update'+
+                            '<input type="checkbox" name="b_update" value="t"/>'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div> '+   
+                    '<div class="form-group">'+
+                        '<label class="mt-checkbox">Delete'+
+                            '<input type="checkbox" name="b_delete" value="t"/>'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div> '+   
+                '</div>');
     }
     
     function edit_data(id)
@@ -349,11 +392,56 @@
             dataType: "JSON",
             success: function(data)
             {
-    
+                if (data.b_view == 't') {
+                    var b_view = 'checked';
+                }
+                if (data.b_insert == 't') {
+                    var b_insert = 'checked';
+                }
+                if (data.b_update == 't') {
+                    var b_update = 'checked';
+                }
+                if (data.b_delete == 't') {
+                    var b_delete = 'checked';
+                }
+                
+                $('#select_i_group').hide();
+                $('#select_i_menu').hide();
+                $('#select_disabled').show();
+                $('[name="i_group_disabled"]').attr('disabled', 'disabled');
+                $('[name="i_menu_disabled"]').attr('disabled', 'disabled');
+
                 $('[name="i_group_access"]').val(data.i_group_access);
-                $('[name="c_company"]').val(data.c_company);
-                $('[name="n_company"]').val(data.n_company);
-                $('[name="address"]').val(data.address);
+                $('[name="i_group_disabled"]').val(data.i_group);
+                $('[name="i_menu_disabled"]').val(data.i_menu);
+                $('[name="i_group"]').val(data.i_group);
+                $('[name="i_menu"]').val(data.i_menu);
+                $('#role').html('<div class="form-group">'+
+                        '<label class="mt-checkbox">View'+
+                            '<input type="checkbox" name="b_view" '+ b_view +'  value="t" />'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div>'+  
+                    '<div class="form-group">'+  
+                        '<label class="mt-checkbox">Insert'+
+                            '<input type="checkbox" name="b_insert" '+ b_insert +'  value="t" />'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div> '+   
+                    '<div class="form-group">'+
+                        '<label class="mt-checkbox">Update'+
+                            '<input type="checkbox" name="b_update" '+ b_update +'  value="t" />'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div> '+   
+                    '<div class="form-group">'+
+                        '<label class="mt-checkbox">Delete'+
+                            '<input type="checkbox" name="b_delete" '+ b_delete +'  value="t" />'+
+                            '<span></span>'+
+                        '</label>'+
+                    '</div> '+   
+                '</div>');
+                
                 $('#add_edit').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('EDIT USER ROLE'); // Set title to Bootstrap modal title
             },
@@ -366,7 +454,9 @@
     
     function reload_table()
     {
-        table.ajax.reload(null,false); //reload datatable ajax 
+        // table.ajax.reload(); //reload datatable ajax 
+        var data_tables = $('#posts').DataTable();
+        data_tables.draw();
     }
     
     function save()
@@ -466,4 +556,4 @@
             
         }
     } 
-</script> -->
+</script>            
