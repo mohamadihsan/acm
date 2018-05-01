@@ -78,10 +78,25 @@
                         <div class="caption">
                             <i class="fa fa-file-text-o"></i> <?= $table_title ?> </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
-                            <i class="fa fa-download"></i> 
-                                Export  
-                            </button>
+                            <?php
+                            if ($view == 't') {
+                                ?>
+                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                                    <i class="fa fa-download"></i> 
+                                    Export  
+                                </button>
+                                <?php
+                            }else{
+                                ?>
+                                <script>
+                                    alert('akun anda tidak diperkenankan untuk mengakses data ini!');
+                                </script>
+                                <?php
+                                
+                                redirect('','refresh');
+                                
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="portlet-body">

@@ -75,14 +75,14 @@ class TUpdate_Card_API extends REST_Controller {
                             $this->response([
                                 'status' => false,
                                 'data' => $response,
-                                'message' => 'Proses Perpanjangan Kartu Gagal'
+                                'message' => 'Kartu belum teregistrasi atau data pemegang kartu bermasalah'
                             ], REST_Controller::HTTP_NOT_ACCEPTABLE);
                         }else if($response[0]->c_status == 't'){
                             //respone success
                             $this->response([
                                 'status' => true,
                                 'data' => $response,
-                                'message' => 'Data Valid'
+                                'message' => 'Data Valid, Proses Update Kartu bisa dilanjutkan'
                             ], REST_Controller::HTTP_OK);
                         }else{
                             // respone failed
@@ -181,7 +181,7 @@ class TUpdate_Card_API extends REST_Controller {
                             $this->response([
                                 'status' => false,
                                 'data' => $response,
-                                'message' => 'Proses Perpanjangan Kartu Gagal'
+                                'message' => 'Proses Perpanjangan Kartu Gagal, Kartu belum teregistrasi atau data pemegang kartu bermasalah'
                             ], REST_Controller::HTTP_NOT_ACCEPTABLE);
                         }else if($response[0]->c_status == 't'){
                             //respone success

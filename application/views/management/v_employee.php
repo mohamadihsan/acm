@@ -30,18 +30,38 @@
                         <div class="caption">
                             <i class="fa fa-users"></i> <?= $table_title ?> </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
-                                <i class="fa fa-plus"></i> 
-                                Add Employee
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#import" data-toggle="modal">
-                                <i class="fa fa-upload"></i> 
-                                    Import Data 
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
-                            <i class="fa fa-download"></i> 
-                                Export  
-                            </button>
+                            <?php
+                            if ($insert == 't') {
+                                ?>
+                                <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
+                                    <i class="fa fa-plus"></i> 
+                                    Add Employee
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#import" data-toggle="modal">
+                                    <i class="fa fa-upload"></i> 
+                                        Import Data 
+                                </button>
+                                <?php
+                            }
+
+                            if ($view == 't') {
+                                ?>
+                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                                    <i class="fa fa-download"></i> 
+                                    Export  
+                                </button>
+                                <?php
+                            }else{
+                                ?>
+                                <script>
+                                    alert('akun anda tidak diperkenankan untuk mengakses data ini!');
+                                </script>
+                                <?php
+                                
+                                redirect('','refresh');
+                                
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="portlet-body">
@@ -51,7 +71,7 @@
                                     <th class="all"> No </th>
                                     <th class="all"> Identity Number </th>
                                     <th> Name </th>
-                                    <th> Company </th>
+                                    <th> Department </th>
                                     <th class="none"> Email </th>
                                     <th class="none"> Phone </th>
                                     <th class="min-tablet"> Status </th>
@@ -66,7 +86,7 @@
                                     <th> No </th>
                                     <th> Identity Number </th>
                                     <th> Name </th>
-                                    <th> Company </th>
+                                    <th> Department </th>
                                     <th> Email </th>
                                     <th> Phone </th>
                                     <th> Status </th>
@@ -129,10 +149,10 @@
                                 }
                                 ?>
                             </select>
-                            <label for="form_control_1">Company
+                            <label for="form_control_1">Department
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Please Choice company...</span>
+                            <span class="help-block">Please Choice Department...</span>
                         </div>
                         <div class="form-group form-md-line-input">
                             <input type="text" class="form-control" id="form_control_1" name="email" placeholder="Enter your email">
@@ -175,7 +195,7 @@
         <div class="modal-body">
             <input type="file" name="file" id="file_excel" class="">
             <input type="hidden" name="type_people" id="type_people" value="employee" readonly>
-            <p>Select Company :</p>
+            <p>Select Department :</p>
             <select name="c_company" id="" class="form-control">
                 <?php
                 foreach ($company as $c) {

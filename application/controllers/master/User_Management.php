@@ -104,7 +104,8 @@ class User_Management extends CI_Controller {
     public function show()
     {
         $token = $this->session->userdata('id_token');
-        
+        $n_menu = "user"; 
+
         if($token){
             
             //cek validasi token
@@ -127,6 +128,10 @@ class User_Management extends CI_Controller {
                 $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
                 $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
+                $roles = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $data['view']   = $roles[0]->b_view;
+                $data['insert'] = $roles[0]->b_insert;
+
                 $data['user'] = $this->User_model->show();
                 $data['people'] = $this->People_model->show_all('employee');
                 $data['groups'] = $this->Group_model->show();

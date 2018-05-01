@@ -81,14 +81,14 @@ class TRegistration_API extends REST_Controller {
                         $this->response([
                             'status' => true,
                             'data' => $response,
-                            'message' => 'Data valid'
+                            'message' => 'Data valid, Proses Registrasi bisa dilanjutkan'
                         ], REST_Controller::HTTP_CREATED);
                     }else{
                         // response success not found data
                         $this->response([
                             'status' => false,
                             'data' => $data_post,
-                            'message' => 'Proses registrasi gagal, cek kembali parameter yang anda masukkan!'
+                            'message' => 'Data tidak ditemukan, Kartu belum teregistrasi!'
                         ], REST_Controller::HTTP_NOT_ACCEPTABLE);
                     }
                     

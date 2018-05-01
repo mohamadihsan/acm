@@ -71,6 +71,8 @@ class Authentication extends REST_Controller {
             $username_from_db   = $user[0]->username;
             $password_from_db   = $user[0]->password;
             $i_group            = $user[0]->i_group;
+            // set ip address
+            $ip_address = $this->input->ip_address();
 
             // cek data apakah username terdaftar atau tidak 
             if (count($user) > 0) {
@@ -108,8 +110,7 @@ class Authentication extends REST_Controller {
                     
                     $iat        = date('Y-m-d H:i:s');
                     $expired    = date('Y-m-d H:i:s', strtotime('+1 days', strtotime($iat)));
-                    // set ip address
-                    $ip_address = $this->input->ip_address();
+
                     if (!$this->input->valid_ip($ip_address)) {
                         $ip_address = null;
                     }
@@ -124,8 +125,9 @@ class Authentication extends REST_Controller {
                         $payload['terminal_id']     =   $terminal_id;
                         $payload['c_login']         =   $c_login;
 
+                        $output['status']       =   true;
+                        $output['group_access'] =   $i_group;
                         $output['id_token']     =   JWT::encode($payload, $this->secret);
-                        // $output['i_user']       =   $i_user_from_db;
 
                         // data login success
                         $data_login_success = array(

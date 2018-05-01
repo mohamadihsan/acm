@@ -66,14 +66,34 @@
                         <div class="caption">
                             <i class="fa fa-trash"></i> <?= $table_title ?> </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-danger btn-sm btn-circle" onclick="add_data()">
-                                <i class="fa fa-plus"></i> 
-                                Deletion Card
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
-                            <i class="fa fa-download"></i> 
-                                Export  
-                            </button>
+                            <?php
+                            if ($insert == 't') {
+                                ?>
+                                <button type="button" class="btn btn-danger btn-sm btn-circle" onclick="add_data()">
+                                    <i class="fa fa-plus"></i> 
+                                    Deletion Card
+                                </button>
+                                <?php
+                            }
+
+                            if ($view == 't') {
+                                ?>
+                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                                    <i class="fa fa-download"></i> 
+                                    Export  
+                                </button>
+                                <?php
+                            }else{
+                                ?>
+                                <script>
+                                    alert('akun anda tidak diperkenankan untuk mengakses data ini!');
+                                </script>
+                                <?php
+                                
+                                redirect('','refresh');
+                                
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="portlet-body">

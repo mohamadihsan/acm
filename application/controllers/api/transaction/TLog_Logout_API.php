@@ -32,19 +32,19 @@ class TLog_Logout_API extends REST_Controller {
                 
                 // extract token 
                 $extract = $this->token_validation->extract($token);
-                
+
                 // set variable
                 $i_user = $extract['i_user'];
                 $c_login = $extract['c_login'];
                 $terminal_id = $extract['terminal_id'];
-                $i_group_access = $extract['i_group_access'];
+                $i_group = $extract['i_group'];
 
 
 
                 // $i_user = $json->i_user;
                 // $c_login = $json->c_login;
                 // $terminal_id = $json->terminal_id;
-                // $i_group_access = $json->i_group_access;
+                // $i_group = $json->i_group;
                 // set ip address
                 $ip_address = $this->input->ip_address();
                 if (!$this->input->valid_ip($ip_address)) {
@@ -57,7 +57,7 @@ class TLog_Logout_API extends REST_Controller {
                     
                     $data = array(
                         'i_user' => $i_user,
-                        'i_group_access' => $i_group_access,
+                        'i_group' => $i_group,
                         'c_login' => $c_login,
                         'terminal_id' => $terminal_id,
                         'ip_address' => $ip_address

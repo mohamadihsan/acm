@@ -31,14 +31,34 @@
                             <i class="fa fa-users"></i> <?= $table_title ?> </div>
                         <div class="actions">
                             <!-- <div id="add_button"></div> -->
-                            <button type="button" class="btn btn-default btn-sm btn-circle add_test" onclick="add_data()">
-                                <i class="fa fa-plus"></i> 
-                                Add Company
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
-                            <i class="fa fa-download"></i> 
-                                Export  
-                            </button>
+                            <?php
+                            if ($insert == 't') {
+                                ?>
+                                <button type="button" class="btn btn-default btn-sm btn-circle add_test" onclick="add_data()">
+                                    <i class="fa fa-plus"></i> 
+                                    Add Company
+                                </button>
+                                <?php
+                            }
+                            
+                            if ($view == 't') {
+                                ?>
+                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                                    <i class="fa fa-download"></i> 
+                                    Export  
+                                </button>
+                                <?php
+                            }else{
+                                ?>
+                                <script>
+                                    alert('akun anda tidak diperkenankan untuk mengakses data ini!');
+                                </script>
+                                <?php
+                                
+                                redirect('','refresh');
+                                
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="portlet-body">

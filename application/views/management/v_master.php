@@ -35,7 +35,7 @@
                                 ?>
                                 <button type="button" class="btn btn-default btn-sm btn-circle" onclick="add_data()">
                                     <i class="fa fa-plus"></i> 
-                                    Add Tenant
+                                    Add Master
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#import" data-toggle="modal">
                                     <i class="fa fa-upload"></i> 
@@ -71,7 +71,7 @@
                                     <th class="all"> No </th>
                                     <th class="all"> Identity Number </th>
                                     <th> Name </th>
-                                    <th> Company </th>
+                                    <th> Station </th>
                                     <th class="none"> Email </th>
                                     <th class="none"> Phone </th>
                                     <th class="min-tablet"> Status </th>
@@ -86,7 +86,7 @@
                                     <th> No </th>
                                     <th> Identity Number </th>
                                     <th> Name </th>
-                                    <th> Company </th>
+                                    <th> Station </th>
                                     <th> Email </th>
                                     <th> Phone </th>
                                     <th> Status </th>
@@ -108,7 +108,7 @@
 <!-- MODAL ADD & EDIT-->
 <div id="add_edit" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
     <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-user"></i> TENANT</h4>
+        <h4 class="modal-title"><i class="fa fa-user"></i> MASTER</h4>
     </div>
     <div class="modal-body">
         <!-- BEGIN VALIDATION STATES-->
@@ -135,7 +135,7 @@
                             <span class="help-block">Enter your fullname...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="tenant" readonly>
+                            <input type="text" class="form-control" id="form_control_1" name="type_people" placeholder="Type" value="master" readonly>
                             <label for="form_control_1">Type</label>
                         </div>
                         <div class="form-group form-md-line-input">
@@ -149,10 +149,10 @@
                                 }
                                 ?>
                             </select>
-                            <label for="form_control_1">Company
+                            <label for="form_control_1">Station
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Please Choice company...</span>
+                            <span class="help-block">Please Choice Station...</span>
                         </div>
                         <div class="form-group form-md-line-input">
                             <input type="text" class="form-control" id="form_control_1" name="email" placeholder="Enter your email">
@@ -194,8 +194,8 @@
         </div>
         <div class="modal-body">
             <input type="file" name="file" id="file_excel" class="">
-            <input type="hidden" name="type_people" id="type_people" value="tenant" readonly>
-            <p>Select Company :</p>
+            <input type="hidden" name="type_people" id="type_people" value="master" readonly>
+            <p>Select Station :</p>
             <select name="c_company" id="" class="form-control">
                 <?php
                 foreach ($company as $c) {
@@ -261,7 +261,7 @@
                 "infoFiltered": ""
             },
             "ajax":{
-                "url": "<?php echo base_url() . 'tenant/all'; ?>",
+                "url": "<?php echo base_url() . 'master/all'; ?>",
                 "type": "POST"
             },
             "columnDefs":[
@@ -306,7 +306,7 @@
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $('#add_edit').modal('show'); // show bootstrap modal
-        $('.modal-title').text('ADD TENANT'); // Set title to Bootstrap modal title
+        $('.modal-title').text('ADD EMPLOYEE'); // Set title to Bootstrap modal title
     }
     
     function edit_data(id)
@@ -316,7 +316,7 @@
     
         //Ajax Load data from ajax
         $.ajax({
-            url : "<?php echo site_url('tenant/')?>/" + id,
+            url : "<?php echo site_url('master/')?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
@@ -331,7 +331,7 @@
                 $('[name="phone"]').val(data.phone);
                 $('[name="card_active"]').val(data.card_active);
                 $('#add_edit').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('EDIT TENANT'); // Set title to Bootstrap modal title
+                $('.modal-title').text('EDIT EMPLOYEE'); // Set title to Bootstrap modal title
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -353,10 +353,10 @@
         var message;
 
         if(save_method == 'add') {
-            url = "<?php echo site_url('tenant/add')?>";
+            url = "<?php echo site_url('master/add')?>";
             message = 'Data successfully added';
         } else {
-            url = "<?php echo site_url('tenant/update')?>";
+            url = "<?php echo site_url('master/update')?>";
             message = 'Data successfully updated';
         }
 
@@ -484,7 +484,7 @@
             
             // ajax delete data to database
             $.ajax({
-                url : "<?php echo site_url('tenant/delete')?>/"+id,
+                url : "<?php echo site_url('master/delete')?>/"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)

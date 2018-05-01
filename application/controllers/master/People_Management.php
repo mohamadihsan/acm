@@ -133,17 +133,27 @@ class People_Management extends CI_Controller {
         $this->get_json($type_people, $n_menu);
     }
 
+    public function all_master()
+    {
+        // menu name must pair with n_menu on macm.t_m_menu
+        $n_menu = 'master';
+        $type_people = 'master';
+        // call function
+        $this->get_json($type_people, $n_menu);
+    }
+
     public function show_employee()
     {
         $token = $this->session->userdata('id_token');
-        
+        $n_menu = "kci employee";
+
         if($token){
             
             //cek validasi token
             if($this->token_validation->check($token)){
                 
                 $data = array(  
-                    'menu'          => 'Employee', 
+                    'menu'          => 'KCI Employee', 
                     'title'         => 'Employee Management', 
                     'subtitle'      => 'Pages',
                     'table_title'   => 'Employee List'
@@ -159,6 +169,10 @@ class People_Management extends CI_Controller {
                 $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
                 $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
+                $roles = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $data['view']   = $roles[0]->b_view;
+                $data['insert'] = $roles[0]->b_insert;
+
                 $data['company'] = $this->Company_model->show_data_company();
 
             }else{
@@ -199,7 +213,8 @@ class People_Management extends CI_Controller {
     public function show_tenant()
     {
         $token = $this->session->userdata('id_token');
-        
+        $n_menu = "tenant / vendor";
+
         if($token){
             
             //cek validasi token
@@ -222,6 +237,10 @@ class People_Management extends CI_Controller {
                 $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
                 $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
+                $roles = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $data['view']   = $roles[0]->b_view;
+                $data['insert'] = $roles[0]->b_insert;
+
                 $data['company'] = $this->Company_model->show_data_company();
 
             }else{
@@ -261,7 +280,8 @@ class People_Management extends CI_Controller {
     public function show_non_employee()
     {
         $token = $this->session->userdata('id_token');
-        
+        $n_menu = "non kci";
+
         if($token){
             
             //cek validasi token
@@ -284,6 +304,10 @@ class People_Management extends CI_Controller {
                 $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
                 $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
                 
+                $roles = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $data['view']   = $roles[0]->b_view;
+                $data['insert'] = $roles[0]->b_insert;
+
                 $data['company'] = $this->Company_model->show_data_company();
 
             }else{
@@ -319,6 +343,74 @@ class People_Management extends CI_Controller {
         $data['menu'] = 'Non Employee';
 
         $this->load->template('management/v_non_employee', $data);
+    }
+
+    public function show_master()
+    {
+        $token = $this->session->userdata('id_token');
+        $n_menu = "master";
+
+        if($token){
+            
+            //cek validasi token
+            if($this->token_validation->check($token)){
+                
+                $data = array(  
+                    'menu'          => 'Master Station', 
+                    'title'         => 'Master Station Management', 
+                    'subtitle'      => 'Pages',
+                    'table_title'   => 'Master Station List'
+                );
+
+                // get user role
+                $data_token = $this->token_validation->extract($token);
+                $i_group_from_token = $data_token['i_group'];
+
+                // show menu based on group user
+                $data['menu_single'] = $this->Menu_model->show_menu_user($i_group_from_token, null);
+                $data['menu_master'] = $this->Menu_model->show_menu_user($i_group_from_token, 'master');
+                $data['menu_card_owner'] = $this->Menu_model->show_menu_user($i_group_from_token, 'card owner');
+                $data['menu_report_transaction'] = $this->Menu_model->show_menu_user($i_group_from_token, 'report transaction');
+                
+                $roles = $this->Menu_model->check_action($i_group_from_token, $n_menu);
+                $data['view']   = $roles[0]->b_view;
+                $data['insert'] = $roles[0]->b_insert;
+
+                $data['company'] = $this->Company_model->show_data_company();
+
+            }else{
+
+                // token expired        
+                ?>  
+                    <script> 
+                        setTimeout(function(){
+                            alert("Token is expired. System will be logout automatically!")
+                        }, 1000);
+                    </script> 
+                <?php
+
+                redirect('logout','refresh');
+                
+            } 
+
+        }else{
+
+            // redirect logout, token not found    
+            ?>  
+                <script> 
+                    setTimeout(function(){
+                        alert("You do not have access to this page!")
+                    }, 1000);
+                </script> 
+            <?php
+
+            redirect('logout','refresh');
+            
+        } 
+
+        $data['menu'] = 'master';
+        
+        $this->load->template('management/v_master', $data);
     }
 
     public function ajax_edit($id)
