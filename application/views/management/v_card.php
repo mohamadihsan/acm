@@ -88,16 +88,24 @@
 
 <!-- MODAL EXPORT -->
 <div id="export" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
-    <div class="modal-body">
-        <i class="fa fa-download"></i> EXPORT
-    </div>
-    <div class="modal-body">
-        <p> Export Data from date: </p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-        <button type="button" class="btn blue">Export</button>
-    </div>
+    <form id="export">
+        <div class="modal-body">
+            <i class="fa fa-download"></i> EXPORT
+        </div>
+        <div class="modal-body">
+            <p> Export Data by Card Type: </p>
+            <select name="i_card_type" id="i_card_type">
+                <option value="4">Master</option>
+                <option value="5">KCI Employee</option>
+                <option value="6">Non KCI</option>
+                <option value="7">Tenant / Vendor</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
+            <button type="submit" class="btn blue">Export</button>
+        </div>
+    </form>
 </div>
 <!-- END MODAL EXPORT -->
 
@@ -160,6 +168,65 @@
             $(this).parent().parent().removeClass('has-error');
             $(this).next().empty();
         });
+
+        // Variable to hold request
+        var request;
+
+        // Bind to the submit event of our form
+        $("#export").submit(function(event){
+
+            // Prevent default posting of form - put here to work in case of errors
+            event.preventDefault();
+
+            // Abort any pending request
+            if (request) {
+                request.abort();
+            }
+            // setup some local variables
+            var $form = $(this);
+
+            // Let's select and cache all the fields
+            var $inputs = $form.find("input, select, button, textarea");
+
+            // Serialize the data in the form
+            var serializedData = $form.serialize();
+
+            // Let's disable the inputs for the duration of the Ajax request.
+            // Note: we disable elements AFTER the form data has been serialized.
+            // Disabled form elements will not be serialized.
+            $inputs.prop("disabled", true);
+
+            // Fire off the request to /form.php
+            request = $.ajax({
+                url: "<?= base_url().'card/export' ?>",
+                type: "GET",
+                data: serializedData
+            });
+
+            // Callback handler that will be called on success
+            request.done(function (response, textStatus, jqXHR){
+                // Log a message to the console
+                console.log("Link Download, normal!");
+            });
+
+            // Callback handler that will be called on failure
+            request.fail(function (jqXHR, textStatus, errorThrown){
+                // Log the error to the console
+                console.error(
+                    "The following error occurred: "+
+                    textStatus, errorThrown
+                );
+            });
+
+            // Callback handler that will be called regardless
+            // if the request failed or succeeded
+            request.always(function () {
+                // Reenable the inputs
+                $inputs.prop("disabled", false);
+            });
+
+        });
+
     });
 
     function reload_table()

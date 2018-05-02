@@ -19,6 +19,7 @@ $route['company/add']                   = 'master/Company_Management/ajax_add';
 $route['company/update']                = 'master/Company_Management/ajax_update';
 $route['card']                          = 'master/Card_Management/show';
 $route['card/all']                      = 'master/Card_Management/all';
+$route['card/export']                   = 'master/Card_Management/exportExcel';
 $route['employee']                      = 'master/People_Management/show_employee';
 $route['employee/all']                  = 'master/People_Management/all_employee';
 $route['employee/(:num)']               = 'master/People_Management/ajax_edit/$1';

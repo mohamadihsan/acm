@@ -36,7 +36,7 @@
                                 ?>
                                 <button type="button" class="btn btn-default btn-sm btn-circle add_test" onclick="add_data()">
                                     <i class="fa fa-plus"></i> 
-                                    Add Company
+                                    Add Company/ Department/ Station
                                 </button>
                                 <?php
                             }
@@ -66,8 +66,8 @@
                             <thead>
                                 <tr>
                                     <th class="all"> No </th>
-                                    <th class="all"> Company Code </th>
-                                    <th class="min-tablet"> Company Name </th>
+                                    <th class="all"> Code </th>
+                                    <th class="min-tablet"> Name </th>
                                     <th> Address </th>
                                     <th class="all"> Action </th>
                                 </tr>
@@ -77,8 +77,8 @@
                             <tfoot>
                                 <tr>
                                     <th> No </th>
-                                    <th> Company Code </th>
-                                    <th> Company Name </th>
+                                    <th> Code </th>
+                                    <th> Name </th>
                                     <th> Address </th>
                                     <th> Action </th>
                                 </tr>
@@ -111,17 +111,17 @@
                     <div class="form-body">
                         <div class="form-group form-md-line-input">
                             <input type="text" class="form-control" name="c_company" id="c_company" placeholder="Enter Code">
-                            <label for="form_control_1">Company Code
+                            <label for="form_control_1">Company / Department / Station Code
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Enter Company Code...</span>
+                            <span class="help-block">Enter Company / Department / Station Code...</span>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" name="n_company" id="form_control_1" placeholder="Enter your Fullname">
-                            <label for="form_control_1">Company Name
+                            <input type="text" class="form-control" name="n_company" id="form_control_1" placeholder="Enter your Company / Department / Station">
+                            <label for="form_control_1">Company / Department / Station Name
                                 <span class="required">*</span>
                             </label>
-                            <span class="help-block">Enter Company Name...</span>
+                            <span class="help-block">Enter Company / Department / Station Name...</span>
                         </div>
                         <div class="form-group form-md-line-input">
                             <textarea name="address" id="address" cols="30" rows="10" class="form-control"></textarea>

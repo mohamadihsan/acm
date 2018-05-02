@@ -103,10 +103,10 @@ class Company_Management extends CI_Controller {
             if($this->token_validation->check($token)){
                 
                 $data = array(  
-                    'menu'          => 'Company', 
-                    'title'         => 'Company Management', 
+                    'menu'          => 'Company / Department / Station', 
+                    'title'         => 'Company / Department / Station Management', 
                     'subtitle'      => 'Pages',
-                    'table_title'   => 'Company List'
+                    'table_title'   => 'Company / Department / Station List'
                 );
 
                 // get user role
