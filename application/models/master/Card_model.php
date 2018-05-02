@@ -6,7 +6,7 @@ class Card_model extends CI_Model {
 
     var $table = 'macm.t_m_card'; //nama tabel dari database
     var $column_order = array(null, 'c_card', 'i_card_type', 'c_people', 'd_active_card', 'b_active'); //field yang ada di table user
-    var $column_search = array('c_card', 'i_card_type', 'c_people', 'd_active_card'); //field yang diizin untuk pencarian 
+    var $column_search = array('c_card', 'c_people'); //field yang diizin untuk pencarian 
     var $order = array('i_card' => 'asc'); // default order 
 
     private function _get_datatables_query()
