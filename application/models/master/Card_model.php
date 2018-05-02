@@ -97,6 +97,23 @@ class Card_model extends CI_Model {
         
         return $result;
     }
+
+    function exportExcel($i_card_type = null)
+    {
+        if($i_card_type != 'all'){
+            $this->db->where('i_card_type', $i_card_type);
+        }
+        $this->db->from($this->table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function show_card_type()
+    {
+        $result = $this->db->query("SELECT * FROM macm.t_m_card_type")->result();
+        
+        return $result;
+    }
 }
 
 /* End of file Card_model.php */

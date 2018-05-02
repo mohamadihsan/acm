@@ -102,6 +102,7 @@ class Card_Management extends CI_Controller {
                 $data['insert'] = $roles[0]->b_insert;
 
                 $data['card'] = $this->Card_model->show_data_card();
+                $data['card_type'] = $this->Card_model->show_card_type();
 
             }else{
 
@@ -140,33 +141,75 @@ class Card_Management extends CI_Controller {
 
     function exportExcel()
     {
-        // $this->load->library("Excel/PHPExcel");
+        $token = $this->session->userdata('id_token');
+        
+        if($token){
+            
+            //cek validasi token
+            if($this->token_validation->check($token)){
 
-        //membuat objek PHPExcel
-        $objPHPExcel = new PHPExcel();
+                //membuat objek PHPExcel
+                $objPHPExcel = new PHPExcel();
 
-        //set Sheet yang akan diolah 
-        $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A1', 'Hello')
-                ->setCellValue('B2', 'Ini')
-                ->setCellValue('C1', 'Excel')
-                ->setCellValue('D2', 'Pertamaku');
-        //set title pada sheet (me rename nama sheet)
-        $objPHPExcel->getActiveSheet()->setTitle('Excel Pertama');
+                //set Sheet yang akan diolah 
+                $objPHPExcel->setActiveSheetIndex(0)
+                        ->setCellValue('A1', 'No')
+                        ->setCellValue('B1', 'Card Number')
+                        ->setCellValue('C1', 'Card Type')
+                        ->setCellValue('D1', 'Card Owner')
+                        ->setCellValue('E1', 'Active')
+                        ->setCellValue('F1', 'Status');
 
-        //mulai menyimpan excel format xlsx, kalau ingin xls ganti Excel2007 menjadi Excel5          
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+                $list = $this->Card_model->exportExcel($_POST['i_card_type']);
+                $no = 1;
+                $i = 2;
+                foreach ($list as $field) {
+                    
+                    if ($field->b_active == 't') {
+                        $b_active = 'active';
+                    }else{
+                        $b_active = 'non active';
+                    }         
+                   
+                   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $no++);
+                   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $field->c_card);
+                   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$i, $field->i_card_type);
+                   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$i, $field->c_people);
+                   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$i, $field->d_active_card);
+                   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, $b_active);
 
-        //sesuaikan headernya 
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        //ubah nama file saat diunduh
-        header('Content-Disposition: attachment;filename="hasilExcel.xlsx"');
-        //unduh file
-        $objWriter->save("php://output");
+                   $i++;
+                }
+                
+                //set title pada sheet (me rename nama sheet)
+                $objPHPExcel->getActiveSheet()->setTitle('Excel Pertama');
+
+                //mulai menyimpan excel format xlsx, kalau ingin xls ganti Excel2007 menjadi Excel5          
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+
+                //sesuaikan headernya 
+                header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+                header("Cache-Control: no-store, no-cache, must-revalidate");
+                header("Cache-Control: post-check=0, pre-check=0", false);
+                header("Pragma: no-cache");
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                //ubah nama file saat diunduh
+                header('Content-Disposition: attachment;filename="hasilExcel.xlsx"');
+                //unduh file
+                $objWriter->save("php://output");
+            }
+        }else{
+            // token expired        
+            ?>  
+            <script> 
+                setTimeout(function(){
+                    alert("Token is expired. System will be logout automatically!")
+                }, 1000);
+            </script> 
+            <?php
+
+            redirect('logout','refresh');
+        }
     }
 }
 

@@ -33,7 +33,7 @@
                             <?php
                             if ($view == 't') {
                                 ?>
-                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#modalexport" data-toggle="modal">
                                     <i class="fa fa-download"></i> 
                                     Export  
                                 </button>
@@ -87,23 +87,29 @@
 <!-- END CONTENT -->
 
 <!-- MODAL EXPORT -->
-<div id="export" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
-    <form id="export">
+<div id="modalexport" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
+    <!-- <form id="exportExcel"> -->
+    <form action="<?= base_url().'card/export' ?>" method="POST">
         <div class="modal-body">
             <i class="fa fa-download"></i> EXPORT
         </div>
         <div class="modal-body">
             <p> Export Data by Card Type: </p>
-            <select name="i_card_type" id="i_card_type">
-                <option value="4">Master</option>
-                <option value="5">KCI Employee</option>
-                <option value="6">Non KCI</option>
-                <option value="7">Tenant / Vendor</option>
+            <select name="i_card_type" id="i_card_type" class="form-control">
+                <option value="all">All</option>
+            <?php
+                foreach ($card_type as $c) {
+                    ?>
+                    <option value="<?= $c->i_card_type ?>"><?= $c->n_card_type ?></option>
+                    <?php
+                }
+                ?>
             </select>
         </div>
         <div class="modal-footer">
             <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
             <button type="submit" class="btn blue">Export</button>
+            <!-- <a href="<?= base_url().'card/export' ?>" class="btn blue" target="_blank">Export</a> -->
         </div>
     </form>
 </div>
@@ -173,7 +179,7 @@
         var request;
 
         // Bind to the submit event of our form
-        $("#export").submit(function(event){
+        $("#exportExcel").submit(function(event){
 
             // Prevent default posting of form - put here to work in case of errors
             event.preventDefault();
@@ -207,6 +213,8 @@
             request.done(function (response, textStatus, jqXHR){
                 // Log a message to the console
                 console.log("Link Download, normal!");
+                //if success reload ajax table
+                $('#modalexport').modal('hide');
             });
 
             // Callback handler that will be called on failure
