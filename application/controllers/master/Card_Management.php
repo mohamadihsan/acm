@@ -150,6 +150,148 @@ class Card_Management extends CI_Controller {
 
                 //membuat objek PHPExcel
                 $objPHPExcel = new PHPExcel();
+                
+                $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
+                //change the font size
+                $objPHPExcel->getActiveSheet()->getStyle('A:F')->getFont()->setSize(10);
+                //make the font become bold
+                $objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true);
+
+                $style_header = array(
+                    'fill' => array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        // 'color' => array('rgb' => 'CCCCCC'),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    ),
+                    'font' => array(
+                        'bold' => true,
+                    )
+                );
+
+                $style_table_header = array(
+                    'fill' => array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('rgb' => 'EEEEEE')
+                    ),
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '000000'),
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    ),
+                      'font' => array(
+                          'bold' => true,
+                    )
+                );
+            
+                $style_center = array(
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '000000'),
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+            
+                $style_right = array(
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '000000'),
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+            
+                $style_left = array(
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '000000'),
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+            
+                $style_left_bold = array(
+                    'font' => array('bold' => true,
+                    ),
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '000000'),
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+            
+                $style_right_bold = array(
+                    'font' => array('bold' => true,
+                    ),
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '000000'),
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+            
+                $style_border = array(
+                    'borders' => array(
+                        'outline' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            'color' => array('argb' => '000000'),
+                        ),
+                    )
+                );
+            
+                $style_bold = array(
+                    'font' => array('bold' => true,
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+                
+                // Top
+                $objPHPExcel->getActiveSheet()->getStyle('A1')->applyFromArray($style_table_header);
+                $objPHPExcel->getActiveSheet()->getStyle('B1')->applyFromArray($style_table_header);
+                $objPHPExcel->getActiveSheet()->getStyle('C1')->applyFromArray($style_table_header);
+                $objPHPExcel->getActiveSheet()->getStyle('D1')->applyFromArray($style_table_header);
+                $objPHPExcel->getActiveSheet()->getStyle('E1')->applyFromArray($style_table_header);
+                $objPHPExcel->getActiveSheet()->getStyle('F1')->applyFromArray($style_table_header);
+
+                $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+                $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+                $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10);
+                $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+                $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+                $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
 
                 //set Sheet yang akan diolah 
                 $objPHPExcel->setActiveSheetIndex(0)
@@ -159,7 +301,7 @@ class Card_Management extends CI_Controller {
                         ->setCellValue('D1', 'Card Owner')
                         ->setCellValue('E1', 'Active')
                         ->setCellValue('F1', 'Status');
-
+                        
                 $list = $this->Card_model->exportExcel($_POST['i_card_type']);
                 $no = 1;
                 $i = 2;
@@ -171,21 +313,40 @@ class Card_Management extends CI_Controller {
                         $b_active = 'non active';
                     }         
                    
+                    // Style Content
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$i)->applyFromArray($style_center);
+                    $objPHPExcel->getActiveSheet()->getStyle('B'.$i)->applyFromArray($style_center);
+                    $objPHPExcel->getActiveSheet()->getStyle('C'.$i)->applyFromArray($style_center);
+                    $objPHPExcel->getActiveSheet()->getStyle('D'.$i)->applyFromArray($style_center);
+                    $objPHPExcel->getActiveSheet()->getStyle('E'.$i)->applyFromArray($style_center);
+                    $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->applyFromArray($style_center);
+
                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $no++);
                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $field->c_card);
                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$i, $field->i_card_type);
                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$i, $field->c_people);
                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$i, $field->d_active_card);
                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, $b_active);
-
                    $i++;
                 }
-                
-                //set title pada sheet (me rename nama sheet)
-                $objPHPExcel->getActiveSheet()->setTitle('Excel Pertama');
 
+                // PHPExcel_Shared_Font::setAutoSizeMethod(PHPExcel_Shared_Font::AUTOSIZE_METHOD_EXACT);
+
+                // foreach($objPHPExcel->getActiveSheet()->getColumnDimension() as $col) {
+                //     $col->setAutoSize(true);
+                // }
+                
                 //mulai menyimpan excel format xlsx, kalau ingin xls ganti Excel2007 menjadi Excel5          
                 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+                
+                // Set document properties
+                $objPHPExcel->getProperties()->setCreator("Nutech Integrasi")
+                            ->setLastModifiedBy("Nutech Integrasi")
+                            ->setTitle("Card List")
+                            ->setSubject("Card List")
+                            ->setDescription("Generate Card List.")
+                            ->setKeywords("Card")
+                            ->setCategory("Report");
 
                 //sesuaikan headernya 
                 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -194,7 +355,7 @@ class Card_Management extends CI_Controller {
                 header("Pragma: no-cache");
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 //ubah nama file saat diunduh
-                header('Content-Disposition: attachment;filename="hasilExcel.xlsx"');
+                header('Content-Disposition: attachment;filename="CardList.xlsx"');
                 //unduh file
                 $objWriter->save("php://output");
             }
