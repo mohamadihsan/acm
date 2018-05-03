@@ -101,6 +101,13 @@ class Company_model extends CI_Model {
         return $query->result();
     }
 
+    function exportExcel()
+    {
+        $this->db->from($this->table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
 
 /* End of file Company_model.php */

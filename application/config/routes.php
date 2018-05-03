@@ -13,6 +13,7 @@ $route['verify']['POST']                = 'auth/User_Authentication/verify';
 $route['dashboard']                     = 'general/Dashboard';
 $route['company']                       = 'master/Company_Management/show';
 $route['company/all']                   = 'master/Company_Management/all';
+$route['company/export']                = 'master/Company_Management/exportExcel';
 $route['company/(:num)']                = 'master/Company_Management/ajax_edit/$1';
 $route['company/delete/(:num)']         = 'master/Company_Management/ajax_delete/$1';
 $route['company/add']                   = 'master/Company_Management/ajax_add';
