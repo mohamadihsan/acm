@@ -113,6 +113,24 @@ class People_model extends CI_Model {
         return $result;
     }
 
+    function exportExcel($type_people, $status)
+    {
+        $this->db->select('*');
+        
+        if($status == 't'){
+            $this->db->where('b_active', 't');
+        }else if($status == 'f'){
+            $this->db->where('b_active', 'f');
+        }
+
+        $this->db->where('type_people', $type_people);
+
+        $this->db->from('macm.t_m_people p');
+        $this->db->join('macm.t_m_company c', 'c.c_company = p.c_company');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
 
 /* End of file People_model.php */

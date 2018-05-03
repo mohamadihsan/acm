@@ -34,10 +34,10 @@
                                 <i class="fa fa-plus"></i> 
                                 Add User
                             </button>
-                            <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                            <!-- <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
                             <i class="fa fa-download"></i> 
                                 Export  
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                     <div class="portlet-body">

@@ -46,7 +46,7 @@
 
                             if ($view == 't') {
                                 ?>
-                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#export" data-toggle="modal">
+                                <button type="button" class="btn btn-default btn-sm btn-circle" data-target="#modalexport" data-toggle="modal">
                                     <i class="fa fa-download"></i> 
                                     Export  
                                 </button>
@@ -230,17 +230,27 @@
 </div> -->
 
 <!-- MODAL EXPORT -->
-<div id="export" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
-    <div class="modal-body">
-        <i class="fa fa-download"></i> EXPORT
-    </div>
-    <div class="modal-body">
-        <p> Export Data from date: </p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-        <button type="button" class="btn blue">Export</button>
-    </div>
+<div id="modalexport" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" data-attention-animation="false">
+    <!-- <form id="exportExcel"> -->
+    <form action="<?= base_url().'employee/export' ?>" method="POST">
+        <div class="modal-body">
+            <i class="fa fa-download"></i> EXPORT
+        </div>
+        <div class="modal-body">
+            <p> Export Data by Status: </p>
+            <select name="b_active" id="i_card_type" class="form-control">
+                <option value="all">All</option>
+                <option value="t">Active</option>
+                <option value="f">Non Active</option>
+            </select>
+            <input type="hidden" name="type_people" value="employee">
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
+            <button type="submit" class="btn blue">Export</button>
+            <!-- <a href="<?= base_url().'employee/export' ?>" class="btn blue" target="_blank">Export</a> -->
+        </div>
+    </form>
 </div>
 <!-- END MODAL EXPORT -->
 

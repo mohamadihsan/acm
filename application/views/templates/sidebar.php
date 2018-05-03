@@ -88,7 +88,7 @@
             if (isset($menu_card_owner)) {
                 if (count($menu_card_owner) > 0) {
                     ?>
-                    <li class="nav-item <?php if($this->uri->segment(1)=="employee" OR $this->uri->segment(1)=="non_employee" OR $this->uri->segment(1)=="tenant") echo 'active open'; ?>">
+                    <li class="nav-item <?php if($this->uri->segment(1)=="employee" OR $this->uri->segment(1)=="non_employee" OR $this->uri->segment(1)=="tenant" OR $this->uri->segment(1)=="master") echo 'active open'; ?>">
                         <a href="javascript:;" class="nav-link nav-toggle">
                             <i class="icon-users"></i>
                             <span class="title">Card Owner</span>
