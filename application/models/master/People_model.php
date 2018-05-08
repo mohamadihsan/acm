@@ -113,6 +113,13 @@ class People_model extends CI_Model {
         return $result;
     }
 
+    public function show_simple($c_people)
+    {
+        $result = $this->db->query("SELECT * FROM macm.sp_getpeople('$c_people')")->result();
+        
+        return $result;
+    }
+
     function exportExcel($type_people, $status)
     {
         $this->db->select('*');

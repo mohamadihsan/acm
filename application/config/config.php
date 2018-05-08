@@ -67,6 +67,7 @@ $config['csrf_regenerate'] = TRUE;
 $config['csrf_exclude_uris'] = array(
     'api/deletion',
     'api/find_card',
+    'api/find_people_simple',
     'api/find_people',
     'api/logout',
     'api/user/register',
