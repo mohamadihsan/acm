@@ -196,10 +196,8 @@ class MPeople_API extends REST_Controller {
 
                     // action untuk data post format json
                     $c_people      = $json['c_people'];
-                    $type_people   = $json['type_people'];
                     $data_post = array(
-                        'c_people' => $c_people,
-                        'type_people' => $type_people 
+                        'c_people' => $c_people
                     );
 
                 }
